@@ -24,7 +24,7 @@ The Escrow Builder Proposal enables Nouns Builders to create proposals for miles
 
 ## Creating an Escrow Proposal
 
-Functionality Funds are secured in escrow and released upon milestone completion. Milestone releases can be requested under the milestone management page.
+Functionally Funds are secured in escrow and released upon milestone completion. Milestone releases can be requested under the milestone management page.
 
 ### Step 1: Select the Escrow Proposal Type
 
@@ -100,6 +100,10 @@ This separate attestation flow ensures that all delegations are securely recorde
 - Each attestation follows the schema ID `0x1289c5f988998891af7416d83820c40ba1c6f5ba31467f2e611172334dc53a0e`.
 - EAS verifies attestations to confirm delegation authority.
 - Users can query the EAS registry to view or verify attestations for a specific DAO address.
+
+#### Attestation Usage
+1. The attestation **MUST** be done on same chain as where dao exists.
+2. The schema only has `daoMultisig` address, which is the delegated address. The recipient **MUST** be the treasury address of the DAO.
 
 ---
 ## Further Reading
