@@ -1,0 +1,44 @@
+---
+id: builder-propdates
+title: How to Post Propdates
+---
+
+## Overview
+
+In addition to creating milestone-based escrow proposals and requesting the release of milestones, users and DAO members specifically can now **post updates**, so called *"Propdates"* directly within the proposal feed. These updates use the [Ethereum Attestation Service (EAS)](https://docs.attest.org/) to record comments and updates on-chain in a secure and verifiable way.
+
+Users can access the Propdate functionality by navigating to `Activity` of their DAO, select a specific proposal, and scrolling down.
+
+![Overview Propdates](./public/guides/propdateGuide/Overview-propdates.png)
+
+## Viewing Propdate
+
+Propdates and comments by DAO members are shown by default, but non-member updates can be viewed by selecting `All Propdates`.
+
+![View all Propdates](./public/guides/propdateGuide/all-propdates.png)
+
+## How It Works
+
+Each update or release request is stored as an **on-chain attestation** using EAS, read more at the [Attestations Reference](./src/content/docs/reference/attestations.mdx). Propdates you post will appear in the **"Propdates"** feed under the proposal.
+
+By selecting `Post Propdate` users and DAO members can comment on proposals before, during, and after voting ended to:
+
+- Add public updates
+- Track progress across milestones
+- Reply to comments and updates
+
+## Submitting an Update
+
+1. Open the **Proposal Page**.
+2. Click `Create Propdate` under the Propdates section.
+3. Type your message.
+4. Click `Post Propdate` and sign the transaction in your wallet.
+5. Wait for the propdate to be posted on chain.
+
+![Post Propdate](./public/guides/propdateGuide/postpropdate.gif)
+
+Alternatively, you can also respond to Propdates by using the `Reply` functionality.
+
+![Post Reply](./public/guides/propdateGuide/replypropdate.gif)
+
+Using Propdates will create an EAS attestation on-chain that is tied to the selected proposal and your wallet address or ENS will be associated with the content.
