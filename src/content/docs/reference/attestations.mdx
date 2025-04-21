@@ -26,20 +26,20 @@ The schema with the UID `0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1ceca
 ### Schema Structure
 
 ```
-bytes32 propId;
-bytes32 replyToUID;
-uint8 messageType;      // 0: INLINE_TEXT, 1: INLINE_JSON, 2: URL_TEXT, 3: URL_JSON
-string message;         // Inline content or off-chain URL
+bytes32 proposalId;
+bytes32 originalMessageId;
+uint8 messageType;  // 0: INLINE_TEXT, 1: INLINE_JSON, 2: URL_TEXT, 3: URL_JSON
+string message;     // Inline content or off-chain URL
 ```
 
 ### Field Breakdown
 
-| Field         | Type     | Description |
-|---------------|----------|-------------|
-| `propId`       | `bytes32` | Proposal ID (usually keccak256 of the proposal metadata or ID hash) |
-| `replyToUID`   | `bytes32` | UID of another attestation being replied to. Use `0x0` for top-level comments. |
-| `messageType`  | `uint8`   | Specifies how to interpret `message`. See types below. |
-| `message`      | `string`  | Inline content (if `INLINE_*`) or a URL (e.g., IPFS) if `URL_*` |
+| Field               | Type      | Description |
+|---------------------|-----------|-------------|
+| `proposalId`        | `bytes32` | Proposal ID (usually keccak256 of the proposal metadata or ID hash) |
+| `originalMessageId` | `bytes32` | UID of another attestation being replied to. Use `0x0` for top-level comments. |
+| `messageType`       | `uint8`   | Specifies how to interpret `message`. See types below. |
+| `message`           | `string`  | Inline content (if `INLINE_*`) or a URL (e.g., IPFS) if `URL_*` |
 
 
 ### Message Type Definition
@@ -66,12 +66,12 @@ string message;         // Inline content or off-chain URL
 
 ### JSON Field Reference
 
-| Field         | Type       | Description                                  |
-|---------------|------------|----------------------------------------------|
-| `milestoneId` | `number`   | Milestone index the update refers to         |
-| `content`     | `string`   | [**Required**] text content                  |
-| `labels`      | `string[]` | Tags for filtering/search                    |
-| `attachments` | `string[]` | List of media or file URLs (preferably IPFS) |
+| Field         | Type       | Description                                             |
+|---------------|------------|---------------------------------------------------------|
+| `milestoneId` | `number`   | [Optional] Milestone index the update refers to         |
+| `content`     | `string`   | [**Required**] text content                             |
+| `labels`      | `string[]` | [Optional] Tags for filtering/search                    |
+| `attachments` | `string[]` | [Optional] List of media or file URLs (preferably IPFS) |
 
 
 ## Usage
@@ -82,23 +82,22 @@ string message;         // Inline content or off-chain URL
 
 ```json
 {
-  "propId": "0x20dce33aa50446e11ad5e97321f50e98c5d4fa41b0cfa87b5a525a6d1100fc4b",
-  "replyToUID": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "proposalId": "0x20dce33aa50446e11ad5e97321f50e98c5d4fa41b0cfa87b5a525a6d1100fc4b",
+  "originalMessageId": "0x0000000000000000000000000000000000000000000000000000000000000000",
   "messageType": 1,
   "message": "{\"milestoneId\":1,\"content\":\"Milestone 1 complete. All Figma wireframes uploaded.\",\"labels\":[\"figma\",\"ux\"],\"attachments\":[\"ipfs://bafybeihpky3lq4m/demo.mp4\"]}"
 }
 ```
+### Workflow for Non-UI Propdates
 
-### Workflow for non-UI Propdates
-
-1. **Create attestation**  
-   A wallet with authority can submit an attestation directly through [EAS](https://base.easscan.org/) using the schema UID.
+1. **Create an attestation**  
+   Any wallet can submit an attestation directly through [EAS](https://base.easscan.org/) using the Schema UID, and recipient as the DAO's Treasury address.
 
 2. **Fetch and display attestations**  
-   Fetch the schema on the relevant network using EAS Scan and the Schema UID. Connect your wallet and post an update.
+   Use EAS Scan to fetch the schema on the relevant network using the Schema UID. Connect your wallet to post an update.
 
-3. **Propdates versus release requests
-   Release request must be made indepentently of updates and comments, using the `Release Milestone` functionality, as described in the [Nouns Builder Escrow Proposal Guide](./guides/builder-escrow-proposal.mdx)
+3. **Propdates vs. Release Requests**  
+   Release requests must be made separately from updates and comments, using the `Release Milestone` feature, as outlined in the [Nouns Builder Escrow Proposal Guide](./guides/builder-escrow-proposal.mdx).
 
 ### Usage in Nouns Builder Frontend
 
