@@ -47,8 +47,8 @@ The schema with the UID `0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1ceca
 ### Schema Structure
 
 ```solidity
-bytes32 propId;
-bytes32 replyToUID;
+bytes32 proposalId;
+bytes32 originalMessageId;
 uint8 messageType;      // 0: INLINE_TEXT, 1: INLINE_JSON, 2: URL_TEXT, 3: URL_JSON
 string message;         // Inline content or off-chain URL
 ```
@@ -57,7 +57,7 @@ string message;         // Inline content or off-chain URL
 
 | Field               | Type      | Description |
 |---------------------|-----------|-------------|
-| `propId`        | `bytes32` | Proposal ID (usually keccak256 of the proposal metadata or ID hash) |
+| `proposalId`        | `bytes32` | Proposal ID (usually keccak256 of the proposal metadata or ID hash) |
 | `originalMessageId` | `bytes32` | UID of another attestation being replied to. Use `0x0` for top-level comments. |
 | `messageType`       | `uint8`   | Specifies how to interpret `message`. See types below. |
 | `message`           | `string`  | Inline content (if `INLINE_*`) or a URL (e.g., IPFS) if `URL_*` |
