@@ -1,35 +1,56 @@
 ---
+sidebar:
+  order: 6
 title: Propdate EAS Schema
 ---
 
 ## Overview
 
-This schema defines how users of Nouns Builder can submit *Propdates* to DAO proposals, i.e. *updates*, *comments*, and *milestone-related actions* to proposals using the [Ethereum Attestation Service (EAS)](https://docs.attest.sh).
-All attestations using this schema are displayed under the **Propdates** section of the proposal UI.
-It supports Markdown, IPFS links, structured JSON, and threaded discussions via reply references. All attestations are displayed under the *Propdates* tab in the proposal view.
+This schema defines how users of Nouns Builder can submit *Propdates*, i.e., *updates*, *comments*, and *milestone-related actions*, to DAO proposals using the [Ethereum Attestation Service (EAS)](https://docs.attest.org).
+All attestations using this schema are displayed under the **Propdates** section of the proposal UI. It supports Markdown, IPFS links, structured JSON, and threaded discussions via reply references.
+
+## Sequence Diagram
+
+![EAS Attestaion Flow](./public/guides/propdateGuide/attestation-flow.png)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant DAO Frontend
+    participant Ethereum Attestation Service (EAS)
+    participant Blockchain
+
+    User->>DAO Frontend: Compose Propdate update
+    DAO Frontend->>User: Prompt to sign transaction
+    User->>Blockchain: Sign and submit Propdate attestation
+    Blockchain->>EAS: Store attestation
+    DAO Frontend->>EAS: Fetch Propdates for proposal/activity feed
+    EAS->>DAO Frontend: Return Propdate data
+    DAO Frontend->>User: Display Propdates (filtered by member/all)
+```
 
 ## Schema Specification
 
-The schema with the UID `0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3` enables Nouns Builder Propdates. It is deployed on-chain on all networks supported by Nouns Builder, consisting of mandatory and optional fields. The payload displayed on the frontend is wrapped in `message`, which MAY contain a *JSON* string.
+The schema with the UID `0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3` enables Nouns Builder Propdates. It is deployed on-chain on all networks supported by Nouns Builder, **except ZORA** consisting of mandatory and optional fields. The payload dispalyed on the frontend is wrapped in `message`, which MAY contain a *JSON* string.
 
 ### Deployed Schemas
 
 - [Base](https://base.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
-- [Zora](),
+- **EAS, hence Nouns Builder Propdates are not available on Zora Mainnet.**
 - [OP Mainnet](https://optimism.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
 - [Ethereum Mainnet](https://easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
 - [Base Sepolia](https://base-sepolia.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
 - [OP Sepolia](https://optimism-sepolia.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
-- [Zora Sepolia](),
+- **EAS, hence Nouns Builder Propdates are not available on Zora Sepolia.**
 - [Ethereum Sepolia](https://sepolia.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3)
 
 ### Schema Structure
 
-```
-bytes32 proposalId;
-bytes32 originalMessageId;
-uint8 messageType;  // 0: INLINE_TEXT, 1: INLINE_JSON, 2: URL_TEXT, 3: URL_JSON
-string message;     // Inline content or off-chain URL
+```solidity
+bytes32 propId;
+bytes32 replyToUID;
+uint8 messageType;      // 0: INLINE_TEXT, 1: INLINE_JSON, 2: URL_TEXT, 3: URL_JSON
+string message;         // Inline content or off-chain URL
 ```
 
 ### Field Breakdown
@@ -90,19 +111,19 @@ string message;     // Inline content or off-chain URL
 ```
 ### Workflow for Non-UI Propdates
 
-1. **Create an attestation**  
-   Any wallet can submit an attestation directly through [EAS](https://base.easscan.org/) using the Schema UID, and recipient as the DAO's Treasury address.
+1. **Create attestation**  
+    A wallet with authority can submit an attestation directly through [EAS](https://base.easscan.org/) using the schema UID.
 
 2. **Fetch and display attestations**  
-   Use EAS Scan to fetch the schema on the relevant network using the Schema UID. Connect your wallet to post an update.
+    Fetch the schema on the relevant network using EAS Scan and the Schema UID. Connect your wallet and post an update.
 
-3. **Propdates vs. Release Requests**  
-   Release requests must be made separately from updates and comments, using the `Release Milestone` feature, as outlined in the [Nouns Builder Escrow Proposal Guide](./guides/builder-escrow-proposal.mdx).
+3. **Propdates versus release requests
+    Release request must be made independently of updates and comments, using the `Release Milestone` functionality, as described in the [Nouns Builder Escrow Proposal Guide](../guides/builder-escrow-proposal.mdx)
 
 ### Usage in Nouns Builder Frontend
 
 - Appears in **Propdates** tab on proposal page.
-- Posts by DAO members are shown by default but anyone can:
+- Posts by DAO members are shown by default, but anyone can:
   - Post progress updates
   - Comment on milestones
   - Start threaded conversations
@@ -111,5 +132,5 @@ string message;     // Inline content or off-chain URL
 
 Only attestations from DAO members are displayed under **Propdates** by default, but users can select **All Propdates** to see non-member comments.
 
-The attestation schema can be deployed to additional networks using the same schema by anyone.
+The attestation schema can be deployed to additional networks using the same UID by anyone.
 
