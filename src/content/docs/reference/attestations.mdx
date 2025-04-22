@@ -31,17 +31,17 @@ sequenceDiagram
 
 ## Schema Specification
 
-The schema with the UID `0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3` enables Nouns Builder Propdates. It is deployed on-chain on all networks supported by Nouns Builder, **except ZORA** consisting of mandatory and optional fields. The payload dispalyed on the frontend is wrapped in `message`, which MAY contain a *JSON* string.
+The schema with the UID `0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3` enables Nouns Builder Propdates. It is deployed on-chain on all networks supported by Nouns Builder **except Zora**. The schema consists of mandatory and optional fields. The payload displayed on the frontend is wrapped in a `message` field, which MAY contain a *JSON* string.
 
 ### Deployed Schemas
 
 - [Base](https://base.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
-- **EAS, hence Nouns Builder Propdates are not available on Zora Mainnet.**
+- Zora Mainnet **(not supported)**
 - [OP Mainnet](https://optimism.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
 - [Ethereum Mainnet](https://easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
 - [Base Sepolia](https://base-sepolia.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
 - [OP Sepolia](https://optimism-sepolia.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
-- **EAS, hence Nouns Builder Propdates are not available on Zora Sepolia.**
+- Zora Sepolia **(not supported)**
 - [Ethereum Sepolia](https://sepolia.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3)
 
 ### Schema Structure
@@ -57,7 +57,7 @@ string message;         // Inline content or off-chain URL
 
 | Field               | Type      | Description |
 |---------------------|-----------|-------------|
-| `proposalId`        | `bytes32` | Proposal ID (usually keccak256 of the proposal metadata or ID hash) |
+| `propId`        | `bytes32` | Proposal ID (usually keccak256 of the proposal metadata or ID hash) |
 | `originalMessageId` | `bytes32` | UID of another attestation being replied to. Use `0x0` for top-level comments. |
 | `messageType`       | `uint8`   | Specifies how to interpret `message`. See types below. |
 | `message`           | `string`  | Inline content (if `INLINE_*`) or a URL (e.g., IPFS) if `URL_*` |
@@ -117,12 +117,12 @@ string message;         // Inline content or off-chain URL
 2. **Fetch and display attestations**  
     Fetch the schema on the relevant network using EAS Scan and the Schema UID. Connect your wallet and post an update.
 
-3. **Propdates versus release requests
+3. **Propdates versus release requests**
     Release request must be made independently of updates and comments, using the `Release Milestone` functionality, as described in the [Nouns Builder Escrow Proposal Guide](../guides/builder-escrow-proposal.mdx)
 
 ### Usage in Nouns Builder Frontend
 
-- Appears in **Propdates** tab on proposal page.
+- Appears in the **Propdates** tab on the proposal page.
 - Posts by DAO members are shown by default, but anyone can:
   - Post progress updates
   - Comment on milestones
