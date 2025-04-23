@@ -88,9 +88,9 @@ Delegation streamlines milestone management by allowing DAOs to assign fund rele
 
 Attestations can be made by the following entities in this order of priority
 
-1. **Builder DAO Governor (`0x6623d2a90429475ed9c8a4b613c4b5b4f8428cee`)**
+1. **Builder DAO Treasury (`0xcf325a4c78912216249b818521b0798a0f904c10`)**
 2. **Builder DAO Operations Multisig (`0x58eAEfBEd9EEFbC564E302D0AfAE0B113E42eAb3`)**
-3. **Smart Invoice Multisig (`0x503a5161D1c5D9d82BF35a4c80DA0C3Ad72d9244`)**
+3. **Smart Invoice Multisig (`0xD609883e5eb442d364Aa57369224bE839A38C6f9`)**
 
 ### How Attestations Use EAS (Ethereum Attestation Service)
 
@@ -103,7 +103,7 @@ This separate attestation flow ensures that all delegations are securely recorde
 
 #### Attestation Usage
 1. The attestation **MUST** be done on same chain as where dao exists.
-2. The schema only has `daoMultisig` address, which is the delegated address. The recipient **MUST** be the treasury address of the DAO.
+2. The schema only has `daoMultisig` address, which is the delegated address. The recipient **MUST** be the DAO token address.
 
 ---
 ## Further Reading
