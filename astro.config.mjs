@@ -13,17 +13,25 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Nouns Builder",
-      social: {
-        github: "https://github.com/ourzora/nouns-builder",
-      },
+      social: [
+        { icon: 'farcaster', label: 'Farcaster', href: 'https://farcaster.xyz/~/channel/builder' },
+				{ icon: 'x.com', label: 'X.COM', href: 'https://x.com/nounsbuilder' },
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/BuilderOSS' },
+        { icon: 'discord', label: 'Discord', href: 'https://discord.gg/f845eBCyyb' },
+        { icon: 'laptop', label: 'App', href: 'https://nouns.build/' },
+      ],
       sidebar: [
         {
-          label: "Guides",
+          label: "Getting Started",
+          autogenerate: { directory: "onboarding" },
+        },
+        {
+          label: "User Guide",
           autogenerate: { directory: "guides" },
         },
         {
-          label: "Reference",
-          autogenerate: { directory: "reference" },
+          label: "Contributor Guide",
+          autogenerate: { directory: "contributors" },
         },
       ],
     }),

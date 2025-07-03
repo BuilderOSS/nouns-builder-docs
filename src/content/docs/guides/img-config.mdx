@@ -1,15 +1,10 @@
 ---
-
 sidebar:
-  order: 2
-
+  order: 6
 title: Image Configuration
 ---
 
-
-
-##### Configuring the NFTs Images
----
+# Configuring the NFTs Images
 
 Every time an auction is started a new NFT image is randomly generated.
 These properties are first set when the DAO is created by providing a folder of artwork layers.
@@ -17,13 +12,17 @@ Note, that the properties for the DAO NFTs are stored in a single folder on IPFS
 
 Check out the [Example Artwork Toolkit](https://www.figma.com/community/file/1166768320345172833) to learn more about formatting the art for the DAO NFTs.
 
-### Image Requirements
+## Image Requirements
 - Maximum of 500 files
 - PNG and SVG are the only supported file types
 - 600px x 600px minimum for PNGs and 32px minimum for SVGs
 - Images must be square
 
-### Properties vs Items
+:::caution
+Currently no maximum image size is set on the frontend, which is **subject to change**.
+:::
+
+## Properties vs Items
 - `Properties:` Categories of different traits for the DAO NFTs 
 - `Items:` Distinct images that make up a property
 
@@ -31,7 +30,7 @@ Check out the [Example Artwork Toolkit](https://www.figma.com/community/file/116
 
 <br/> 
 
-### Seed Generation
+## Seed Generation
 The seed is used to create a random combination of properties for the DAO NFTs.
 It is generated in the [Metadata Render Contract](https://github.com/ourzora/nouns-protocol/blob/main/src/token/metadata/MetadataRenderer.sol#L279) by calling `_generateSeed` with the current tokenId and salting the hash with block data.
 
@@ -41,7 +40,7 @@ function _generateSeed(uint256 _tokenId) private view returns (uint256) {
 }
 ```
 
-### Adding Properties
+## Adding Properties
 Once the properties have been uploaded to IPFS they then need to be added to the metadata render by calling `addProperties`.
 ```
 /// @notice Adds properties and/or items to be pseudo-randomly chosen from during token minting

@@ -1,28 +1,27 @@
 ---
-title: Welcome To Nouns Builder 
+title: Nouns Builder Docs
+description: Nouns builder allows anyone to easily deploy a DAO in minutes
 template: splash
 hero:
+  tagline: This is a place for users and builders to learn about the Nouns Builder that makes it easy for communities and collectives to create Nounish DAOs.
   image:
-    file: ../../assets/images/splash.svg
+    file: ../../assets/images/builder-front.svg
   actions:
     - text: Get Started 
-      link: /reference/intro/
+      link: /onboarding/intro_onboarding/
       icon: right-arrow
       variant: primary
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { LinkCard, Card, CardGrid } from '@astrojs/starlight/components';
 
-
+## Deploy a DAO in minutes with Nouns Builder!
 
 <CardGrid>
-	<Card title="Create Your DAO" icon="pencil">
-	
-		Nouns builder allows anyone to easily deploy a DAO in minutes
-
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-
- </CardGrid>
+	<LinkCard title="For Newcomers" href="../guides/intro_user">
+	</LinkCard>
+	<LinkCard title="User Guides" href="../onboarding/intro_onboarding">
+	</LinkCard>
+  <LinkCard title="Contributor Guides" href="../contributors/intro_contributors">
+	</LinkCard>
+</CardGrid>

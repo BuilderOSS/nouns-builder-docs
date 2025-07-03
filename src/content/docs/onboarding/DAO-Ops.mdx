@@ -1,0 +1,170 @@
+---
+sidebar:
+  order: 7
+title: DAO Operations and Tools
+---
+
+
+Builder DAOs thrive on active coordination, transparent execution, and engaged community participation. This section covers the core operational tools and workflows needed to run your DAO smoothly—from daily tasks to analytics and off-chain collaboration.
+
+---
+
+## 🛠️ Daily Operations
+
+### Moderation, Bot Management, and Announcement Workflows
+
+Keeping your DAO organized and safe begins with clear communication and consistent moderation.
+
+**Moderation tasks:**
+
+- Maintain Discord and Warpcast channels for civil, on-topic discussion.
+- Assign roles (e.g. voter, contributor, core team) with specific permissions.
+- Enforce community guidelines and escalate disputes if needed.
+
+**Bot management:**
+
+- Use bots like **Gnosis Safe Notifier**, **DAO Activity Pings**, or **Builder Voting Alerts** to automate proposal and auction updates.
+- Integrate **Propdate** or **Warpcast Bots** for governance notifications.
+
+**Announcements:**
+
+- Pin important updates in Discord or Warpcast.
+- Use recurring governance digests to summarize activity and drive participation.
+
+[INSERT IMAGE: Discord server layout with roles, bots, and announcements]
+
+---
+
+### Handling Auctions, Votes, and Proposals
+
+Most Builder DAOs run a 24-hour auction cycle for minting new governance tokens. Here's how to manage and monitor auction-related governance tasks:
+
+**Auctions**
+
+- Track auction start/end times on [nouns.build](https://nouns.build/).
+- Share current auction links and encourage bidding.
+- Announce winners and welcome new token holders.
+
+**Votes & Proposals**
+
+- Guide members through the proposal lifecycle: draft → discussion → onchain submission → vote → execution.
+- Use templates to standardize proposals and help contributors stay consistent.
+
+---
+
+## 🧾 Multisig Management
+
+### Setting Up Gnosis Safe and Transaction Workflows
+
+For offchain assets (like USDC or grants), use a **Gnosis Safe** multisig to hold and manage funds securely.
+
+**Setup steps:**
+
+1. Go to [gnosis-safe.io](https://gnosis-safe.io/) and create a new safe.
+2. Add DAO signers (e.g. 3-of-5 core contributors).
+3. Fund the safe with treasury tokens or ETH.
+4. Create and execute transactions with signer approval.
+
+**Best practices:**
+
+- Rotate signers if roles change.
+- Keep the Safe address public and verifiable in DAO docs.
+
+---
+
+### Using Zodiac or Third-Party Tools for Off-Chain Voting
+
+Builder DAOs can extend governance via **Zodiac**, allowing offchain decisions to be executed onchain via Gnosis Safe modules.
+
+**Use Cases:**
+
+- Approve proposals via Snapshot and execute via Zodiac.
+- Allow subcommittees or working groups to manage smaller budgets.
+
+**Other tools:**
+
+- **SafeSnap** – Snapshot voting that triggers onchain actions via Gnosis Safe.
+- **Coordinape** or **Clarity** – For contributor compensation and voting-based allocations.
+
+---
+
+## 📊 Analytics & Reporting
+
+### Suggested KPIs for DAO Health
+
+Tracking the right metrics helps you understand what’s working and where support is needed.
+
+**Key DAO health indicators:**
+
+- Proposal submission rate
+- Proposal pass/fail ratio
+- Voting participation (active wallets / total supply)
+- Treasury inflows/outflows
+- Auction revenue per cycle
+- Community growth (Discord, Warpcast, email, etc.)
+
+Track these monthly to maintain transparency and inform strategy.
+
+
+---
+
+### Tools: Dune, Builder Explorer, and Custom Dashboards
+
+**Dune Analytics**
+
+- Prebuilt or custom SQL dashboards using indexed onchain data.
+- Great for visualizing auctions, treasury trends, and token distribution.
+
+**Nouns Builder**
+
+- Lightweight web interface to explore Builder DAOs, proposals, and auctions.
+- Useful for internal review or investor/stakeholder overviews.
+
+**Custom Dashboards**
+
+- Use the Builder SDK + Subgraph for tailored analytics tools.
+- Embed charts into Notion, Webflow, or community websites.
+
+---
+
+## 🤝 Community Coordination
+
+### Event Planning
+
+Hosting regular events keeps your community active and engaged.
+
+**Types of events:**
+
+- Weekly community calls (proposal previews, Q&A, show-and-tell)
+- Governance hackathons or bounties
+- DAO onboarding walkthroughs
+- IRL meetups or sponsored activations at crypto conferences
+
+**Planning tips:**
+
+- Assign a lead or team for coordination.
+- Use shared docs or Notion for logistics.
+- Publicize events across Discord, Warpcast, and Twitter.
+
+---
+
+### Grants and Bounties
+
+Builder DAOs often distribute funding through:
+
+- **Grants**: For larger projects aligned with DAO goals.
+- **Bounties**: Smaller, task-based rewards for quick contributions.
+
+**Workflow:**
+
+1. Draft grant/bounty scope
+2. Publish in Discord, Notion, or a Prop House round
+3. Evaluate submissions or applicants
+4. Distribute funds and report outcomes
+
+**Tools to explore:**
+
+- [Prop House](https://prop.house/)
+- [CharmVerse](https://charmverse.io/)
+- [Dework](https://dework.xyz/)
+

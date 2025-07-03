@@ -1,0 +1,161 @@
+---
+sidebar:
+  order: 5
+title: The Nouns.build Platform
+---
+
+The [nouns.build](http://nouns.build/) platform is the primary frontend interface for launching, discovering, and managing Builder DAOs. It abstracts complex smart contract interactions into a clean and user-friendly experience, allowing individuals and communities to create and participate in DAOs without needing to write code.
+
+---
+
+## Platform Overview
+
+### What It Does
+
+The platform serves as:
+
+- A **DAO launcher**: Create a fully onchain DAO in minutes.
+- A **management dashboard**: Interact with proposals, token auctions, and treasury funds.
+- A **discovery tool**: Browse and learn from other DAOs in the ecosystem.
+
+Everything that happens through the platform is executed onchain, making governance actions transparent and verifiable.
+
+---
+
+### Hosted vs. Self-Hosted Options
+
+There are two ways to interact with the protocol:
+
+### 1. **Hosted (via nouns.build)**
+
+- **Fast and convenient**: No deployment or server required.
+- **Managed frontend**: All the logic is handled for you.
+- **Recommended for most users**: Ideal for creators and communities launching their first DAO.
+
+### 2. **Self-Hosted**
+
+- **Customizable**: Modify branding, layout, or logic.
+- **Requires development skills**: You’ll need to fork the [open-source code](https://github.com/nounsDAO/nouns-builder) and deploy it yourself.
+- **Ideal for advanced teams**: Great for DAOs with specific design or integration needs.
+
+---
+
+## DAO Discovery & Profiles
+
+### How DAOs Appear and Are Categorized
+
+DAOs launched through the platform are publicly visible on the homepage and DAO index. They are typically sorted by:
+
+- **Launch date**
+- **Auction activity**
+- **Proposal volume**
+- **Treasury size**
+
+This allows users to explore and compare different DAOs across the Builder ecosystem.
+
+---
+
+### Profile Customization and Visibility
+
+Each DAO has its own profile page, featuring:
+
+- Token auctions
+- Proposal activity
+- Treasury overview
+- Governance settings
+
+DAOs can customize:
+
+- **Name and description**
+- **Banner image**
+- **Token artwork or visual logic (NFTs or static art)**
+
+These profiles act as a landing page for new members and voters.
+
+---
+
+## Feature Guide
+
+### Launch Flow Walkthrough
+
+Launching a DAO on nouns.build takes only a few steps:
+
+1. **Click “Launch a DAO”**
+2. **Enter basic details**: Name, symbol, auction settings, governance rules
+3. **Customize visuals**: Upload artwork or configure token rendering logic
+4. **Deploy**: Confirm the transaction in your wallet to launch
+
+Once deployed, your DAO will begin auctioning its first token and be publicly visible on the site.
+
+
+---
+
+### Proposal Management UI
+
+The proposal interface makes it easy to:
+
+- Draft and submit proposals
+- View voting timelines and quorum status
+- Cast onchain votes directly through your wallet
+- Track executed proposals
+
+Each proposal page includes a live status indicator and transaction history for transparency.
+
+![Proposal Status](/onboarding/knowledge_baseOnboarding/proposal-status.png)
+
+---
+
+### Auction Dashboard and Analytics
+
+Every DAO has a real-time auction dashboard where you can:
+
+- View current and past auctions
+- Place bids
+- See top bidders
+- Track token issuance history
+
+Some DAOs integrate analytics dashboards (e.g., Dune) to visualize treasury growth, proposal metrics, and community engagement.
+
+---
+
+## Limitations & FAQs
+
+### Known Issues and Feature Roadmap
+
+The nouns.build platform is rapidly evolving, but some current limitations include:
+
+- No built-in multisig or offchain voting options (requires integration)
+- Limited support for DAO-to-DAO relationships or delegation
+- Proposal templates are basic (no advanced formatting or attachments)
+
+Upcoming roadmap features may include:
+
+- Delegation and voting enhancements
+- Easier token art customization tools
+
+#### Confirmed Roadmap
+
+- **July 2025**:
+  - Finalise SDK, including utils and hooks ([#574](https://github.com/BuilderOSS/nouns-builder/issues/574), [#575](https://github.com/BuilderOSS/nouns-builder/issues/575))
+- **August 2025**:
+  - Add "User votes", "User proposals", and voting history to a new "Activity" tab on profile page ([#318](https://github.com/BuilderOSS/nouns-builder/issues/318))
+- **August–September 2025**:
+  - Enable payment streaming through proposals (e.g. Sablier, Superfluid) ([#463](https://github.com/BuilderOSS/nouns-builder/issues/463))
+- **TBD**:
+  - Community-led Nouns Site template ([Noun Site repo](https://github.com/BuilderOSS/noun-site))
+
+:::tip
+**Community Product Prioritisation Sessions** are held at least every two months, where you can advocate for your favourit feature to make it onto the short-term roadmap.
+:::
+
+### What Requires Direct Smart Contract Interaction
+
+While most actions can be done via the UI, some advanced tasks may require interacting directly with smart contracts:
+
+- Upgrading governance logic
+- Adding custom proposal logic/hooks
+- Migrating treasury assets across protocols
+- Advanced rendering configuration
+
+Developers can use tools like Etherscan, Hardhat, or the Builder SDK for deeper control.
+

@@ -1,4 +1,6 @@
 ---
+sidebar:
+  order: 8
 id: builder-escrow-proposal
 title: How to Create an Escrow Proposal
 ---
@@ -80,6 +82,14 @@ Milestones can be released using the "Release Milestone" button. This action mov
 
 ![Milestone Release Flow](/guides/escrowGuide/release_milestone.gif)
 
+:::tip[Conditional UI]
+Depending on the release authority (delegate vs. DAO) you will only be shown the release button if you are logged in with the appropriate wallet.
+
+Once you click `Release` with a multisig as delegate, you will be redirected to the Safe frontend, where you must **whitelist [smartinvoice.xyz](https://smartinvoice.xyz) as a Safe App**.
+
+For further documentation on the release flow, please visit the [SmartInvoice Docs](https://www.smartinvoice.xyz/tutorials/client/release-escrow-funds-inside-milestone).
+:::
+
 ---
 
 ## Delegating Release Authority
@@ -92,6 +102,12 @@ Attestations can be made by the following entities in this order of priority:
 2. **Builder DAO Treasury (`0xcf325a4c78912216249b818521b0798a0f904c10`)**
 3. **Builder DAO Operations Multisig (`0x58eAEfBEd9EEFbC564E302D0AfAE0B113E42eAb3`)**
 4. **Smart Invoice Multisig (`0xD609883e5eb442d364Aa57369224bE839A38C6f9`)**
+
+:::tip[Use Nouns Builder Proposals for Delegation]
+You can now use a proposal template on Nouns Builder to nominate a delegate for releasing escrowed milestones.
+:::
+
+![Delegation](/guides/escrowGuide/nominate-proposal.png)
 
 ### How Attestations Use EAS (Ethereum Attestation Service)
 
