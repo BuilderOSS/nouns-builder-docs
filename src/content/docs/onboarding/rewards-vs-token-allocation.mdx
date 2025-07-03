@@ -1,0 +1,65 @@
+---
+sidebar:
+  order: 5
+id: reward-splits
+title: "Reward Split & Token Allocation"
+description: "Clarifies the difference between protocol reward distribution and configurable token allocations in Nouns Builder."
+---
+
+#### Understanding the difference between Reward Splits vs. Token Allocations
+
+When deploying a DAO with Nouns Builder, there are two distinct settings that govern how funds and tokens are distributed. These are often confused but are technically and operationally separate.
+
+This guide explains the key differences between **protocol-level auction reward splits** and **configurable token allocations**, and provides instructions for withdrawing funds from the Rewards contract.
+
+---
+
+## 1. Auction Rewards (Protocol-Level Split)
+
+When a DAO is deployed, a fixed portion of auction proceeds is routed to a designated **Rewards Recipient**. This address is set at deployment and **cannot be changed later**. It is part of the protocol logic.
+
+These rewards accumulate in the Builder Protocol Rewards contract and must be claimed manually.
+
+### Claiming Protocol Rewards
+
+To withdraw funds:
+
+1. Go to the [Rewards Contract on BaseScan](https://basescan.org/address/0x7777777F279eba3d3Ad8F4E708545291A6fDBA8B#writeContract)
+2. Connect your wallet via "Connect to Web3"
+3. Navigate to the `Write Contract` tab
+4. Use function `#5 withdrawFor(address recipient, uint256 amount)`
+5. For `recipient`, input the DAO’s reward address (typically your treasury or multisig)  
+   - **Example only:** `0x894F30da29216516b5aE85207dED77038C107f22` (used by nouns.build — do not use this for your DAO)
+6. For `amount`, input `0` — this will sweep the full balance owed.
+
+:::tip[Note:]
+This interface and documentation will be integrated into the app UI (see [#513](https://github.com/BuilderOSS/nouns-builder/issues/513)) and [deployment guide](https://builder-docs.vercel.app/guides/builder-deployment/#allocations) will be updated accordingly.
+:::
+
+## 2. Token Allocations (Configurable)
+
+Token Allocations allow a DAO to automatically allocate a percentage of newly minted NFTs to one or more addresses. This setting **can be configured or updated via the Admin tab** in the app UI.
+
+These allocations are not related to the ETH collected from auctions. Instead, they govern who receives minted NFTs and in what proportion.
+
+![Token Allocation in Admin UI](./public/guides/onboardingGuide/founder-allocation.png)
+
+### Common Use Cases
+
+- Allocating tokens to contributors
+- Reserving a percentage for community treasury
+- Routing mints to sub-DAOs or partnerships
+
+---
+
+## Summary
+
+| Feature               | Auction Rewards                         | Token Allocations                           |
+|----------------------|------------------------------------------|---------------------------------------------|
+| Funds or Tokens?     | ETH from auction proceeds                | ERC-721 NFTs                                |
+| Configurable?        | No (hardcoded at DAO deployment)         | Yes (configurable via UI)                   |
+| Purpose              | Sends ETH to reward address              | Sends NFTs to allocation addresses          |
+| Where to Manage      | [BaseScan Contract UI](https://basescan.org/address/0x7777777F279eba3d3Ad8F4E708545291A6fDBA8B#writeContract) | Admin tab in nouns.build UI                 |
+
+
+

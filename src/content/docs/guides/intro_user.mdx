@@ -1,25 +1,25 @@
 ---
 sidebar:
   order: 1
-title: Introduction
+title: User Guide Overview
 ---
 
-##### Build your own DAO 
+# Build your own DAO 
 
 ---
 
 Nouns builder allows anyone to easily deploy a DAO in minutes. 
 Inspired by [NounsDAO](https://nouns.center/intro), Nouns builder uses a factory contract called the Manager to create custom Nouns-styled DAOs.
 
-### Important Links
-[Code](https://github.com/ourzora/nouns-protocol) | [Addresses](https://github.com/ourzora/nouns-protocol/blob/main/deploys/1.txt) | [Interface](https://nouns.build/) | 
+## Important Links
+[Code](https://github.com/orgs/BuilderOSS/) | [Addresses](https://github.com/ourzora/nouns-protocol/blob/main/deploys/1.txt) | [Interface](https://nouns.build/) | 
 [Testnet Interface](https://testnet.nouns.build) | [Deploy Guide](../../guides/builder-deployment) | [Artwork Toolkit](https://www.figma.com/community/file/1166768320345172833)
 
 ![guide image](../../../assets/images/managerContractUpdated.png)
 
 <br/>
 
-#### Why Nouns styled DAOs are interesting
+## Why Nouns styled DAOs are interesting
 - `Distribution Mechanism:` Creating an NFT at a consistent interval allows the community to form at a healthy rate rather than distributing governance via an airdrop.
 - `Composable and Upgradable:` All contracts are individually upgradable meaning the DAO is not a static thing, but rather something that is meant to evolve over time.
 - `Perpetual Funding:` The DAO creates sustainable funding by consistently issuing new NFTs over time.
@@ -30,7 +30,7 @@ Inspired by [NounsDAO](https://nouns.center/intro), Nouns builder uses a factory
 Definitions for the key contracts that make up Builder. 
 - `Manager:` In charge of deploying custom DAOs
 
-DAO Components: 
+### DAO Components
 - `Token:` ERC-721 NFT contract which has its minting controlled by the Auction contract
 - `Metadata Renderer:` On-chain metadata renderer for the NFTs
 - `Auction:` Mints new NFTs and auctions them off
@@ -54,5 +54,9 @@ For example, if the Proposal Threshold is set to 100 BPS and there are 500 total
 - `NFT Image Properties:` Image components used for creating the NFTs
 - `Founders and Allocations:` Set multiple founders with different allocations
 
-Note, veto power is encouraged due to the small number of votes (NFTs) at the beginning of a DAO.
+<br/>
+
+:::tip[Note]
+Veto power is encouraged due to the small number of votes (NFTs) at the beginning of a DAO.
 The veto can later before removed by the founders once the NFTs have become sufficiently decentralized.
+:::
