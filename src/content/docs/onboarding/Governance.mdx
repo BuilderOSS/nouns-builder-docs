@@ -1,0 +1,125 @@
+---
+sidebar:
+  order: 6
+title: Governance
+---
+
+Governance is the process through which Builder DAOs make decisions, allocate funds, and evolve over time. The Builder Protocol enables fully onchain, transparent governance where token holders can create, vote on, and execute proposals. This section explains how proposals work, how voting power is calculated, and the tools and practices that support effective DAO governance.
+
+---
+
+## 🗳️ Proposal Lifecycle
+
+### Creating, Voting On, and Executing Proposals
+
+Governance proposals allow DAO members to make decisions about how the DAO operates or spends treasury funds.
+
+**The standard lifecycle:**
+
+1. **Proposal Creation**
+    - A member with the required number of tokens (proposal threshold) submits a proposal.
+    - Proposals include a title, description, and one or more onchain actions (e.g., sending ETH, calling a contract).
+    - After creation, the proposal enters the *voting delay* period.
+2. **Voting Period**
+    - Once active, DAO members can vote **FOR**, **AGAINST**, or **ABSTAIN** using their tokens.
+    - Voting is open for a set period (e.g., 2–5 days), as configured during DAO setup.
+3. **Execution**
+    - If the proposal reaches quorum and has a majority of **FOR** votes, it becomes queueable.
+    - Any user can then trigger the execution after a 48 hour delay, which carries out the proposed onchain actions.
+
+
+---
+
+## 🧮 Voting Power
+
+### How Voting is Calculated
+
+Voting power in Builder DAOs is typically based on the number of governance tokens a member holds at the time a proposal is created.
+
+- **Snapshot Voting**
+    
+    The system takes a snapshot of token balances at proposal start to determine eligible voters and their weight.
+    
+- **One Token = One Vote**
+    
+    Each token counts as one vote. In DAOs using NFTs, this might mean 1 NFT = 1 vote. In DAOs using ERC-20s, the weight is proportional to your token balance.
+    
+
+This prevents manipulation by acquiring tokens after a proposal has already begun.
+
+
+---
+
+### Delegation
+
+Token holders who don’t want to vote on every proposal can **delegate** their voting power to another address.
+
+**Benefits of delegation:**
+
+- Enables active contributors to represent passive holders
+- Makes governance more efficient
+- Reduces voter apathy and improves quorum rates
+
+**How to delegate:**
+
+1. Go to the DAO's governance interface
+2. Choose a delegate address.
+3. Confirm the transaction via your wallet.
+
+![Delegation](./public/onboarding/knowledge_baseOnboarding/delegation.png)
+
+---
+
+## 🧠 Governance Best Practices
+
+### Proposal Formatting
+
+Well-structured proposals lead to more thoughtful discussion and greater chances of passing.
+
+**Suggested format:**
+
+- **Title:** Clear and concise
+- **Summary:** One-sentence overview of the proposal
+- **Context/Background:** Why this proposal matters
+- **Execution Details:** What exactly will happen if the proposal passes
+- **Budget (if applicable):** Requested amount, recipient, and use of funds
+
+Use plain language, break up text into sections, and include links or diagrams when helpful. A good proposal can be found [here](https://nouns.build/dao/base/0xe8af882f2f5c79580230710ac0e2344070099432/vote/43).
+
+---
+
+### Managing Community Engagement
+
+Governance isn’t just technical—it’s social.
+
+**Tips for encouraging participation:**
+
+- Share proposals early in community forums (e.g., Discord, Warpcast)
+- Host proposal Q&A or discussion calls
+- Recap passed proposals and share updates post-execution
+- Encourage respectful disagreement and open dialogue
+
+A healthy governance culture is built on transparency, inclusion, and consistent communication.
+
+---
+
+## 🛠️ Governance Tools
+
+### Builder Voting, or Custom Interfaces
+
+Builder DAOs can use a variety of interfaces to manage and interact with governance proposals:
+
+### **1. Voting through Nouns.build**
+
+- Minimal and fast
+- Built directly into [nouns.build](http://nouns.build/)
+- Great for DAOs that want a simple, no-frills solution
+
+
+### 2. **Custom Interfaces**
+
+- DAOs can fork and customize their own governance UIs
+- Useful for projects with unique branding or voting logic
+- Requires frontend development experience
+
+Choose the tool that best fits your community’s needs and technical capacity.

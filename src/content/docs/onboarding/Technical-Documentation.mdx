@@ -1,0 +1,136 @@
+---
+sidebar:
+  order: 8
+title: Technical Documentation
+---
+
+This section provides a deep dive into the technical foundation of Builder DAOs, including smart contract architecture, developer tools, and supported infrastructure. Whether you're customizing your DAO, integrating it with other applications, or simply learning how it works under the hood, this guide will help you get started.
+
+:::tip[For Developers]
+If you want to get an in depth technical perspective, please head to the [Contributor Guide](/contributors/intro_contributors.mdx).
+:::
+
+## 🔗 Smart Contract Reference
+
+### Core Contracts and Interfaces
+
+The Nouns Builder Protocol is made up of modular, upgradeable contracts designed to work together to create and manage fully onchain DAOs.
+
+**Key contracts:**
+
+- `Auction`: Handles token auctions, bidding logic, and minting of new governance tokens.
+- `Token`: ERC-721 (NFT) or ERC-20 (fungible) token contract representing DAO membership and voting power.
+- `Governor`: Manages proposals, voting logic, and execution of onchain actions.
+- `Treasury`: Holds ETH or other native tokens for the DAO and executes approved spending.
+- `Metadata Renderer`: Controls how token metadata is rendered (e.g., static art, generative logic).
+
+**Standard interfaces include:**
+
+- `IAuction`
+- `IGovernor`
+- `IToken`
+- `IMetadataRenderer`
+
+These follow common patterns established by Nouns DAO and OpenZeppelin standards for interoperability.
+
+---
+
+### Upgrade Paths and Governance Hooks
+
+The protocol is **upgradeable** using proxy contracts (via OpenZeppelin’s UUPS or Transparent proxies), allowing Builder DAOs to evolve over time.
+
+**Upgrade mechanics:**
+
+- Proposals can include contract upgrades by specifying new implementation addresses.
+- DAOs must hold sufficient voting power and pass the proposal onchain.
+- Upgrades affect logic contracts but preserve storage and state via the proxy.
+
+**Governance hooks** are extension points for advanced functionality:
+
+- Proposal execution hooks
+- Auction settlement hooks
+- Metadata customization and trait updates
+
+These allow power users to inject custom logic or bridge to external contracts.
+
+
+## 📊 Subgraph and APIs
+
+### Using the Builder Subgraph
+
+The protocol provides a [GraphQL subgraph](https://thegraph.com/) that indexes onchain events such as:
+
+- New auctions
+- Proposal lifecycle events
+- Treasury transfers
+- Token mints
+
+**Example query: Fetch latest auctions**
+
+```graphql
+graphql
+CopyEdit
+{
+  auctions(first: 5, orderBy: startTime, orderDirection: desc) {
+    id
+    startTime
+    endTime
+    highestBid
+  }
+}
+
+```
+
+### REST and GraphQL APIs Available
+
+While the subgraph is the primary source of indexed data, DAOs and developers can also use:
+
+- **Builder REST API** (coming soon): Useful for integration with low-code platforms and mobile apps.
+- **GraphQL API**: Preferred for web interfaces and data dashboards.
+- **Onchain reads**: For real-time, trustless data via JSON-RPC (e.g., `eth_call`).
+
+---
+
+## 🚀 Deployment Details
+
+### Supported Chains
+
+Builder DAOs can be deployed on any EVM-compatible chain. Official support currently includes:
+
+- **Ethereum Mainnet**
+- **Optimism**
+- **Base**
+- **Arbitrum One**
+- **Zora Network**
+
+**Testnets:**
+
+- Optimism Goerli
+- Base Sepolia
+
+Chain selection affects gas costs, UX, and community reach. Most DAOs currently launch on low-cost L2s like Base or Optimism.
+
+[INSERT IMAGE: Table showing chain names, explorer links, and deployment stats]
+
+---
+
+### Gas and Cost Considerations
+
+**Key cost components:**
+
+- **DAO Deployment**: ~0.1–0.2 ETH (varies by chain)
+- **Auction Bids**: Transaction fees per bid and settlement
+- **Proposal Actions**: Voting and execution transactions
+- **Metadata Rendering**: If using generative or dynamic logic
+
+**Tips to save gas:**
+
+- Launch on a Layer 2 like Base
+- Use static metadata rendering
+- Minimize external calls in proposals
+
+
+### Next →
+
+[DAO Operations and Tools](DAO%20Operations%20and%20Tools%20216e03c2c451812ca80bf0dc64b4e19a.md)
+
