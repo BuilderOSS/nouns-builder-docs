@@ -23,7 +23,7 @@ The NFT contracts created from the `ZoraNFTCreator` are known as an `ERC721Drop`
 
 Every time an NFT is minted and sold using these contracts 5% of the primary sale amount will be reserved by the Zora DAO. Nothing is taken on secondary sales.
 
-View the list of deployed contract addresses [here](#) and view the contract source code [here](#)
+View the list of deployed contract addresses and contract source code on the Zora documentation (archived).
 
 - `Edition`: A collection where all the NFTs share the same media asset.  
 - `Drop`: A collection where all the NFTs have individual pieces of media.
@@ -44,7 +44,7 @@ The sales configuration is set when the contract is created. The config holds th
 
 Note that `presaleMerkleRoot` can be set to `0x0000000000000000000000000000000000000000000000000000000000000000` if there are no plans for allow list minting. Current values can be viewed by calling `salesConfig` on the contract and it can be updated by calling `setSalesConfig` with the new parameters.
 
-Learn more about creating an allow list [here.](#)
+Learn more about creating an allow list in the Zora documentation (archived).
 
 ```solidity
 function setSaleConfiguration(
@@ -107,7 +107,7 @@ function mintWithRewards(
 
 ### purchasePresaleWithRewards
 
-A private sale function for allowlist minting that requires a merkle proof. Check out the section [here](#) for creating an allowlist.
+A private sale function for allowlist minting that requires a merkle proof. Check out the Zora documentation for creating an allowlist.
 
 ```solidity
 function purchasePresaleWithRewards(
@@ -214,10 +214,10 @@ A Merkle root allows a large data set to be condensed and expressed in a small p
 
 Here is both an interface and source code that makes it easy to generate a Merkle root and proofs for allowlist minting:
 
-* [Generator Interface](#)
-* [Lanyard Tool](#)
+* Generator Interface
+* Lanyard Tool
 
-It is possible to upload an allowlist using the manage interface on the create website and then access the list of proofs from the [API here](#).
+It is possible to upload an allowlist using the manage interface on the create website and then access the list of proofs from the API.
 
 ## Updating Contract Info on OpenSea
 
@@ -225,7 +225,7 @@ Once the contract is deployed, the address that is set as the owner will need to
 
 ## Upgrading the Contract
 
-Once deployed it is possible to upgrade the NFT contract to have new functionality. Note, that upgrade options are only the ones that are in the [Zora registry](#). All upgrades are opt‑in and can only be initiated by a default admin.
+Once deployed it is possible to upgrade the NFT contract to have new functionality. Note, that upgrade options are only the ones that are in the Zora registry. All upgrades are opt‑in and can only be initiated by a default admin.
 
 `upgradeTo` allows the NFT contract to upgrade to a new implementation contract to make delegate calls.
 
