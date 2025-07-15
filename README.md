@@ -1,40 +1,39 @@
-# Starlight Starter Kit: Basics
+# Nouns Builder Documentation
 
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
-```
-npm create astro@latest -- --template starlight
-```
+Official documentation for [Nouns Builder](https://nouns.build/), a protocol for creating and managing Nouns-style DAOs.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/starlight/tree/main/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/starlight/tree/main/examples/basics)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwithastro%2Fstarlight%2Ftree%2Fmain%2Fexamples%2Fbasics&project-name=my-starlight-docs&repository-name=my-starlight-docs)
+## Links
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- 🌐 [Live Site](https://builder-docs.vercel.app)
+- 🏗️ [Nouns Builder App](https://nouns.build/)
+- 🐙 [GitHub](https://github.com/BuilderOSS)
+- 💬 [Discord](https://discord.gg/bTygNksyRb)
+- 🟣 [Farcaster](https://farcaster.xyz/~/channel/builder)
 
 ## 🚀 Project Structure
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
 ```
 .
-├── public/
+├── public/                     # Static assets and guide screenshots
+│   ├── guides/                # Screenshots organized by feature
+│   └── onboarding/            # Onboarding guide images
 ├── src/
-│   ├── assets/
+│   ├── assets/images/         # Documentation images
 │   ├── content/
 │   │   ├── docs/
-│   │   └── config.ts
+│   │   │   ├── onboarding/    # Getting started guides
+│   │   │   ├── guides/        # User guides
+│   │   │   └── contributors/  # Contributor documentation
+│   │   └── config.ts          # Content schema configuration
 │   └── env.d.ts
-├── astro.config.mjs
+├── astro.config.mjs           # Astro and Starlight configuration
 ├── package.json
 └── tsconfig.json
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
-
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
-
-Static assets, like favicons, can be placed in the `public/` directory.
+Documentation is written in `.mdx` files in the `src/content/docs/` directory. The site navigation is automatically generated from the directory structure as configured in `astro.config.mjs`.
 
 ## 🧞 Commands
 
@@ -49,6 +48,28 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 📚 Content Organization
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+The documentation is organized into three main sections:
+
+- **Getting Started** (`src/content/docs/onboarding/`) - Onboarding guides for new users
+- **User Guide** (`src/content/docs/guides/`) - Feature guides for creating DAOs, auctions, governance, etc.
+- **Contributor Guide** (`src/content/docs/contributors/`) - Documentation for contributors and developers
+
+## 🛠️ Development
+
+This site is built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.build). To contribute:
+
+1. Fork the repository
+2. Install dependencies: `npm install`
+3. Start development server: `npm run dev`
+4. Make your changes to the content in `src/content/docs/`
+5. Test your changes locally
+6. Submit a pull request
+
+## 📝 Writing Documentation
+
+- Use `.mdx` files for all documentation
+- Place images in `src/assets/images/` and reference with relative paths
+- Guide screenshots should be placed in `public/guides/[feature-name]/`
+- Follow the existing content structure and style
