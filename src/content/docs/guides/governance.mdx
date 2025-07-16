@@ -32,6 +32,45 @@ For example, if the Proposal Threshold is set to 100 BPS and there are 500 total
 
 ![guide image](../../../assets/images/proposalLifecycle.png)
 
+### Proposal Stages In Depth
+
+Proposals in Nouns Builder move through the following stages, defined by the `ProposalState` enum:
+
+```ts
+export enum ProposalState {
+  Pending = 0,     // Created, waiting for voting delay to pass
+  Active = 1,      // Open for voting
+  Canceled = 2,    // Canceled by proposer or admin
+  Defeated = 3,    // Voting ended without reaching quorum or For majority
+  Succeeded = 4,   // Passed quorum and received majority For votes
+  Queued = 5,      // Scheduled for execution after timelock delay
+  Expired = 6,     // Was queued but not executed within grace period (14 days)
+  Executed = 7,    // Executed on-chain successfully
+  Vetoed = 8       // Vetoed by an address with veto rights
+}
+```
+
+The lifecycle of a proposal generally follows:
+
+**1. Pending:** Proposal submitted, but voting has not started (waiting for Voting Delay).
+
+**2. Active:** Voting is open for the duration of the Voting Period.
+
+**3. Succeeded:** If quorum and majority *For* are met, the proposal moves to Queued.
+
+**4. Queued:** Proposal is in the queue and must wait for Time Lock Delay, e.g., 2 days.
+
+**5. Grace Period:** After timelock, there's a 14-day window in which the proposal can be executed or vetoed.
+
+**6. Executed:** If executed within the grace period, the proposal is marked as Executed.
+
+**7. Expired:** If not executed within the 14-day grace period, it transitions to Expired and can no longer be executed.
+
+:::note
+Proposals can vetoed at any stage of the proposal process until executed.
+
+**You can view the specific settings, e.g., Voting Delay, Voting Period, Timelock for *your DAO* in the Admin Panel.**
+:::
 
 ---
 
