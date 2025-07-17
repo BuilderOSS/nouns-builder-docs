@@ -13,7 +13,7 @@ It keeps a record of proposals and votes.
 While the Treasury contract is in charge of holding DAO funds and executing transactions for passed proposals.
 
 - `Proposal Threshold:` Min [BPS](https://www.investopedia.com/terms/b/basispoint.asp) of total votes (NFTs) needed to put a proposal to a vote.
-For example, if the Proposal Threshold is set to 100 BPS and there are 500 total NFTs minted then 5 NFTs need to approve the proposal for it to a vote.
+For example, if the Proposal Threshold is set to 100 BPS and there are 500 total NFTs minted then 5 NFTs need to approve the proposal for it to go to a vote.
 - `Quorum Threshold:` Min BPS of total **For** votes (NFTs) required for a proposal to pass
 - `Voting Delay:` The amount of time before a proposal can start voting in seconds.
 - `Voting Period:` The duration for voting on a proposal in seconds.
@@ -24,7 +24,7 @@ For example, if the Proposal Threshold is set to 100 BPS and there are 500 total
 ### Proposal Lifecycle:
 - A proposal is submitted to the DAO on-chain by an address that owns enough NFTs to clear the Proposal Threshold.
 - The proposal can't be voted on until after the voting delay time has passed.
-- Once the delay period has passed, the proposal must then receive more **For** votes than **Against** and the number of **For** votes must meet or the Quorum Threshold.
+- Once the delay period has passed, the proposal must then receive more **For** votes than **Against** and the number of **For** votes must meet or exceed the Quorum Threshold.
 - Finally, if the voting period has finished and it has received enough **For** votes then the proposed transaction is queued for execution.
 - Then the proposal must pass the Time Lock Delay which defaults to 2 days.
 - Finally, once the time lock has ended the proposal is then executed.
@@ -56,7 +56,7 @@ The lifecycle of a proposal generally follows:
 
 **2. Active:** Voting is open for the duration of the Voting Period.
 
-**3. Succeeded:** If quorum and majority *For* are met, the proposal moves to Queued.
+**3. Succeeded:** If quorum and majority **For** are met, the proposal moves to Queued.
 
 **4. Queued:** Proposal is in the queue and must wait for Time Lock Delay, e.g., 2 days.
 
@@ -67,7 +67,7 @@ The lifecycle of a proposal generally follows:
 **7. Expired:** If not executed within the 14-day grace period, it transitions to Expired and can no longer be executed.
 
 :::note
-Proposals can vetoed at any stage of the proposal process until executed.
+Proposals can be vetoed at any stage of the proposal process until executed.
 
 **You can view the specific settings, e.g., Voting Delay, Voting Period, Timelock for *your DAO* in the Admin Panel.**
 :::
@@ -217,7 +217,7 @@ function delegateBySig(
 ## Vetoing
 Vetoing is an optional setting that can be configured by the founders when deploying.
 Note, veto power is encouraged due to the small number of votes (NFTs) at the beginning of a DAO.
-The veto can later before removed by the founders once the NFTs have become sufficiently decentralized.
+The veto can later be removed by the founders once the NFTs have become sufficiently decentralized.
 
 #### Vetoing Proposal
 ```
