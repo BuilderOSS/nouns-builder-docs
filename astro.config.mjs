@@ -33,6 +33,10 @@ export default defineConfig({
           label: "Contributor Guide",
           autogenerate: { directory: "contributors" },
         },
+        {
+          label: "Developer Libraries",
+          autogenerate: { directory: "developers" },
+        },
       ],
     }),
   ],

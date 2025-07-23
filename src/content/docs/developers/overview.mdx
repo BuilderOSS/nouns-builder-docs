@@ -1,0 +1,112 @@
+---
+title: Library Overview
+description: Overview of BuilderOSS library packages for developers
+---
+
+# BuilderOSS Developer Libraries
+
+The BuilderOSS ecosystem provides a comprehensive set of TypeScript libraries to help developers build applications that integrate with the Nouns Builder protocol. These libraries are designed to be modular, type-safe, and easy to use.
+
+## Available Packages
+
+### Core Libraries
+
+- **<a href="https://www.npmjs.com/package/@buildeross/sdk" target="_blank">@buildeross/sdk</a>** - Comprehensive SDK with contract ABIs, GraphQL clients, and blockchain utilities
+- **<a href="https://www.npmjs.com/package/@buildeross/hooks" target="_blank">@buildeross/hooks</a>** - React hooks for blockchain interactions, UI utilities, and data management
+- **<a href="https://www.npmjs.com/package/@buildeross/utils" target="_blank">@buildeross/utils</a>** - Helper functions for blockchain operations, data formatting, and validation
+
+### Infrastructure & Configuration
+
+- **<a href="https://www.npmjs.com/package/@buildeross/constants" target="_blank">@buildeross/constants</a>** - Shared constants, contract addresses, and configuration values
+- **<a href="https://www.npmjs.com/package/@buildeross/types" target="_blank">@buildeross/types</a>** - TypeScript type definitions for blockchain interactions and data structures
+- **<a href="https://www.npmjs.com/package/@buildeross/ipfs-service" target="_blank">@buildeross/ipfs-service</a>** - IPFS utilities for file upload and content management
+
+### UI & Styling
+
+- **<a href="https://www.npmjs.com/package/@buildeross/zord" target="_blank">@buildeross/zord</a>** - Modern design system and component library built with Vanilla Extract
+- **<a href="https://www.npmjs.com/package/@buildeross/analytics" target="_blank">@buildeross/analytics</a>** - Analytics integration for Google Analytics, Segment, and Vercel
+
+### Development Tools
+
+- **<a href="https://www.npmjs.com/package/@buildeross/eslint-config-custom" target="_blank">@buildeross/eslint-config-custom</a>** - Shared ESLint configuration for consistent code quality
+- **<a href="https://www.npmjs.com/package/@buildeross/blocklist" target="_blank">@buildeross/blocklist</a>** - Address validation against US Treasury SDN list
+
+## Quick Start
+
+To get started with BuilderOSS libraries, install the packages you need:
+
+```bash
+# Core functionality
+pnpm install @buildeross/sdk @buildeross/hooks @buildeross/utils
+
+# UI components and styling
+pnpm install @buildeross/zord
+
+# Additional utilities
+pnpm install @buildeross/constants @buildeross/types @buildeross/ipfs-service
+```
+
+## Key Features
+
+### Type Safety
+All packages are built with TypeScript and provide comprehensive type definitions for blockchain interactions, ensuring compile-time safety.
+
+### Multi-Chain Support
+The libraries support all major networks where Builder protocol is deployed:
+- Ethereum Mainnet
+- Base
+- Optimism  
+- Zora
+- Testnets (Sepolia, Base Sepolia, etc.)
+
+### React Integration
+Built with React in mind, providing hooks and components that integrate seamlessly with modern React applications and Next.js.
+
+## Development Workflow
+
+1. **Start with the SDK** - Use `@buildeross/sdk` for core blockchain interactions
+2. **Add React Hooks** - Use `@buildeross/hooks` for React-specific functionality
+3. **Style with Zord** - Use `@buildeross/zord` for consistent UI components
+4. **Enhance with Utilities** - Use `@buildeross/utils` for data formatting and validation
+
+## Common Patterns
+
+### Fetching DAO Data
+```typescript
+import { SubgraphSDK } from '@buildeross/sdk/subgraph'
+import { useDaoAuction } from '@buildeross/hooks'
+
+// In your component
+const auction = useDaoAuction({
+  collectionAddress: '0x...',
+  auctionAddress: '0x...',
+  chainId: CHAIN_ID.ETHEREUM
+})
+```
+
+### Building UI Components
+```typescript
+import { Box, Stack, Text, Button } from '@buildeross/zord'
+
+function MyComponent() {
+  return (
+    <Box p="x6" backgroundColor="background1" borderRadius="normal">
+      <Stack gap="x4">
+        <Text size="lg" weight="heading">DAO Name</Text>
+        <Button variant="primary">Join Auction</Button>
+      </Stack>
+    </Box>
+  )
+}
+```
+
+## Support
+
+- **Documentation**: Comprehensive documentation for each package
+- **TypeScript**: Full type definitions and IntelliSense support
+- **Examples**: Real-world usage examples in the main Nouns Builder application
+- **Community**: Join our [Discord](https://discord.gg/f845eBCyyb) for support
+
+## License
+
+All BuilderOSS libraries are released under the MIT License.
