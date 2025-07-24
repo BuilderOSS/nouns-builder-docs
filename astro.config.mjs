@@ -37,6 +37,10 @@ export default defineConfig({
           label: "Developer Libraries",
           autogenerate: { directory: "developers" },
         },
+        {
+          label: "Legal FAQ",
+          autogenerate: { directory: "legal" },
+        },
       ],
     }),
   ],
