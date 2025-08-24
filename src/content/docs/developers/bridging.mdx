@@ -1,0 +1,23 @@
+---
+sidebar:
+  order: 2
+id: dev-bridging
+title: Bridging
+---
+
+## Builder Bridges
+
+The Builder platform provides a access to *deposit-only* native bridges as documented in the [bridging user guide](/onboarding/builder-bridging).
+
+## Bridging Legacy Modal 
+
+A bridge modal opened on any page if a user tried to interact with any button for a contract interaction and had 0 balance on that L2 chain. The bridge modal could also be opened by adding a query param `?bridge=true`
+example: `https://nouns.build/explore?bridge=true`.
+
+It used the native bridge contract for ETH to Zora/OP/Base and was **DEPOSIT ONLY**. Withdrawals had to be done via the respective UIs and linked in the docs [here](/onboarding/builder-bridging). While we kept the bridging functionality, the modal was deprecated.
+
+:::caution
+
+The modal functionality for bridging was deprecated. The code for this functionality can be found in this [code commit](https://github.com/BuilderOSS/nouns-builder/releases/tag/buildeross-v0.1.2) for reference.
+
+:::
