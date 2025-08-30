@@ -1,0 +1,102 @@
+---
+sidebar:
+  order: 7
+title: Changing and Adding Artwork
+---
+
+This guide covers the proposal types for modifying artwork in your Nouns Builder DAO: **Replace Artwork** (also known as Change Artwork) and **Add Artwork**. These features allow DAOs to update or expand their generative NFT artwork. Note that all changes require a proposal to be created, voted on, and executed on-chain.
+
+Artwork in Nouns Builder is structured in layers (traits or properties), with each layer containing multiple variants (items). The system uses IPFS for storage and an on-chain metadata renderer to compose NFTs generatively.
+
+## Overview
+
+- **Layers (Traits/Properties)**: Up to 15 maximum, e.g., background, body, accessories
+- **Variants (Items)**: No hard contract limit per layer, but practical limits apply due to upload constraints.
+- **Process**: Changes are additive and immutable on IPFS. You cannot delete existing artwork; replacements or additions are the only options.
+- **Proposal Flow**: Use the proposal creation interface on nouns.build. Upload folders must follow a specific structure (e.g., numbered folders for layers, with variants inside).
+
+Refer to the [Configuring the NFT's Images guide](/guides/img-config) to learn how to set up your NFT artwork.
+
+## Replace Artwork Proposal
+
+This proposal type replaces the entire artwork set for your DAO. It is ideal for major overhauls, such as changing file types, dimensions, or replacing multiple variants.
+
+### Steps
+1. Navigate to your DAO on nouns.build and select "Create Proposal".
+2. Choose the "Replace Artwork" template.
+3. Upload your artwork folder:
+   - Structure: Organize into subfolders (e.g., `0-background/`, `1-body/`) containing variant files.
+   - File type: All files in the replacement set must share a single type (PNG, SVG, or GIF). You may change the collection’s overall type in a Replace Artwork proposal, but mixing types within the same set is not supported.
+   - Ensure the total directory size is under 200 MB.
+4. Validate the upload: The interface will check layer ordering and variant counts.
+5. Submit the proposal for voting and execution.
+
+### Use Cases
+- Overhauling the entire collection, e.g., replacing **ALL** existing art, or switching file types.
+- Replacing a single variant (requires re-uploading all artwork with the change).
+- Adjusting dimensions or file types across the board.
+
+### Limitations
+- You must re-upload the entire artwork set; selective changes are not supported.
+- Existing tokens may render updated assets if your renderer retrieves files on-chain rather than using cached snapshots. Test your renderer’s behavior on staging before proposing changes.
+- To “remove” a variant, replace it with a transparent file; note this can cause visual issues for already-minted NFTs when that variant is rendered.
+- File type: all files in a single Replace Artwork proposal must share one format. You may switch the collection’s overall file type by replacing the entire set, but do not mix formats within one proposal.
+
+## Add Artwork Proposal
+
+This proposal type adds new variants to existing layers or introduces entirely new layers. It is additive and does not replace the full set.
+
+### Steps
+1. Navigate to your DAO on nouns.build and select "Create Proposal".
+2. Choose the "Add Artwork" template.
+3. Upload your new artwork folder:
+   - Structure: Use subfolders matching existing layer names to add variants (e.g., `background/` for new backgrounds).
+   - To add a new layer, use a new folder name (e.g., `hats/`).
+   - Folders with the same name as existing layers will append variants.
+4. Validate the upload: Ensure compatibility with existing artwork (e.g., same file type and dimensions).
+5. Submit the proposal for voting and execution.
+
+### Use Cases
+- Expanding a layer with new variants (e.g., adding new backgrounds).
+- Introducing a new layer (e.g., adding "hats" to an existing collection).
+- Adding multiple variants across different layers in one proposal.
+- Note: Add Artwork does not support mixing file types within the same collection. To change file type (e.g., PNG → GIF), use a Replace Artwork proposal.
+
+:::note
+
+Although the folder structure must also be consistent with previous uploads when adding artwork, not all files need to be reuploaded. In other words, when adding artwork only the artwork to be added must be uploaded, but follow the existing folder structure.
+
+:::
+
+### Limitations
+- Cannot delete or replace existing variants; additions only.
+- Dimensions must match existing artwork.
+- Layer ordering: New layers are appended; ensure correct sequencing in the upload.
+- If adding to multiple layers, include each layer as its own folder in one upload batch. Avoid duplicate filenames within a layer; uploader behavior may overwrite or fail—do not rely on it.
+- Large additions (e.g., >500 variants per layer) may hit transaction/upload limits; test on staging.
+
+## General Limitations
+
+- **Maximum Layers**: 15 (hard contract limit).
+- **Variants per layer**: No contract limit. Operationally, we recommend 150–200 variants per layer to avoid upload issues. We have tested up to ~250 variants per layer.
+- **File Count and Size**: 
+  - Total directory: Up to 200 MB.
+  - Individual media files: Up to 50 MB.
+  - File limit: As of August 2025, the v3 Pinata API reliably handles ~150 files per batch in our flows. We are temporarily using the legacy API to improve stability; this may change—check release notes before large uploads.
+- **Immutability**: Once uploaded to IPFS, content cannot be deleted. Use transparent files for "removals," but test thoroughly.
+- **Rendering impact**: Future mints will use the updated assets. Already-minted tokens may or may not change depending on your renderer (on-chain retrieval vs. cached snapshots). Verify on staging before proposing changes.
+- **Testing**: Always test (**extensively!**) on testnets first (testnet.nouns.build) before mainnet proposals.
+- **Complex Scenarios**: Adding GIFs or mixing types requires replacing all artwork. Untested for varying GIF durations or frame rates.
+
+:::caution
+
+The upload of GIF file types is currently only available on staging as **PROTOTYPICAL** implementation. Please proceed with caution, as this feature is not yet cleared for production and **ACTIVELY** worked on.
+
+:::
+
+## Supported File Types
+
+Collections use a single file type across all layers at a time. To change the collection’s file type (e.g., PNG → GIF), submit a Replace Artwork proposal. Each Add/Replace transaction must contain a single file type (PNG, SVG, or GIF).
+- **PNG**: Standard for static layers.
+- **SVG**: Vector-based; supported for scalability.
+- **GIF**: Animated; **PROTOTYPICAL IMPLEMENTATION—staging only**. If using GIFs, the entire replacement set must be GIF (convert static layers to single‑frame GIFs as needed).
