@@ -15,7 +15,7 @@ Artwork in Nouns Builder is structured in layers (traits or properties), with ea
 - **Process**: Changes are additive and immutable on IPFS. You cannot delete existing artwork; replacements or additions are the only options.
 - **Proposal Flow**: Use the proposal creation interface on nouns.build. Upload folders must follow a specific structure (e.g., numbered folders for layers, with variants inside).
 
-Refer to the [Configuring the NFT's Images guide](/guides/img-config) to learn how to setup your NFT artwork.
+Refer to the [Configuring the NFT's Images guide](/guides/img-config) to learn how to set up your NFT artwork.
 
 ## Replace Artwork Proposal
 
@@ -43,7 +43,7 @@ This proposal type replaces the entire artwork set for your DAO. It is ideal for
 - File type: all files in a single Replace Artwork proposal must share one format. You may switch the collection’s overall file type by replacing the entire set, but do not mix formats within one proposal.
 ## Add Artwork Proposal
 
-This proposal type adds new variants to existing layers or introduces entirely new layers. It is an additive process and does not overwrite the full set.
+This proposal type adds new variants to existing layers or introduces entirely new layers. It is additive and does not replace the full set.
 
 ### Steps
 1. Navigate to your DAO on nouns.build and select "Create Proposal".
@@ -52,7 +52,7 @@ This proposal type adds new variants to existing layers or introduces entirely n
    - Structure: Use subfolders matching existing layer names to add variants (e.g., `background/` for new backgrounds).
    - To add a new layer, use a new folder name (e.g., `hats/`).
    - Folders with the same name as existing layers will append variants.
-4. Validate the upload: Ensure compatibility with existing artwork (e.g., same `file` type and dimensions).
+4. Validate the upload: Ensure compatibility with existing artwork (e.g., same file type and dimensions).
 5. Submit the proposal for voting and execution.
 
 ### Use Cases
@@ -65,8 +65,8 @@ This proposal type adds new variants to existing layers or introduces entirely n
 - Cannot delete or replace existing variants; additions only.
 - Dimensions must match existing artwork.
 - Layer ordering: New layers are appended; ensure correct sequencing in the upload.
-- If adding to multiple layers, upload them in one folder—duplicates will replace, but this is additive overall.
-- Untested for very large additions (e.g., >500 variants per layer); transaction gas limits may apply.
+- If adding to multiple layers, include each layer as its own folder in one upload batch. Avoid duplicate filenames within a layer; uploader behavior may overwrite or fail—do not rely on it.
+- Large additions (e.g., >500 variants per layer) may hit transaction/upload limits; test on staging.
 
 ## General Limitations
 
@@ -75,7 +75,7 @@ This proposal type adds new variants to existing layers or introduces entirely n
 - **File Count and Size**: 
   - Total directory: Up to 200 MB.
   - Individual media files: Up to 50 MB.
-  - File limit: Up to 150 files can be uploaded at once to the v.3 Pinata API, which is why we have rolled back to the legacy API until further notice.
+  - File limit: As of August 2025, the v3 Pinata API reliably handles ~150 files per batch in our flows. We are temporarily using the legacy API to improve stability; this may change—check release notes before large uploads.
 - **Immutability**: Once uploaded to IPFS, content cannot be deleted. Use transparent files for "removals," but test thoroughly.
 - **Generative Nature**: Changes affect future NFTs only; verify via previews or test DAOs.
 - **Testing**: Always test (**extensively!**) on testnets first (testnet.nouns.build) before mainnet proposals.
@@ -92,4 +92,4 @@ The upload of GIF file types is currently only available on staging as **PROTOTY
 Collections can have multiple file types across all layers, but any transaction to change or add artwork can only contain a single file type (PNG, SVG, or GIF).
 - **PNG**: Standard for static layers.
 - **SVG**: Vector-based; supported for scalability.
-- **GIF**: Animated; prototypical support on staging only. If using GIFs, convert static layers to single‑frame GIFs to keep the set uniform.
+- **GIF**: Animated; **PROTOTYPICAL IMPLEMENTATION—staging only**. If using GIFs, the entire replacement set must be GIF (convert static layers to single‑frame GIFs as needed).
