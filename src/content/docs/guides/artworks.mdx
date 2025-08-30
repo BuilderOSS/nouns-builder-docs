@@ -57,10 +57,10 @@ This proposal type adds new variants to existing layers or introduces entirely n
 5. Submit the proposal for voting and execution.
 
 ### Use Cases
-- Expanding a layer with new variants (e.g., changing a backgrounds).
+- Expanding a layer with new variants (e.g., adding new backgrounds).
 - Introducing a new layer (e.g., adding "hats" to an existing collection).
 - Adding multiple variants across different layers in one proposal.
-- Introducing a new file type for individual traits, such as a GIF property
+- Note: Add Artwork does not support mixing file types within the same collection. To change file type (e.g., PNG → GIF), use a Replace Artwork proposal.
 
 :::note
 
@@ -78,7 +78,7 @@ Although the folder structure must also be consistent with previous uploads when
 ## General Limitations
 
 - **Maximum Layers**: 15 (hard contract limit).
-- **Variants per Layer**: No contract limit, but recommended up to 150–200 total files across all layers to avoid upload issues. Tested up to ~250 variants per layer.
+- **Variants per layer**: No contract limit. Operationally, we recommend 150–200 variants per layer to avoid upload issues. We have tested up to ~250 variants per layer.
 - **File Count and Size**: 
   - Total directory: Up to 200 MB.
   - Individual media files: Up to 50 MB.
@@ -96,7 +96,7 @@ The upload of GIF file types is currently only available on staging as **PROTOTY
 
 ## Supported File Types
 
-Collections can have multiple file types across all layers, but any transaction to change or add artwork can only contain a single file type (PNG, SVG, or GIF).
+Collections use a single file type across all layers at a time. To change the collection’s file type (e.g., PNG → GIF), submit a Replace Artwork proposal. Each Add/Replace transaction must contain a single file type (PNG, SVG, or GIF).
 - **PNG**: Standard for static layers.
 - **SVG**: Vector-based; supported for scalability.
 - **GIF**: Animated; **PROTOTYPICAL IMPLEMENTATION—staging only**. If using GIFs, the entire replacement set must be GIF (convert static layers to single‑frame GIFs as needed).
