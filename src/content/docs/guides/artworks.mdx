@@ -30,7 +30,6 @@ This proposal type replaces the entire artwork set for your DAO. It is ideal for
    - Ensure the total directory size is under 200 MB.
 4. Validate the upload: The interface will check layer ordering and variant counts.
 5. Submit the proposal for voting and execution.
-5. Submit the proposal for voting and execution.
 
 ### Use Cases
 - Overhauling the entire collection, e.g., replacing **ALL** existing art, or switching file types.
@@ -90,7 +89,7 @@ The upload of GIF file types is currently only available on staging as **PROTOTY
 
 ## Supported File Types
 
+Collections can have multiple file types across all layers, but any transaction to change or add artwork can only contain a single file type (PNG, SVG, or GIF).
 - **PNG**: Standard for static layers.
 - **SVG**: Vector-based; supported for scalability.
-- **GIF**: Animated; **PROTOTYPICAL IMPLEMENTATION, proceed with caution on staging**, but all files in the collection must be GIF (convert static layers to single-frame GIFs if needed).
-- **PDF**: Not supported (out of scope).
+- **GIF**: Animated; prototypical support on staging only. If using GIFs, convert static layers to single‑frame GIFs to keep the set uniform.
