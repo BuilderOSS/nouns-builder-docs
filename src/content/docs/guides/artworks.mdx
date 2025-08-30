@@ -39,10 +39,9 @@ This proposal type replaces the entire artwork set for your DAO. It is ideal for
 
 ### Limitations
 - You must re-upload the entire artwork set; selective changes are not supported.
-- All NFTs will reflect the updates, even those already minted if a certain file is replaced.
-- To "remove" a variant, replace it with a transparent file, but this may cause visual on already minted NFTs issues if selected.
-- All files must match the existing file type (e.g., if current is PNG, add PNG only).
-
+- Existing tokens may render updated assets if your renderer retrieves files on-chain rather than using cached snapshots. Test your renderer’s behavior on staging before proposing changes.
+- To “remove” a variant, replace it with a transparent file; note this can cause visual issues for already-minted NFTs when that variant is rendered.
+- File type: all files in a single Replace Artwork proposal must share one format. You may switch the collection’s overall file type by replacing the entire set, but do not mix formats within one proposal.
 ## Add Artwork Proposal
 
 This proposal type adds new variants to existing layers or introduces entirely new layers. It is an additive process and does not overwrite the full set.
