@@ -2,7 +2,7 @@
 sidebar:
   order: 16
 id: reward-splits
-title: "Reward Split & Token Allocation"
+title: "Founder Rewards Allocation"
 description: "Clarifies the difference between protocol reward distribution and configurable token allocations in Nouns Builder."
 ---
 
@@ -12,17 +12,37 @@ When deploying a DAO with Nouns Builder, there are two distinct settings that go
 
 This guide explains the key differences between **protocol-level auction reward splits** and **configurable token allocations**, and provides instructions for withdrawing funds from the Rewards contract.
 
----
 
 ## 1. Auction Rewards (Protocol-Level Split)
 
 When a DAO is deployed, a fixed portion of auction proceeds is routed to a designated **Rewards Recipient**. This address is set at deployment and **cannot be changed later**. It is part of the protocol logic.
 
-These rewards accumulate in the Builder Protocol Rewards contract and must be claimed manually.
+These rewards accumulate in the Builder Protocol Rewards contract and can be claimed via the Builder frontend.
 
-### Claiming Protocol Rewards
+![Founder Auction Rewards UI](/guides/onboardingGuide/founderauctionrewards.png)
+
+The Auction Rewards section displays the following splits with tooltips:
+
+- **Builder Rewards:** Rewards paid to Nouns Builder for maintaining the DAO’s core infrastructure and tooling. (2.50%)
+- **Referral Rewards:** Rewards paid to users who refer new bidders to auctions, or to developers integrating referrals into external UIs. (2.50%)
+- **Founder Rewards:** Rewards paid to the DAO founders for their role in creating the DAO. (e.g., 50.00%)
+
+The **Recipient** address and **Balance** are shown below, along with a **Withdraw** button. Note that the Recipient and Balance are not displayed if the Founder Rewards Split Percentage is set at 0.
+
+## Claiming Protocol Rewards
 
 To withdraw funds:
+
+1. Navigate to the Auction Rewards section in your DAO's dashboard.
+2. Ensure you are connected with the wallet that controls the Rewards Recipient address.
+3. Review the current Balance.
+4. Click the **Withdraw** button to claim the full accumulated ETH rewards.
+
+:::tip[Note:]
+If the Founder Rewards Split is set at 0, no Recipient or Balance will be displayed, and no withdrawal is available.
+:::
+
+Alternatively, for manual claiming via contract interaction:
 
 1. Go to the [Rewards Contract on BaseScan](https://basescan.org/address/0x7777777F279eba3d3Ad8F4E708545291A6fDBA8B#writeContract)
 2. Connect your wallet via "Connect to Web3"
@@ -32,10 +52,6 @@ To withdraw funds:
    - **Example only:** `0x894F30da29216516b5aE85207dED77038C107f22` (used by nouns.build — do not use this for your DAO)
 6. For `amount`, input `0` — this will sweep the full balance owed.
 
-:::tip[Note:]
-This interface and documentation will be integrated into the app UI (see [#513](https://github.com/BuilderOSS/nouns-builder/issues/513)) and [deployment guide](https://builder-docs.vercel.app/guides/builder-deployment/#allocations) will be updated accordingly.
-:::
-
 ## 2. Token Allocations (Configurable)
 
 Token Allocations allow a DAO to automatically allocate a percentage of newly minted NFTs to one or more addresses. This setting **can be configured or updated via the Admin tab** in the app UI.
@@ -44,13 +60,12 @@ These allocations are not related to the ETH collected from auctions. Instead, t
 
 ![Token Allocation in Admin UI](/guides/onboardingGuide/founder-allocation.png)
 
-### Common Use Cases
+## Common Use Cases
 
 - Allocating tokens to contributors
 - Reserving a percentage for community treasury
 - Routing mints to sub-DAOs or partnerships
 
----
 
 ## Summary
 
@@ -59,7 +74,4 @@ These allocations are not related to the ETH collected from auctions. Instead, t
 | Funds or Tokens?     | ETH from auction proceeds                | ERC-721 NFTs                                |
 | Configurable?        | No (hardcoded at DAO deployment)         | Yes (configurable via UI)                   |
 | Purpose              | Sends ETH to reward address              | Sends NFTs to allocation addresses          |
-| Where to Manage      | [BaseScan Contract UI](https://basescan.org/address/0x7777777F279eba3d3Ad8F4E708545291A6fDBA8B#writeContract) | Admin tab in nouns.build UI                 |
-
-
-
+| Where to Manage      | Auction Rewards section in DAO dashboard | Admin tab in nouns.build UI
