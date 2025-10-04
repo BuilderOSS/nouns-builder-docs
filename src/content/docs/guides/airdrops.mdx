@@ -1,0 +1,71 @@
+---
+sidebar:
+  order: 9
+title: Airdrops
+---
+
+## Creating an Airdrop Proposal
+
+Airdrops enable DAOs to distribute governance tokens directly to specified addresses via on-chain proposals. This is particularly useful for migrations, bootstrapping membership, or rewarding contributors. Airdrops are executed through the token contract and **can occur even if auctions are paused**, as they do not interact with the auction mechanism.
+
+![Airdrop Proposal UI](/guides/airdropGuide/airdropUI.png)
+
+## Creating an airdrop proposal
+
+1. Navigate to the "Propose" section in your DAO
+2. Select "Airdrop tokens" as the proposal type
+3. Add recipients manually or via CSV upload
+4. Specify the number of tokens per recipient (must be a positive integer)
+5. Review the dynamic summary, which displays total tokens to be distributed and live updates as recipients are added or removed.
+6. Submit the proposal for voting
+7. Once passed and executed, tokens are minted and transferred in batched transactions.
+
+### Manual Entry
+
+For smaller distributions, add recipients directly via the UI:
+
+- Enter a valid Ethereum address or ENS name in the address field
+- Specify the token amount (positive integer)
+- Use the "Add recipient" button to include additional entries
+- Recipients can be edited or removed individually
+- ENS names are resolved per recipient during submission
+
+### Using CSV Upload
+
+For distributing to multiple recipients, use the CSV upload feature:
+- Download the provided template, which includes headers for "address" and "amount"
+- Populate with valid Ethereum addresses (or ENS names, which are resolved on submission) and positive integer amounts
+- Upload via drag-and-drop or file selection
+- The system parses the CSV, validates entries, and reports errors
+- Up to 100 recipients per transaction to avoid gas limits; add multiple transactions within the same proposal for larger distributions
+
+Example CSV structure:
+```
+address,amount
+0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e,10
+0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe,25
+```
+
+Validation ensures no more than 100 rows per CSV and enforces required headers. Errors are displayed inline, disabling submission until resolved.
+
+## Limitations and Best Practices
+
+
+:::caution
+
+We limit CSV file length to 100 recipients per transaction due to gas constraints; queue multiple transactions in one proposal for larger airdrops, but caution that this might exceed the block gas limit, causing the proposal execution to fail. Test on testnet for large distributions.
+
+:::
+
+
+:::note 
+
+Once executed, airdrops cannot be undone; verify addresses carefully.
+
+:::
+
+## Final Remarks
+
+- For migrations from existing collections, consider snapshots to capture current holders before airdropping.
+- Airdrops function independently and do not unpause auctions.
+- Airdrops do not affect quorum or threshold calculations until tokens are claimed and delegated.
