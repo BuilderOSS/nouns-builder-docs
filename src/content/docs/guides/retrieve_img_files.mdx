@@ -1,0 +1,111 @@
+---
+sidebar:
+  order: 11
+title: Retrieving DAO Artwork via IPFS
+---
+
+This guide explains how to retrieve and download your DAO's artwork from IPFS using IPFS Desktop. This is useful when you need to view the existing folder structure before adding or replacing artwork, or when you want to download the complete artwork set.
+
+## Prerequisites
+
+- [IPFS Desktop](https://docs.ipfs.tech/install/ipfs-desktop/) installed on your machine
+- Your DAO's artwork IPFS CID (Content Identifier)
+
+## Finding Your DAO's Artwork CID
+
+Your DAO's artwork is stored on IPFS and can be accessed via its CID. To locate this:
+
+1. Navigate to [nouns.build/playground](https://nouns.build/playground)
+2. Select your DAO from the list
+3. Locate the "Explore on IPFS" section
+4. The CID will be displayed as a clickable link (e.g., `bafybeieah7w...wzf7mzqi`)
+
+![Playground View](/guides/artworkGuide/playground_view.png)
+
+## Viewing Artwork in Your Browser
+
+Before downloading, you can explore the artwork directory structure directly in your browser using an IPFS gateway:
+
+1. Click the CID link in the Playground section, or manually construct the URL: `https://ipfs.io/ipfs/[CID]`
+2. Replace `[CID]` with your DAO's artwork CID
+3. Example: `https://ipfs.io/ipfs/bafybeihjotbyklahe2bi4zmlaoryxwy5xmwfhyyyhv5bu4saoivx3nxpta/`
+
+Alternative gateways if ipfs.io is unavailable:
+- `https://dweb.link/ipfs/[CID]`
+- `https://gateway.pinata.cloud/ipfs/[CID]`
+
+:::note
+Gateway access allows you to view individual files and the directory structure, but does not currently support downloading the entire folder as a ZIP archive. For complete folder downloads, use IPFS Desktop as described below.
+:::
+
+## Downloading Artwork via IPFS Desktop
+
+### Step 1: Configure Peering with Pinata
+
+To ensure IPFS Desktop can retrieve content pinned by Nouns Builder's infrastructure, you need to peer with Pinata's IPFS nodes:
+
+1. Open IPFS Desktop
+2. Navigate to Settings
+3. Locate the "Peers" or "Swarm" section
+4. Add Pinata's peering addresses following [Pinata's peering documentation](https://docs.pinata.cloud/files/uploading-files#peering-with-pinata)
+
+This ensures your IPFS node can efficiently discover and retrieve content from Pinata's infrastructure.
+
+### Step 2: Retrieve the Artwork Folder
+
+1. In IPFS Desktop, navigate to the "Files" tab
+2. Select "Import" or use the search function
+3. Enter your DAO's artwork CID
+4. IPFS Desktop will begin retrieving the content from the network
+
+:::caution
+Large artwork folders may take several minutes to retrieve depending on your internet connection and the total folder size. Folders approaching the 200 MB limit will require more time.
+:::
+
+### Step 3: Download the Files
+
+Once retrieved:
+
+1. The artwork folder will appear in your IPFS Desktop file browser
+2. Right-click on the folder
+3. Select "Export" or "Download" to save it to your local machine
+4. Choose your destination directory
+
+The complete folder structure, including all layers and variants, will be downloaded to your computer.
+
+## Troubleshooting
+
+### CID not found or timing out
+- Verify you're using the correct CID from the Playground section
+- Check your internet connection
+- Ensure you've configured Pinata peering correctly
+- Try accessing via a browser gateway first to confirm the content exists
+
+### Slow retrieval speeds
+- Large artwork sets (>100 MB) take longer to retrieve
+- Consider retrieval during off-peak hours
+- Check if your ISP blocks or throttles peer-to-peer traffic
+
+### Gateway displays "Invalid CID" error
+- Ensure the CID is correctly formatted with no extra characters
+- Note that ipfs.io does not yet support all CIDv1 formats; try alternative gateways like dweb.link
+
+## Understanding the Folder Structure
+
+Downloaded artwork follows this structure:
+```
+artwork-folder/
+├── 0-background/
+│   ├── variant1.png
+│   ├── variant2.png
+│   └── ...
+├── 1-body/
+│   ├── variant1.png
+│   └── ...
+└── 2-accessories/
+    └── ...
+```
+
+Each numbered folder represents a layer (trait/property), with variants stored inside. This structure must be maintained when creating Add Artwork or Replace Artwork proposals.
+
+Refer to the [Changing and Adding Artwork guide](/guides/artworks) for details on modifying your DAO's artwork using this structure.
