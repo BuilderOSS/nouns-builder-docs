@@ -131,7 +131,7 @@ The sales configuration is set when the contract is created and holds all mintin
 - `maxSalePurchasePerAddress`: Max number of NFTs one address can mint during the public sale
 - `presaleMerkleRoot`: Cryptographic proof used for presale allowlist minting
 
-Note that `presaleMerkleRoot` can be set to `0x0000000000000000000000000000000000000000000000000000000000000000` if no allowlist minting is planned. Current values can be read by calling `salesConfig` on the contract, and updated by calling `setSalesConfig`.
+Note that `presaleMerkleRoot` can be set to `0x0000000000000000000000000000000000000000000000000000000000000000` if no allowlist minting is planned. Current values can be read by calling `salesConfig` on the contract, and updated by calling `setSaleConfiguration`.
 
 ```solidity
 function setSaleConfiguration(
