@@ -1,0 +1,263 @@
+---
+sidebar:
+  order: 13
+id: coining
+title: Coining
+---
+
+## Overview
+
+Coining is Builder's framework for launching on-chain fungible tokens directly from DAO proposals. It replaces the legacy Droposal model with two distinct coin types, **Creator Coins** and **Content Coins**, each with a specific role in the DAO's economy.
+
+- **Creator Coin (DAO Coin):** The primary coordination token for a DAO, deployed via [Clanker](https://clanker.world/). Always governance-gated — a DAO vote is required to deploy it.
+- **Content Coin:** A post- or contribution-level token, deployed via Zora's ERC-20 Coining SDK. Issued through a DAO proposal or as a [permissionless post](/guides/feed) and paired against the DAO's Creator Coin.
+
+Together, these two coin types form a hierarchy: `$CONTENT → $CREATOR → $WETH`, in which trading fees flow up the chain, rewarding the DAO and supporting long-term sustainability.
+
+:::tip
+A DAO can only have one Creator Coin. Content Coins are unlimited and can be created for individual posts, artworks, or contributions — each paired to the DAO's Creator Coin.
+:::
+
+## Key concepts
+
+- **Creator Coin:** A DAO-level ERC-20 token deployed via Clanker. Represents the primary value-capture layer for the DAO.
+- **Content Coin:** A post-level ERC-20 token deployed via Zora Coining SDK, paired to the DAO's Creator Coin.
+- **Base Currency:** The token a coin is priced against. For Creator Coins this is WETH; for Content Coins this is the DAO's Creator Coin.
+- **Pool Configuration:** Liquidity pool settings (fee structure, tick ranges) set at deployment and managed by the DAO treasury.
+- **Initial Purchase:** An optional ETH amount the treasury spends to seed initial liquidity on Creator Coin deployment.
+- **Coin Creations:** The section on a proposal's detail page showing which coins will be (or were) deployed if the proposal passes.
+
+---
+
+## Creator Coin (DAO Coin)
+
+### Concept
+
+A Creator Coin is the DAO's primary ERC-20 token. It is deployed once per DAO and acts as the base currency for all Content Coins that DAO subsequently creates or that are created on its behalf. Deployment requires a successful governance vote.
+
+Creator Coins are powered by [Clanker v4](https://clanker.world/) and launch with a Uniswap v4 liquidity pool. The DAO treasury becomes the token admin and liquidity reward recipient.
+
+### Workflow overview
+
+1. Draft and publish a proposal.
+2. Add a Creator Coin transaction with metadata and pool settings.
+3. Review, submit, and execute the proposal on-chain.
+4. Use the coin page and Coin Creations section to monitor and trade.
+
+### Step 1: Write the proposal
+
+1. Go to your DAO's dashboard and click **Create Proposal**.
+2. Enter a clear **title** (for example, "Deploy [DAO Name] Creator Coin") and a **markdown description** explaining why the DAO is launching a Creator Coin and what it will be used for.
+3. Click **Continue** to proceed to the **Add Transactions** step.
+
+### Step 2: Add the Creator Coin transaction
+
+<img
+  src="/guides/coiningGuide/creator_coin_metadata.png"
+  alt="Creator Coin proposal detail view"
+  width="480"
+/>
+
+1. Select **Creator Coin** from the transaction type dropdown on the **Add Transactions** step.*
+2. Fill in the coin metadata on the left; the right panel updates with a live preview as you type.*
+3. Optionally expand **Advanced Pool Settings** to configure pool and vault behaviour.
+
+#### Creator Coin metadata
+
+| Field             | Description                                                                 |
+|-------------------|-----------------------------------------------------------------------------|
+| **Image**         | Upload a JPG, PNG, WebP, or SVG image for your coin.                       |
+| **Name**          | The display name for your coin (1–100 characters).                         |
+| **Symbol**        | A short ticker (1–10 uppercase letters/numbers). Auto-generated but editable. |
+| **Description**   | A description of the coin and its purpose within the DAO.                  |
+| **Base Currency** | The token your Creator Coin will be paired against. Defaults to WETH.      |
+
+
+#### Creator Coin pool configuration
+
+<img
+  src="/guides/coiningGuide/creator_coin_pool_config.png"
+  alt="Advanced Pool Configuration"
+  width="480"
+/>
+
+#### Vault settings
+
+<img
+  src="/guides/coiningGuide/creator_vault_settings.png"
+  alt="Advanced Vault Settings"
+  width="480"
+/>
+
+*The Advanced Pool Settings panel configures the fee structure and optional initial ETH purchase.*
+
+- **Fee Configuration:** Choose between Static (fixed 1% fee) or Dynamic (1–5% based on trading volume).
+- **Initial Purchase (ETH):** An optional amount of ETH for the treasury to spend on the coin at deployment, seeding initial liquidity. The current treasury balance is shown inline.
+- **Automatically pin creator coin to treasury:** Enables the coin to appear prominently in the DAO treasury view.
+
+4. Read and accept the disclaimer, then click **Add Transaction to Queue**.
+
+:::note
+The **Initial Purchase** field draws from the DAO treasury balance shown in the form. Leave it at 0 if you do not want the treasury to buy tokens at launch.
+:::
+
+### Step 3: Review, submit, and execute
+
+1. Click **Continue** to reach the **Review and Submit** step.
+2. Check the transaction simulation results and confirm the on-chain details.
+3. Submit the proposal on-chain.
+
+Once the proposal passes and is executed, the Creator Coin is deployed. The **Coin Creations** section on the proposal detail page will update to show the deployed coin name, symbol, description, and a [link](https://nouns.build/coin/base/0x250422c9cc891FE672d99B6B829EfF9c96884B99) to the coin's page.
+
+<img
+  src="/guides/coiningGuide/creator_coin_page.png"
+  alt="Creator Coin Page"
+  width="480"
+/>
+
+
+*An executed Creator Coin proposal. The Coin Creations section shows the deployed coin's name, symbol, description, and a link to the coin page.*
+
+---
+
+## Content Coin
+
+### Concept
+
+A Content Coin is a post-level ERC-20 token linked to a specific piece of content — an artwork, a post, a community contribution, or any other discrete output. Content Coins are:
+
+- Deployed via Zora's ERC-20 Coining SDK.
+- Always paired to the DAO's Creator Coin as their base currency.
+- Created through a governance proposal, giving the DAO collective ownership over what gets coined on its behalf, or as a permissionless post.
+
+:::tip
+A Content Coin proposal is only available for DAOs that have already deployed a Creator Coin. The Creator Coin automatically becomes the **Base Currency** for the Content Coin's liquidity pool.
+:::
+
+### Workflow overview
+
+1. Draft and publish a proposal identifying the content to be coined.
+2. Add a Content Coin transaction with media, metadata, and optional custom properties.
+3. Review, submit, and execute the proposal.
+4. Use the Gallery and coin page to view and trade the coin.
+
+### Step 1: Write the proposal
+
+1. Navigate to your DAO's dashboard and click **Create Proposal**.
+2. Write a **title** and **description** that clearly identify the content being coined — include a link to the artwork, post, or contribution where relevant.
+3. Click **Continue**.
+
+### Step 2: Add the Content Coin transaction
+
+1. Under **Select Transaction Type**, choose **Content Coin** from the dropdown.
+2. Fill in the coin metadata
+3. Optionally expand **Custom Properties** to add key-value metadata attributes to the coin.
+4. Accept the disclaimer and click **Add Transaction to Queue**.
+
+#### Content Coin metadata
+
+| Field             | Description                                                                                          |
+|-------------------|------------------------------------------------------------------------------------------------------|
+| **Media**         | Upload the media for your coin (images, videos, or audio).                                          |
+| **Name**          | The display name for the coin (1–100 characters).                                                   |
+| **Symbol**        | A short ticker (1–10 uppercase letters/numbers). Auto-generated from the name but editable.         |
+| **Description**   | A description of the content this coin represents.                                                  |
+| **Base Currency** | Pre-filled with the DAO's Creator Coin. This cannot be changed — Content Coins are always paired to the DAO's Creator Coin. |
+
+
+<img
+  src="/guides/coiningGuide/coin_settings_content_coin.png"
+  alt="Content Coin Form"
+  width="480"
+/>
+
+
+*The Content Coin form. The Base Currency field is automatically pre-filled with the DAO's Creator Coin.*
+
+
+#### Custom settings
+
+<img
+  src="/guides/coiningGuide/custom_settings_content_coin.png"
+  alt="Content Coin Currency Settings"
+  width="480"
+/>
+
+
+#### Launch economics
+
+<img
+  src="/guides/coiningGuide/launch_econ_content_coin.png"
+  alt="Content Coin Launch Economics"
+  width="480"
+/>
+
+
+### Step 3: Review, submit, and execute
+
+1. Click **Continue** to reach the **Review and Submit** step.
+2. Verify the simulation results and confirm the transaction details.
+3. Submit the proposal on-chain.
+
+<img
+  src="/guides/coiningGuide/coin_creations.png"
+  alt="Coin Creations"
+  width="480"
+/>
+
+
+*A proposal detail page showing a Content Coin in the Coin Creations section.*
+
+---
+
+## Reading Coin Creations and post-execution views
+
+### Coin Creations on proposals
+
+After a coining proposal is submitted, the proposal detail page shows a **Coin Creations** section under the **Details** tab. This section is visible at any proposal state — pending, active, executed, or expired — so voters can review what will be deployed before casting their vote.
+
+Each coin card in the section displays:
+
+- The coin type (**Creator Coin** or **Content Coin**) and its index within the proposal (for example, "Creator Coin 1").
+- The coin's ticker symbol (for example, `$BLDC`).
+- The full name, symbol, and description.
+- A **View Coin Page** button linking to the coin's live trading and collector page (visible after execution).
+
+### After execution
+
+Once the proposal is executed:
+
+- The Content Coin is deployed and listed under the [**Gallery** section](https://testnet.nouns.build/dao/base/0xe5b2789eac1c60afeaafb9c92149add89eb9e102/15?tab=gallery) of the DAO.
+- You can also view the coin on its [coin page](https://testnet.nouns.build/coin/base/0x334d84062fa9db869642f9c6e42eb7d0825ef02c), where you can trade.
+
+<img
+  src="/guides/coiningGuide/gallery.png"
+  alt="Gallery"
+  width="480"
+/>
+
+<img
+  src="/guides/coiningGuide/content_coin_page.png"
+  alt="Content Coin Page"
+  width="480"
+/>
+
+
+Once executed, you can:
+
+- Trade coins on the coin page.
+- Comment on Content Coins on the coin page.
+- Like coins by purchasing USD 0.1, 0.5, or USD 1 worth of coin.
+- Share the coin by copying the link.
+- See the top holders.
+
+<img
+  src="/guides/coiningGuide/top_holders.png"
+  alt="Top Holders"
+  width="480"
+/>
+
+
+:::caution
+Trades are disabled for Content Coins on Base Sepolia.
+:::

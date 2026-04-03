@@ -5,109 +5,196 @@ id: builder-proposal
 title: How to Create a Proposal
 ---
 
+##### Learn how to submit a governance proposal in your DAO
 
 
-##### Learn how to create a proposal for a DAO
+Proposals are the core mechanism of DAO governance. Any token holder who meets the Proposal Threshold can submit a proposal — and if it passes a vote, the DAO will execute whatever transactions you've attached to it automatically.
 
----
+The proposal flow is split into three steps: write your proposal, add transactions, then review and submit on-chain.
+
+:::note
+
+To follow along safely before going to mainnet, use the [Sepolia Testnet](https://testnet.nouns.build/). You'll need a governance token for the DAO you want to propose in. Your wallet must hold enough tokens to meet the DAO's Proposal Threshold.
+
+:::
 
 
-### Key Terms 
+## Key Terms
 
-- `Proposal Threshold:` Minimum amount of total votes (NFTs) needed to put a proposal to a vote.
-For example, if the Proposal Threshold is set to 1% and there are 500 total NFTs minted then 5 NFTs need to approve the proposal for it to a vote.
-- `Quorum Threshold:` Minimum of total **For** votes (NFTs) required for a proposal to pass
-- `Voting Delay:` The amount of time before a proposal can start voting in seconds.
-- `Voting Period:` The duration for voting on a proposal in seconds.
-- `Time Lock Delay:` The amount of time a successful proposal must wait between being queued and executed.
+- `Proposal Threshold:` The minimum number of governance tokens (as a percentage of total supply) required to submit a proposal. For example, if the threshold is 1% and 500 tokens have been minted, you'll need at least 5 tokens.
+- `Quorum Threshold:` The minimum number of **For** votes required for a proposal to pass.
+- `Voting Delay:` The time between a proposal being submitted and voting opening, in seconds.
+- `Voting Period:` How long voting remains open, in seconds.
+- `Time Lock Delay:` The waiting period between a successful vote being queued and the transaction being executed. Defaults to 2 days.
 
-### Proposal Lifecycle:
-- A proposal is submitted to the DAO on-chain by an address that owns enough NFTs to clear the Proposal Threshold.
-- The proposal can't be voted on until after the voting delay time has passed.
-- Once the delay period has passed, the proposal must then receive more **For** votes than **Against** and the number of **For** votes must meet or surpass the Quorum Threshold.
-- Next, if the voting period has finished and it has received enough **For** votes then the proposed transaction is queued for execution.
-- Then the proposal must pass the Time Lock Delay which defaults to 2 days.
-- Finally, once the time lock has ended the proposal is then executed.
+
+## Proposal Lifecycle
+
+Once submitted, a proposal moves through the following stages:
+
+1. **Pending** — The proposal is on-chain but voting hasn't started yet (Voting Delay is active).
+2. **Active** — Voting is open. Token holders cast For, Against, or Abstain votes.
+3. **Succeeded / Defeated** — Voting closes. The proposal passes if For votes exceed Against votes and meet the Quorum Threshold. Otherwise it's defeated.
+4. **Queued** — A successful proposal enters the time lock queue.
+5. **Executed** — After the Time Lock Delay, anyone can trigger execution. The DAO's treasury carries out the attached transactions.
 
 ![proposalLifecycle](../../../assets/images/proposalLifecycle.png)
 
----
 
-## Updating DAO Settings
-This section will go over how to edit a specific parameter of your DAO such as the description, auction duration, voting period, and much more.
+## Creating a Proposal
 
-#### Admin Section
-First, navigate to the Admin tab under the live auction for your DAO. 
-You will only be able to view this section if connect a wallet that has an NFT for the DAO.
-![adminSection](../../../assets/images/adminSection.png)
+Navigate to your DAO's **Activity** tab and click **Create proposal**.
 
-<br/>
-
-#### Edit Details
-Next, select the DAO setting you would like to change. 
-In the example below, we are changing the auction duration to once a day instead of once every three hours.
-![adminedit](../../../assets/images/adminEdit.png)
+<img
+  src="/guides/proposalGuide/create_proposal.png"
+  alt="createProposalButton"
+  width="500"
+/>
 
 
-<br/>
+The proposal builder opens at Step 1. A progress indicator at the top of the page shows all three steps throughout the flow.
 
-#### Proposal Form
-Now add a title and description to your proposal.
-![propForm](../../../assets/images/proposalForm.png)
+:::note
 
-<br/>
+**First time?** A tip banner at the top of the page summarises the flow: write the proposal, add transactions, then do a final preflight before submitting. Click **Got it** to dismiss it.
 
-#### Submitting the Proposal
-Finally, you will be prompted with a transaction once you click Submit proposal.
-This will create the proposal on-chain. 
-Note, that you must have enough NFTs in your address to meet the Proposal Threshold to create a proposal.
-
-![proposalSuccess](../../../assets/images/proposalSuccess.png)
+:::
 
 
-<br/>
 
-#### Live Proposals
-Then you should be able to see your proposal under the Governance tab under the live auction for a DAO.
-Note, the proposal must pass the Voting Delay time period before being voted on.
-![propCreated](../../../assets/images/proposalCreated.png)
+## Step 1: Write Proposal
 
----
+<img
+  src="/guides/proposalGuide/write_proposal.png"
+  alt="writeProposalStep"
+  width="500"
+/>
 
-## Creating a General Proposal
-This section will cover how to create a custom proposal that sends ETH out of the treasury.
 
-### Sending Ether
+Fill in the two fields:
 
-First, navigate to the Governance tab under the live auction for a DAO.
-Then click the Submit Proposal button in the Proposals section.
-![generalProp](../../../assets/images/generalProposal.png)
+- **Title** — A concise, descriptive name for your proposal. This is what token holders will see in the proposals list.
+- **Description** — The full proposal write-up. The editor supports Markdown: use the toolbar for headings, bold, italic, links, code blocks, images, and lists. You can also drag and drop files into the description area to attach them.
 
-#### Proposal Form
-Now add a title and description to your proposal. 
-Then paste the address you would like to send the ETH and enter the amount.
-You can skip the function and arguments part since we are only sending ETH.
+Once both fields are complete, click **Continue** to move to Step 2.
 
-![sendEth](../../../assets/images/sendEthGif.gif)
+:::tip
 
-### Calling a Contract Function
+We will add support for submitting proposals on someone's behalf soon.
 
-In this example, we will create a proposal that will mint a free NFT from a [Zora Create](https://create.zora.co/) contract.
+:::
 
-#### Proposals Section
-First, navigate to the Governance tab under the live auction for a DAO.
-Then click the Submit Proposal button in the Proposals section.
-![genProp](../../../assets/images/generalProposal.png)
+## Step 2: Add Transactions
 
-#### Proposal Form
-Then write a title and description for your proposal. 
-After that add the contract ABI for the contract you are calling. 
-You can find the ABI for a contract on Etherscan under the [Contract section](https://etherscan.io/address/0xe87a68de82204bfa63e4d626d4c5194481cf3b59#code) below the source code.
-Then select the function you want to call in the proposal. 
+<img
+  src="/guides/proposalGuide/add_transaction.png"
+  alt="addTransactionsStep"
+  width="500"
+/>
 
-![mintNFTGif](../../../assets/images/mintNFTGif.gif)
+Transactions define what the DAO actually *does* if the proposal passes. You need to queue at least one transaction to proceed. The header shows a running count of transactions queued.
 
-In this case, we are minting [an NFT](https://create.zora.co/collections/0xd945f759d422ae30a6166838317b937de08380e3).
-For this we will select the `purchase` function, the NFT is free so we set the ETH to 0, and we set the amount to 1 to mint a single NFT.
-Once, that is done we can submit our proposal on-chain with a transaction.
+### Selecting a Transaction Type
 
+Use the **Select transaction type** dropdown to choose from the available options:
+
+| Transaction Type | Description |
+|---|---|
+| **Send Tokens** | Send ETH or ERC-20 tokens from the treasury to one or more recipients |
+| **Send NFTs** | Send NFTs from the treasury |
+| **Stream Tokens** | Set up continuous token payments over time (powered by Sablier) |
+| **Airdrop Tokens** | Distribute tokens via Sablier merkle campaigns |
+| **Milestone Payments** | Schedule token releases tied to milestones |
+| **Mint Governance Tokens** | Mint governance tokens to specific addresses |
+| **WalletConnect** | Connect to a dApp and execute transactions via WalletConnect |
+| **Nominate Delegate** | Nominate a delegate for milestone payments or token streams |
+| **Pin Treasury Asset** | Whitelist a token or NFT for prominent display in the treasury |
+| **Custom Transaction** | Any other contract call — paste an ABI and select a function |
+| **Content Coin** | Create a proposal to mint a Content Coin |
+| **Droposal: Single Edition** | Create a single-edition ERC-721 collection droposal |
+| **Pause Auctions** | Pause DAO auctions |
+| **Add Artwork** | Add new artwork layers to your DAO's NFT collection |
+| **Replace Artwork** | Replace an existing artwork layer in your collection |
+
+<img
+  src="/guides/proposalGuide/txn_type.png"
+  alt="Transaction Types"
+  width="400"
+/>
+
+**Once you added the transaction details, you can add it to the queue.**
+
+<img
+  src="/guides/proposalGuide/add_to_queue.png"
+  alt="Add to queue"
+  width="400"
+/>
+
+### Example: Sending Tokens
+
+Select **Send Tokens** to send ETH or an ERC-20 token from the treasury.
+
+<img
+  src="/guides/proposalGuide/proposal_builder.png"
+  alt="Proposal Builder"
+  width="600"
+/>
+
+**If you want to reset your progress, follow the red arrows above. You will have to confirm to reset your progress.**
+
+<img
+  src="/guides/proposalGuide/reset_proposal.png"
+  alt="Reset Progress"
+  width="400"
+/>
+
+1. Choose a token from the **Select a token** dropdown (ETH or any ERC-20 held by the treasury).
+2. Enter the recipient address and amount. Use the **Number of Recipients** control to add multiple recipients in a single transaction.
+3. Click **Add Transaction to Queue**.
+
+The transaction appears in the queue. You can add multiple transactions of different types to a single proposal — they'll all execute together if the proposal passes.
+
+### Updating DAO Settings via a Proposal
+
+If you want to change a governance parameter (auction duration, voting period, quorum, and so on), you don't need a custom transaction. Use the **Configure DAO Settings** shortcut at the bottom of the page — this takes you directly to the Admin tab where settings changes are automatically encoded as proposal transactions.
+
+Once you've queued all your transactions, click **Continue**.
+
+## Step 3: Review and Submit
+
+<img
+  src="/guides/proposalGuide/review_submit.png"
+  alt="Review and Submit"
+  width="600"
+/>
+
+The final step gives you a full summary of everything before it goes on-chain:
+
+- **Proposal title and description** — review for accuracy.
+- **Transaction list** — confirm each transaction, the target addresses, and amounts.
+- **Simulation results** — the interface runs a simulation of your transactions so you can catch any execution errors before spending gas.
+- **Governance timeline** — a projected timeline showing when voting will open and close, and when the proposal could be executed if it passes.
+
+If anything looks wrong, use the **←** back button to return to the previous step and make changes. The draft is preserved.
+
+When you're satisfied, click **Submit proposal**. Your wallet will prompt you to sign and broadcast the on-chain transaction.
+
+<img
+  src="/guides/proposalGuide/proposal_submitting.png"
+  alt="Submitting Proposal"
+  width="600"
+/>
+
+:::note
+
+Your wallet must hold enough governance tokens to meet the Proposal Threshold at the moment of submission. If you don't meet the threshold, the transaction will revert.
+
+:::
+
+Once the transaction confirms, the proposal will appear in your DAO's **Activity** tab with a **Pending** status. It will move to **Active** once the Voting Delay period has elapsed.
+
+<img
+  src="/guides/proposalGuide/proposal_pending.png"
+  alt="Proposal pending"
+  width="600"
+/>

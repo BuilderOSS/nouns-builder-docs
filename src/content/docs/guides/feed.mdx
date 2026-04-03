@@ -1,0 +1,230 @@
+---
+sidebar:
+  order: 12
+id: feed
+title: The Builder Social Feed
+---
+
+#### *Stay up to date with everything happening across Nouns Builder DAOs in one personalised, filterable feed: auctions, proposals, posts, and more.*
+
+## Overview
+
+The **Feed** is the primary landing experience on [nouns.build](https://nouns.build/). It provides a real-time, chronological stream of activity across all Nouns Builder DAOs on supported chains, including auction events, governance updates, community posts, and coin deployments.
+
+The feed is personalised when you connect your wallet. It filters by the DAOs you belong to by default and surfaces quick actions relevant to your role in those communities.
+
+
+<img
+  src="/guides/coiningGuide/feed_overview.png"
+  alt="Feed Overview"
+  width="480"
+/>
+
+
+
+## Feed Layout
+
+The feed is divided into two columns:
+
+- **Left column (main feed):** a chronological list of activity cards, each representing a single event from a DAO.
+- **Right column (sidebar):** your profile, quick-action buttons, a collapsible summary of your DAOs with auction controls, and a collapsible view of active proposals.
+
+At the top of the feed column, a `Customize Feed` button lets you filter what appears.
+
+
+## Feed Cards
+
+Each card in the feed represents a single on-chain or protocol-level event. Cards display:
+
+- The **user address** (or ENS name) and **DAO name** that generated the event
+- A **thumbnail** of the relevant token or media
+- An **event title** (e.g. "New auction for Example DAO #007")
+- **Chain indicator** and **relative timestamp** (e.g. "Base · 37m ago")
+- **Contextual action buttons** depending on the event type
+
+
+### Supported Event Types
+
+| Event | What it means | Actions shown |
+|---|---|---|
+| **Auction Created** | A new auction has started for a DAO token | `Place Bid`, `View Auction` |
+| **Auction Bid** | A bid has been placed on an active auction | `Place Bid`, `View Auction` |
+| **Auction Settled** | An auction has ended and the token has been claimed | `Go to Latest Auction`, `View Auction` |
+| **Proposal Created** | A new governance proposal has been submitted | `View Proposal` |
+| **Proposal Vote** | A vote has been cast on an active proposal | `View Proposal` |
+| **Proposal Executed** | A proposal has passed and been executed on-chain | `View Proposal` |
+| **Proposal Update** | A Propdate has been posted on a proposal | `View Propdate` |
+| **Coining** | Coining posts appear in the feed show the associated coin page. | `Trade` or `Buy`, `View Coin` |
+| **Creator Coin Deployed** | A creator coin has been deployed for a DAO | `View Coin` |
+| **Drop Created** | An ERC-721 drop proposal has been executed | `View Drop` |
+
+The share icon (↗) on each card copies a direct link to that event.
+
+Clicking the **DAO name or avatar** in the top-left corner of any card navigates directly to that DAO's page.
+
+
+## The Sidebar
+
+The sidebar on the right-hand side of the feed gives you a real-time snapshot of your activity across the platform and surfaces quick actions without leaving the feed.
+
+
+### Profile Row
+
+At the top of the sidebar your connected **ENS name or wallet address** is displayed alongside your avatar, with a note showing how many DAOs you are a member of (e.g. "Member of 5 DAOs").
+
+### Quick Actions
+
+Three action buttons sit directly below your profile:
+
+- **`Create Post`** — publish a content coin on behalf of one of your DAOs. Opens a DAO selector, then a publish form with media upload, coin name, symbol, and description fields.
+- **`Create Proposal`** — start a new governance proposal for one of your DAOs. Opens the standard proposal builder. See [How to Create a Proposal](/onboarding/builder-proposal/) for a full walkthrough.
+- **`Create a DAO`** — deploy a new Nouns Builder DAO. See [How to Create a DAO](/guides/builder-deployment/) for a full walkthrough.
+
+### DAOs
+
+The **DAOs** section is a collapsible panel listing all DAOs you are a member of. Click the section header to expand or collapse it.
+
+
+When expanded, each DAO you belong to appears as a card showing:
+
+- The **DAO name** and token avatar
+- The **chain** it is deployed on (e.g. Base)
+- An auction status indicator:
+  - **`Start next Auction`** — the previous auction has settled and a new one can be kicked off. Click to trigger the settlement and start the next auction.
+  - **Auctions are paused** — the DAO's auction mechanism is currently paused. A `View activity` link takes you to the DAO's activity page.
+
+The count of your member DAOs (e.g. "5 DAOs") is shown in the collapsed state as a summary.
+
+### Proposals
+
+The **Proposals** section is a collapsible panel showing active governance proposals across all the DAOs you belong to. Click the section header to expand or collapse it.
+
+When there are no active proposals, the panel displays: *"No active proposals at the moment."*
+
+When active proposals are present, each one appears as a card with its title, DAO name, and voting status. Clicking a proposal card takes you directly to the proposal page.
+
+### Unauthenticated state
+
+When no wallet is connected, the sidebar shows only a prompt to connect your wallet. The quick-action buttons, DAOs section, and Proposals section are not visible until you connect.
+
+
+## Customising the Feed
+
+Click `Customize Feed` at the top of the feed column to open the filter panel.
+
+
+<img
+  src="/guides/coiningGuide/customise_feed.png"
+  alt="Feed Customisation Modal"
+  width="480"
+/>
+
+
+
+You can filter by three dimensions:
+
+### Chains
+
+Select one or more chains to include in your feed:
+
+- **Base**
+- **Ethereum**
+- **OP Mainnet**
+- **Zora**
+
+By default, all chains are included.
+
+### Event Types
+
+Toggle individual event types on or off:
+
+- Auction Created
+- Auction Bid
+- Auction Settled
+- Proposal Created
+- Proposal Vote
+- Proposal Executed
+- Proposal Update
+- Creator Coin Deployed
+- Post Published
+- Drop Created
+
+This is useful if, for example, you only want to track governance activity and want to hide auction noise, or you're specifically watching for new coin deployments.
+
+### DAOs
+
+Choose between:
+
+- **All DAOs** — show events from every DAO on the selected chains (default)
+- **Specific DAOs** — restrict the feed to a curated list of DAOs you choose
+
+Once you've configured your filters, click `Apply Filters` to update the feed. Select `Reset to Defaults` to clear all filters and return to the default view.
+
+## Creating a Post
+
+To publish a post from the feed:
+
+1. Click `Create Post` in the sidebar.
+2. In the **Select DAO for Post** dialog, select the DAO you want to publish on behalf of. You can search by name.
+
+<img
+  src="/guides/coiningGuide/select_DAO_for_post.png"
+  alt="Select DAO for Post"
+  width="480"
+/>
+
+
+3. Click `Continue`.
+4. On the **Publish Post** page:
+   - Upload your **media** (image, video, or audio).
+   - Enter a **name** (1–100 characters) — this becomes the display name for your content coin.
+   - Set a **symbol** (1–10 uppercase letters/numbers) — auto-generated from the name, but editable.
+   - Add a **description**.
+5. Review the live **preview** on the right to see how your post will appear to collectors.
+6. Submit to deploy the post on-chain.
+
+
+
+<img
+  src="/guides/coiningGuide/publish_post.png"
+  alt="Create a Post"
+  width="480"
+/>
+
+
+Posts are published as content coins using Zora's ERC-20 Coining SDK or Clanker coins (in case of launched DAO coins) and appear in the feed under the **Post Published** event type.
+
+Posts published from the feed are coining posts. When a DAO publishes a post, the post is created as an associated coin and appears in the feed as a **Published post** event. From the feed, members can open the coin page and, depending on the state of the asset, see actions such as `Trade`, `Buy`, and `View Coin`.
+
+:::note
+
+You must be a member of the DAO you're publishing for. Only DAOs associated with your connected wallet appear in the DAO selector.
+
+:::
+
+Once the post is live, you can:
+
+- Trade coins on the coin page
+- Comment on Content Coins on the coin page
+- Like coins by purchasing USD 0.1, 0.5, or USD 1 worth of coin
+- Share the coin by copying the link
+
+<img
+  src="/guides/coiningGuide/likes.png"
+  alt="Like Button"
+  width="480"
+/>
+
+
+:::caution
+
+Trades are disabled for Content Coins on Base Sepolia.
+
+:::
+
+## Tips
+
+- **Filter to your DAOs** — if you're a member of several DAOs, set the DAOs filter to "Specific DAOs" and select only the ones you actively follow to reduce noise.
+- **Chain-specific views** — working only on Base? Deselect other chains to keep the feed focused.
+- **Auction controls** — use the `Start next Auction` button in the DAOs sidebar panel to kick off a new auction for your DAO without leaving the feed page.
+- **Governance tracking** — enable "Proposal Created" and "Proposal Vote" in the event type filters to stay informed about governance activity across your communities without visiting each DAO page individually.

@@ -1,0 +1,98 @@
+---
+sidebar:
+  order: 9
+title: Mint Governance Tokens
+---
+
+## Creating a Proposal to Mint Governance Tokens
+
+The **Mint Governance Tokens** proposal type enables DAOs to distribute governance tokens directly
+to specified addresses via on-chain proposals. This is particularly useful for migrations,
+bootstrapping membership, or rewarding contributors. Minting is executed through the token
+contract and **can occur even if auctions are paused**, as it does not interact with the auction
+mechanism.
+
+<img
+  src="/guides/builderGuide/mint_gov_tokens.png"
+  alt="Mint Governance Tokens"
+  width="600"
+/>
+
+
+## Step-by-step Guide
+
+1. Navigate to the **Activity** section in your DAO and click **Create Proposal**.
+2. On the Add Transactions step, select **Mint Governance Tokens** from the transaction type dropdown.
+3. Add recipients manually or via CSV upload.
+4. Specify the number of tokens per recipient (must be a positive integer).
+5. Review the live summary beneath the Recipients label, which displays the total recipient
+   count and total tokens to be distributed, and updates as recipients are added or removed.
+6. Click **Add Transaction to Queue**, then proceed to submit the proposal for voting.
+7. Once passed and executed, tokens are minted and transferred in batched transactions.
+
+### Manual Entry
+
+For smaller distributions, add recipients directly via the form:
+
+- Enter a valid Ethereum address or ENS name in the **Address** field.
+- Specify the token amount (positive integer) in the **Amount** field.
+- Click **Add Recipient** to include additional entries.
+- Recipients can be edited or removed individually.
+- ENS names are resolved per recipient during submission.
+
+### Using CSV Upload
+
+For larger distributions, use the CSV upload feature:
+
+- Click **Download Template** to get a pre-formatted CSV with the required `address` and
+  `amount` headers.
+- Populate the file with valid Ethereum addresses (or ENS names, resolved on submission)
+  and positive integer amounts.
+- Upload via drag-and-drop into the upload area, or click to browse for the file.
+- The form parses the CSV, validates entries, and reports errors inline.
+- A maximum of 100 recipients per CSV is enforced to avoid gas limits. For larger
+  distributions, add multiple Mint Governance Tokens transactions within the same proposal.
+
+Example CSV structure:
+
+```csv
+address,amount
+0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e,10
+0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe,25
+```
+
+Validation ensures no more than 100 rows per CSV and enforces the required headers. Errors
+are displayed inline and submission is disabled until all entries are resolved.
+
+## Limitations and Best Practices
+
+:::caution
+
+CSV uploads are limited to 100 recipients per transaction due to gas constraints. For larger
+distributions, queue multiple Mint Governance Tokens transactions within a single proposal —
+but be aware that a very large number of transactions may exceed the block gas limit, causing
+execution to fail. Test on testnet before submitting large distributions to mainnet.
+
+:::
+
+:::note
+
+Token mints cannot be undone once a proposal is executed. Verify all addresses carefully
+before submitting.
+
+:::
+
+## Final Remarks
+
+- For migrations from existing collections, consider taking a holder snapshot before minting,
+  to accurately capture current membership.
+- Minting governance tokens does not unpause auctions. The two mechanisms are independent.
+- Newly minted tokens do not affect quorum or threshold calculations until they have been
+  delegated by their recipients.
+
+:::tip
+
+Looking to distribute tokens via a Sablier merkle campaign instead? Use the
+**Airdrop Tokens** proposal type, available in the same transaction type dropdown.
+
+:::
