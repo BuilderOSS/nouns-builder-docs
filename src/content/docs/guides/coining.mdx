@@ -7,10 +7,16 @@ title: Coining
 
 ## Overview
 
-Coining is Builder's framework for launching on-chain fungible tokens directly from DAO proposals. It replaces the legacy Droposal model with two distinct coin types, **Creator Coins** and **Content Coins**, each with a specific role in the DAO's economy.
+Coining is Builder's framework for launching on-chain fungible tokens directly from DAO proposals. It is an addition to the legacy Droposal model. Communities now also can make use of two ERC-20 coin types, **Creator Coins** and **Content Coins**, for governance and community engagement. These coin types are as follows:
 
 - **Creator Coin (DAO Coin):** The primary coordination token for a DAO, deployed via [Clanker](https://clanker.world/). Always governance-gated — a DAO vote is required to deploy it.
 - **Content Coin:** A post- or contribution-level token, deployed via Zora's ERC-20 Coining SDK. Issued through a DAO proposal or as a [permissionless post](/guides/feed) and paired against the DAO's Creator Coin.
+
+:::caution
+
+**Coining is currently only supported on Base Mainnet and Base Sepolia.** Base Sepolia is supported for Nouns Builder-related testing only and does not support testing tradining functionalities. If you require a test DAO on Base Mainnet with shortlived voting cycles for testing trading functionalities in production, please reach out to the Tech Pod team or open a ticket on Discord.
+
+:::
 
 Together, these two coin types form a hierarchy: `$CONTENT → $CREATOR → $WETH`, in which trading fees flow up the chain, rewarding the DAO and supporting long-term sustainability.
 
@@ -107,16 +113,23 @@ The **Initial Purchase** field draws from the DAO treasury balance shown in the 
 2. Check the transaction simulation results and confirm the on-chain details.
 3. Submit the proposal on-chain.
 
-Once the proposal passes and is executed, the Creator Coin is deployed. The **Coin Creations** section on the proposal detail page will update to show the deployed coin name, symbol, description, and a [link](https://nouns.build/coin/base/0x250422c9cc891FE672d99B6B829EfF9c96884B99) to the coin's page.
+Once the proposal passes and is executed, the Creator Coin is deployed. This is helpful for a governance perspective, as the executed [Creator Coin proposal page](https://nouns.build/dao/base/0xe5b2789eac1c60afeaafb9c92149add89eb9e102/vote/1) also displays the relevant data proposal data.
+
+<img
+  src="/guides/coiningGuide/creator_coin_proposal_page.png"
+  alt="Creator Coin Proposal Page"
+  width="480"
+/>
+
+
+ It nests a Coin Creations section that shows the deployed coin's name, symbol, description, and a link to the coin page. The **Coin Creations** section on the proposal detail page will update to show the deployed coin name, symbol, description, and a [link](https://nouns.build/coin/base/0x250422c9cc891FE672d99B6B829EfF9c96884B99) to the coin's page.
+
 
 <img
   src="/guides/coiningGuide/creator_coin_page.png"
   alt="Creator Coin Page"
   width="480"
 />
-
-
-*An executed Creator Coin proposal. The Coin Creations section shows the deployed coin's name, symbol, description, and a link to the coin page.*
 
 ---
 
@@ -227,8 +240,8 @@ Each coin card in the section displays:
 
 Once the proposal is executed:
 
-- The Content Coin is deployed and listed under the [**Gallery** section](https://testnet.nouns.build/dao/base/0xe5b2789eac1c60afeaafb9c92149add89eb9e102/15?tab=gallery) of the DAO.
-- You can also view the coin on its [coin page](https://testnet.nouns.build/coin/base/0x334d84062fa9db869642f9c6e42eb7d0825ef02c), where you can trade.
+- The Content Coin is deployed and listed under the [**Gallery** section](https://nouns.build/dao/base/0xe5b2789eac1c60afeaafb9c92149add89eb9e102/15?tab=gallery) of the DAO.
+- You can also view the coin on its [coin page](https://nouns.build/coin/base/0x334d84062fa9db869642f9c6e42eb7d0825ef02c), where you can trade.
 
 <img
   src="/guides/coiningGuide/gallery.png"
