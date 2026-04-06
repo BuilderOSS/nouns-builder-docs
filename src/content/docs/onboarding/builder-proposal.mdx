@@ -78,9 +78,39 @@ Fill in the two fields:
 
 Once both fields are complete, click **Continue** to move to Step 2.
 
-:::tip
+### Optional Fields
 
-We will add support for submitting proposals on someone's behalf soon.
+Beyond the title and description, Step 1 exposes two optional fields that are worth knowing about.
+
+#### Discussion URL
+
+<img
+  src="/guides/proposalGuide/optional_proposal_fields.png"
+  alt="Discussion URL field"
+  width="500"
+/>
+
+Paste a link to any off-chain discussion thread related to the proposal — a governance forum post, a Farcaster cast, a Discord thread, or similar. This gives voters context without cluttering the on-chain description. Please refrain from adding IPFS URLs.
+
+#### Submitting on Behalf of Someone Else
+
+<img
+  src="/guides/proposalGuide/submitting_on_behalf.jpg"
+  alt="Submit on behalf of checkbox and address field"
+  width="500"
+/>
+
+If you are submitting a proposal on behalf of another token holder, check the **Are you submitting this proposal on behalf of someone else?** box. An address field will appear — enter the proposer's wallet address (`0x…`) or ENS name. The proposal will be attributed to that address on-chain in the proposal metadata.
+
+<img
+  src="/guides/proposalGuide/on-behalf_prop_metadata.png"
+  alt="Proposal Metadata for Proposals on someone's behalf"
+  width="500"
+/>
+
+:::note
+
+The wallet you connect with must still meet the DAO's Proposal Threshold. The on-behalf-of field adds data on the attributed proposer in the proposal metadata but does not delegate voting power.
 
 :::
 
