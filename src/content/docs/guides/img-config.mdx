@@ -32,7 +32,7 @@ Currently no maximum image size is set on the frontend, which is **subject to ch
 
 ## Seed Generation
 The seed is used to create a random combination of properties for the DAO NFTs.
-It is generated in the [Metadata Render Contract](https://github.com/ourzora/nouns-protocol/blob/main/src/token/metadata/MetadataRenderer.sol#L279) by calling `_generateSeed` with the current tokenId and salting the hash with block data.
+It is generated in the [Metadata Render Contract](https://github.com/BuilderOSS/nouns-protocol/blob/main/src/token/metadata/MetadataRenderer.sol#L279) by calling `_generateSeed` with the current tokenId and salting the hash with block data.
 
 ```
 function _generateSeed(uint256 _tokenId) private view returns (uint256) {

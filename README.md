@@ -6,7 +6,7 @@ Official documentation for [Nouns Builder](https://nouns.build/), a protocol for
 
 ## Links
 
-- 🌐 [Live Site](https://builder-docs.vercel.app)
+- 🌐 [Live Site](https://docs.nouns.build/)
 - 🏗️ [Nouns Builder App](https://nouns.build/)
 - 🐙 [GitHub](https://github.com/BuilderOSS)
 - 💬 [Discord](https://discord.gg/bTygNksyRb)
