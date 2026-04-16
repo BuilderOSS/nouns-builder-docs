@@ -9,7 +9,7 @@ Official documentation for [Nouns Builder](https://nouns.build/), a protocol for
 - 🌐 [Live Site](https://builder-docs.vercel.app)
 - 🏗️ [Nouns Builder App](https://nouns.build/)
 - 🐙 [GitHub](https://github.com/BuilderOSS)
-- 💬 [Discord](https://discord.gg/bTygNksyRb)
+- 💬 [Discord](https://discord.gg/f845eBCyyb)
 - 🟣 [Farcaster](https://farcaster.xyz/~/channel/builder)
 
 ## 🚀 Project Structure
