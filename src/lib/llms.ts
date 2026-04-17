@@ -11,11 +11,18 @@ function stripFrontmatter(source: string) {
 }
 
 function normalizeMarkdown(source: string) {
-  return source
-    .replace(/\r\n/g, '\n')
-    .replace(/^import\s+.+$/gm, '')
-    .replace(/^export\s+.+$/gm, '')
-    .replace(/<[^>]+>/g, '')
+  const parts = source.replace(/\r\n/g, '\n').split(/(```[\s\S]*?```)/g);
+
+  return parts
+    .map((part, index) => {
+      if (index % 2 === 1) return part;
+
+      return part
+        .replace(/^\s*import\s+.+$/gm, '')
+        .replace(/^\s*export\s+.+$/gm, '')
+        .replace(/^\s*<\/?[A-Z][^>]*>\s*$/gm, '');
+    })
+    .join('')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 }
@@ -30,7 +37,9 @@ function descriptionFor(entry: DocEntry) {
 
 function pathFor(entry: DocEntry) {
   const slug = entry.id.replace(/\.(md|mdx)$/i, '');
-  return slug === 'index' ? '/' : `/${slug}/`;
+  if (slug === 'index') return '/';
+  if (slug.endsWith('/index')) return `/${slug.replace(/\/index$/, '')}/`;
+  return `/${slug}/`;
 }
 
 function urlFor(entry: DocEntry) {
