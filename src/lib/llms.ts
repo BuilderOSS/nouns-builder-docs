@@ -7,7 +7,7 @@ const SITE_DESCRIPTION = 'Documentation for users, contributors, and builders wo
 type DocEntry = Awaited<ReturnType<typeof getCollection<'docs'>>>[number];
 
 function stripFrontmatter(source: string) {
-  return source.replace(/^---\s*[\r\n]+[\s\S]*?[\r\n]+---\s*[\r\n]*/m, '').trim();
+  return source.replace(/^---\s*[\r\n]+[\s\S]*?[\r\n]+---\s*[\r\n]*/, '').trim();
 }
 
 function normalizeMarkdown(source: string) {
@@ -28,11 +28,18 @@ function normalizeMarkdown(source: string) {
 }
 
 function titleFor(entry: DocEntry) {
-  return entry.data.title || entry.id.split('/').pop() || entry.id;
+  if (entry.data.title) return entry.data.title;
+
+  const segments = entry.id.split('/');
+  const basename = (segments.at(-1) || '').replace(/\.[^.]+$/, '');
+
+  if (basename && basename !== 'index') return basename;
+
+  return segments.at(-2) || entry.id;
 }
 
 function descriptionFor(entry: DocEntry) {
-  return (entry.data.description || '').toString().trim();
+  return (entry.data.description || '').toString().replace(/\s+/g, ' ').trim();
 }
 
 function pathFor(entry: DocEntry) {
@@ -80,7 +87,10 @@ export async function buildLlmsIndex() {
     '',
     '## Pages',
     '',
-    ...docs.map((doc) => `- [${doc.title}](${doc.url})${doc.description ? `: ${doc.description}` : ''}`),
+    ...docs.map((doc) => {
+      const escapedTitle = doc.title.replace(/\]/g, '\\]');
+      return `- [${escapedTitle}](${doc.url})${doc.description ? `: ${doc.description}` : ''}`;
+    }),
     '',
     '## Notes',
     '',
