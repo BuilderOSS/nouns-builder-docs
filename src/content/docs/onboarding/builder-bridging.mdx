@@ -6,14 +6,14 @@ title: Bridging on Nouns Builder
 ---
 
 ##### What is bridging?
-A blockchain bridge is a tool that connects two separate blockchain networks to enable assets to be transferred between them. This includes bridges that connect Ethereum (“Layer 1” or “L1”) to Layer 2 (“L2”) networks like Zora Network, OP Mainnet and Base that sit on top of Ethereum to enhance the speed and reduce the costs of performing onchain transactions. Nouns Builder's native bridge allows you to transfer your ETH from Ethereum to the Zora Network, OP Mainnet and Base.
+A blockchain bridge is a tool that connects two separate blockchain networks to enable assets to be transferred between them. This includes bridges that connect Ethereum (“Layer 1” or “L1”) to Layer 2 (“L2”) networks such as OP Mainnet and Base, which sit on top of Ethereum to improve speed and reduce the cost of onchain transactions. Nouns Builder's native bridge allows you to transfer ETH from Ethereum to supported L2 networks.
 
 ##### Why do I need to bridge my ETH?
 You must bridge your ETH to an L2 in order to transact on the L2, for example, to bid on L2 auctions or vote on L2 proposals.
 
 ##### What happens to my ETH when I am bridging?
 
-By bridging your ETH, you make it available for use on the L2. When you bridge ETH to an L2 supported on Nouns Builder (Zora Network, OP Mainnet, Base), your ETH is locked on L1 in the canonical bridge contract and a corresponding representation is made available on the L2. You control both sides with your wallet keys; Nouns Builder does not take custody. Bridged ETH is not spendable on L1 until you withdraw it back through the bridge.
+By bridging your ETH, you make it available for use on the L2. When you bridge ETH to an L2 supported on Nouns Builder, such as OP Mainnet or Base, your ETH is locked on L1 in the canonical bridge contract and a corresponding representation is made available on the L2. You control both sides with your wallet keys; Nouns Builder does not take custody. Bridged ETH is not spendable on L1 until you withdraw it back through the bridge.
 
 ## Bridging ETH to L2 networks on Nouns Builder
 
@@ -21,7 +21,7 @@ While we recommend using a commercial third-party bridge to access your funds mo
 
 For withdrawals and bridging from your L2 DAO treasury to Ethereum Mainnet or another L2, please use the **WalletConnect** Proposal Template to connect to a third-party bridge.
 
-The Nouns Builder bridge currently supports **deposit-only** bridging to Zora Network, OP Mainnet and Base. We use the native bridge for each of these L2 networks. The Nouns Builder bridge does not currently support withdrawals. Users will need to use other bridges to withdraw - see below for more details.
+The Nouns Builder bridge currently supports **deposit-only** bridging to OP Mainnet and Base. We use the native bridge for each supported L2. The Nouns Builder bridge does not currently support withdrawals. Users need to use another bridge to withdraw—see below for details.
 
 To bridge on Nouns Builder:
 1. Connect your wallet on [nouns.build](https://nouns.build).
@@ -45,9 +45,7 @@ As of August 2025, bridges provided by Nouns Builder are only accessible through
 ## Withdrawing ETH from L2 networks on Nouns Builder
 The Nouns Builder bridge **does not** currently support withdrawals.
 
-To withdraw from Zora Network, OP Mainnet or Base to Ethereum Mainnet:
+To withdraw from OP Mainnet or Base to Ethereum Mainnet:
 
-- Withdraw from [Zora Network](https://bridge.zora.energy/)
 - Withdraw from [OP Mainnet](https://app.optimism.io/bridge/withdraw)
 - Withdraw from [Base](https://bridge.base.org/withdraw)
-

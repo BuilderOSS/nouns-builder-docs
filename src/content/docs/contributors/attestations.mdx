@@ -31,17 +31,14 @@ sequenceDiagram
 
 ## Schema Specification
 
-The schema with the UID `0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3` enables Nouns Builder Propdates. It is deployed onchain on all networks supported by Nouns Builder **except Zora**. The schema consists of mandatory and optional fields. The payload displayed on the frontend is wrapped in a `message` field, which MAY contain a *JSON* string.
+The schema with the UID `0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3` enables Nouns Builder Propdates. It is deployed onchain on the supported networks listed below. The schema consists of mandatory and optional fields. The payload displayed on the frontend is wrapped in a `message` field, which MAY contain a *JSON* string.
 
 ### Deployed Schemas
 
 - [Base](https://base.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
-- Zora Mainnet **(not supported)**
 - [OP Mainnet](https://optimism.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
 - [Ethereum Mainnet](https://easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
 - [Base Sepolia](https://base-sepolia.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
-- [OP Sepolia](https://optimism-sepolia.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3),
-- Zora Sepolia **(not supported)**
 - [Ethereum Sepolia](https://sepolia.easscan.org/schema/view/0x8bd0d42901ce3cd9898dbea6ae2fbf1e796ef0923e7cbb0a1cecac2e42d47cb3)
 
 ### Schema Structure
@@ -118,7 +115,7 @@ string message;         // Inline content or off-chain URL
     Fetch the schema on the relevant network using EAS Scan and the Schema UID. Connect your wallet and post an update.
 
 3. **Propdates versus release requests**
-    Release request must be made independently of updates and comments, using the `Release Milestone` functionality, as described in the [Nouns Builder Escrow Proposal Guide](../guides/builder-escrow-proposal)
+    Release request must be made independently of updates and comments, using the `Release Milestone` functionality, as described in the [Nouns Builder Escrow Proposal Guide](/guides/builder-escrow-proposal/)
 
 ### Usage in Nouns Builder Frontend
 
@@ -133,4 +130,3 @@ string message;         // Inline content or off-chain URL
 Only attestations from DAO members are displayed under **Propdates** by default, but users can select **All Propdates** to see non-member comments.
 
 The attestation schema can be deployed to additional networks using the same UID by anyone.
-

@@ -69,10 +69,10 @@ Visitors can mint directly from the gallery card without leaving the DAO page, o
 
 To create a new droposal:
 
-1. Navigate to your DAO's dashboard and click **Create Proposal**.
+1. Open your DAO, select the **Proposals** tab and click **Create Proposal**.
 2. Write a proposal title and description explaining the drop.
 3. On the Add Transactions step, select **Droposal: Single Edition** from the transaction type dropdown.
-4. Configure the drop settings (see Sales Configuration below).
+4. Configure the collection, artwork, sale and revenue settings. Use **Advanced** to change the edition type and size, royalties, mint limit per address or default administrator.
 5. Add the transaction to the queue, then review and submit the proposal for a governance vote.
 6. If the proposal passes and is executed, the `ERC721Drop` contract is deployed and the mint page becomes active.
 
@@ -85,23 +85,21 @@ To create a new droposal:
 
 *Select **Droposal: Single Edition** from the transaction type dropdown on the Add Transactions step.*
 
-You can then also define edition parameters and set a royalty payout address.
+Droposals use an open edition with unlimited mints per wallet by default. Change these settings under **Advanced** when the drop needs a fixed supply or per-wallet mint limit.
 
-#### Droposal Edition Parameters
+### Splitting Revenue
 
-<img
-  src="/guides/builderGuide/droposal_edition_params.png"
-  alt="Edition Parameters"
-  width="300"
-/>
+Enable **Use revenue split** under **Revenue** to share mint proceeds and royalties between multiple recipients.
 
-#### Droposal Royalties Payout Address
+Add each recipient and its allocation. Recipient addresses must be unique and the allocations must total 100% before you can create the split.
 
 <img
-  src="/guides/builderGuide/droposal_royalties.png"
-  alt="Droposals Royalty Payout"
-  width="300"
+  src="/guides/builderGuide/droposal-split-recipients.png"
+  alt="Revenue split recipients and their allocations"
+  width="500"
 />
+
+Creating the split requires a separate wallet transaction. Once deployed, its address becomes the Droposal's payout address; the Droposal itself still needs to pass through governance.
 
 ## Technical Reference
 

@@ -1,0 +1,37 @@
+---
+sidebar:
+  order: 2.3
+title: Upgrading DAO Contracts
+---
+
+##### Prepare an existing DAO for proposal candidates and updateable proposals
+
+:::caution[Upgrade flow coming soon]
+
+The in-app contract upgrade flow is not yet live and could not be tested for this guide. Step-by-step instructions and screenshots will be added once the production experience is available.
+
+Do not submit an upgrade proposal using unverified implementation addresses or calldata.
+
+:::
+
+New DAO deployments can be configured with an update period when their governance contracts are created. Existing DAOs need to upgrade their contracts through governance before they can use the latest proposal capabilities.
+
+Upgrading an existing Governor does not automatically enable proposal updates. Its update period remains set to zero until the DAO approves a governance action to configure it. With a zero-length update period, proposals continue to enter the existing Pending stage immediately and cannot be revised.
+
+The forthcoming guide will cover:
+
+- checking the versions currently used by the DAO;
+- reviewing the official implementation addresses for each supported chain;
+- preparing and simulating the upgrade proposal;
+- upgrading the Token, Auction and Governor proxies in the required order;
+- enabling and verifying the proposal update period; and
+- confirming proposal creation, candidate sponsorship and voting after the upgrade.
+
+Developers and proposal authors preparing an upgrade can review the compatibility notes and contract-level behaviour in the [Builder Protocol Technical Reference](/contributors/contract-upgrade/#proposal-candidates-and-updateable-proposals).
+
+## Protocol References
+
+- [Upgraded Governor contract](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/src/governance/governor/Governor.sol)
+- [Governor proposal lifecycle](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/governor-proposal-lifecycle.md)
+- [Governor architecture](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/governor-architecture.md)
+- [Contract upgrade runbook](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/upgrade-runbook.md)

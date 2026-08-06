@@ -29,14 +29,23 @@ This approach ensures fair distribution over time and creates a predictable fund
 
 ### Governance Parameters
 
-Builder DAOs use onchain governance to make decisions. The protocol provides customizable governance settings when launching a DAO:
+Builder DAOs use onchain governance to make decisions. The protocol provides customisable governance settings when launching a DAO:
 
 - **Voting Delay:** Time between when a proposal is submitted and when voting begins.
 - **Voting Period:** Duration the community has to vote on a proposal.
 - **Quorum Threshold:** Minimum number of votes needed for a proposal to be valid.
 - **Proposal Threshold:** Minimum number of tokens required to create a proposal.
+- **Proposal Update Period:** An optional period during which a proposer can publish a replacement revision before the Voting Delay begins. This parameter exists only on the upgraded Governor and may be set to zero to retain the original lifecycle.
 
 These parameters shape how responsive, secure, and participatory your DAO will be.
+
+:::note[Original and upgraded Governors]
+
+DAO upgrades are opt-in. The original Governor remains in use across DAOs and moves proposals directly to **Pending**. The upgraded governance release combines [EAS-based proposal candidates](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/eas-proposal-candidates-schema.md) with an [upgraded Governor](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/src/governance/governor/Governor.sol) that supports revision-aware signing and the optional **Updatable** period. Existing DAOs that upgrade retain a zero-length update period until governance explicitly enables it, so an implementation upgrade alone does not change their proposal timing.
+
+See the [Governor architecture](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/governor-architecture.md) and [upgrade runbook](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/upgrade-runbook.md) for the contract-level distinction.
+
+:::
 
 ![Governance Settings](/onboarding/nb-protocolOnboarding/gov-setting.png)
 
@@ -49,10 +58,11 @@ Funds from each token auction are automatically routed to the DAO's treasury, wh
 - **No central ownership:** The treasury is owned and managed by the DAO itself.
 - **Proposal-controlled spending:** Members propose and vote on how funds are used.
 - **Transparency:** All transactions are recorded onchain and visible to the public.
+- **Treasury analytics:** The Treasury tab shows the treasury's asset composition, NFTs from the DAO's collection held by the treasury, and auction revenue over selectable time periods.
 
 DAOs often use these funds for grants, contributor payments, community tools, or protocol improvements.
 
-![Treasury](/onboarding/nb-protocolOnboarding/treasury.png)
+![Treasury overview showing its balance and asset composition](/onboarding/nb-protocolOnboarding/treasury-overview.png)
 
 ---
 
@@ -68,7 +78,7 @@ The Nouns Builder Protocol consists of several modular smart contracts. These in
 - **Metadata/Render Contract:** Controls visual and metadata logic for NFTs (if using NFTs).
 - **Treasury Contract:** Stores and secures the DAO's funds.
 
-Each component is interoperable and can be extended or customized by developers.
+Each component is interoperable and can be extended or customised by developers.
 
 ---
 
@@ -76,11 +86,11 @@ Each component is interoperable and can be extended or customized by developers.
 
 The protocol is designed with flexibility in mind:
 
-- **Upgradeable Governance Contracts:** Using the OpenZeppelin upgrade pattern, governance logic can evolve over time.
+- **Upgradeable Governance Contracts:** Builder contracts use UUPS proxies, allowing governance logic to evolve while preserving DAO storage.
 - **Modular Design:** DAOs can replace or extend individual components (e.g., custom token logic or auction formats).
 - **Parameter Tuning:** Governance can change auction intervals, governance rules, and more post-launch.
 
-This makes the protocol suitable for both simple and highly customized DAO setups.
+This makes the protocol suitable for both simple and highly customised DAO setups.
 
 ---
 
@@ -92,7 +102,7 @@ Security is paramount for onchain governance systems. Key features include:
 - **Audit History:** The protocol builds on audited components from Nouns and OpenZeppelin.
 - **Permissionless Deployments:** Anyone can deploy without relying on a central admin.
 
-DAOs should still conduct additional audits if they customize or extend the system.
+DAOs should still conduct additional audits if they customise or extend the system.
 
 ---
 

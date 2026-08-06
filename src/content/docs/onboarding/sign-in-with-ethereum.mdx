@@ -1,0 +1,115 @@
+---
+sidebar:
+  order: 3.5
+id: sign-in-with-ethereum
+title: Signing in with Ethereum
+description: Connect a wallet and sign in to Nouns Builder, including as the owner of a Safe.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+Nouns Builder uses **Sign-In with Ethereum (SIWE)** to authenticate your wallet. Connecting lets the app read your public address and request actions; signing a SIWE message proves that you control that address and starts your authenticated session.
+
+A SIWE signature is not a blockchain transaction. It does not move funds, approve token spending or cost gas.
+
+## Signing in with a Wallet
+
+<Steps>
+
+1. **Connect your wallet**
+
+   Select **Connect Wallet**, then choose your wallet from the list.
+
+   <img
+     src="/onboarding/sign-in/connect-wallet.png"
+     alt="Nouns Builder wallet connection options"
+     width="600"
+   />
+
+2. **Approve the connection**
+
+   Confirm the connection request in your wallet. This connects your public wallet address to Nouns Builder but does not yet authenticate the session.
+
+3. **Start the SIWE request**
+
+   When Nouns Builder asks you to complete authentication, select **Sign Message**. This request does not create a transaction or cost gas.
+
+   <img
+     src="/onboarding/sign-in/sign-message.png"
+     alt="Nouns Builder asking the connected wallet to sign a message"
+     width="520"
+   />
+
+4. **Review and sign the message**
+
+   Check the requesting domain and wallet address shown by your wallet, then approve the signature. Once it has been verified, you are signed in to Nouns Builder.
+
+</Steps>
+
+## Signing in with a Safe
+
+A Safe is a smart contract account, so one of its owner wallets signs in on its behalf. Nouns Builder verifies that the connected wallet is an owner, then presents the Safe address as the connected account while retaining the owner identity used for authentication.
+
+:::note[Sign-in does not create a Safe transaction]
+
+The SIWE message is signed by one Safe owner and does not require the Safe's transaction approval threshold. It does not create an onchain transaction or cost gas.
+
+:::
+
+<Steps>
+
+1. **Select Safe**
+
+   Select **Connect Wallet**, then choose **Safe** from the wallet list.
+
+2. **Enter the Safe details**
+
+   Select the network on which the Safe is deployed, enter its address and select **Continue**. Safes are specific to a network, so both details must match.
+
+   <img
+     src="/onboarding/sign-in/safe-details.png"
+     alt="Selecting a network and entering a Safe address"
+     width="520"
+   />
+
+3. **Connect an owner wallet**
+
+   Choose a wallet that controls one of the Safe's owner addresses and approve the connection. Nouns Builder will verify that the connected address is an owner of the selected Safe.
+
+   <img
+     src="/onboarding/sign-in/safe-owner-wallet.png"
+     alt="Choosing a wallet belonging to an owner of the Safe"
+     width="520"
+   />
+
+4. **Sign in for the Safe**
+
+   Select **Sign Message**. The prompt identifies the Safe for which you are signing in. Review and approve the SIWE request in the owner wallet.
+
+   <img
+     src="/onboarding/sign-in/safe-sign-message.png"
+     alt="A Safe owner being asked to sign in for the selected Safe"
+     width="520"
+   />
+
+5. **Confirm the connected account**
+
+   Open the account menu after authentication. It displays the Safe address as the connected account and identifies the owner wallet that signed in.
+
+   <img
+     src="/onboarding/sign-in/safe-connected.png"
+     alt="Account menu showing the connected Safe and its authenticating owner"
+     width="420"
+   />
+
+</Steps>
+
+## Using a Safe for Onchain Actions
+
+:::caution[Safe transaction guide coming soon]
+
+The onchain Safe flow is still in development and has not been tested end to end. This section will explain how Nouns Builder prepares a Safe transaction, redirects you to Safe, and how the required owners approve and execute it once the production flow is available.
+
+Until then, do not rely on the current test implementation for production Safe transactions.
+
+:::
