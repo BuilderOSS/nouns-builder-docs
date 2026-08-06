@@ -14,11 +14,11 @@ The Nouns Builder Protocol is made up of modular, upgradeable contracts designed
 
 **Key upgraded contracts:**
 
-- [`Auction`](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/src/auction/Auction.sol): Handles token auctions, bidding logic, and minting of new governance tokens.
-- [`Token`](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/src/token/Token.sol): ERC-721 (NFT) or ERC-20 (fungible) token contract representing DAO membership and voting power.
-- [`Governor`](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/src/governance/governor/Governor.sol): Manages proposals, updates, voting logic and execution of onchain actions.
-- [`Treasury`](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/src/governance/treasury/Treasury.sol): Holds ETH or other native tokens for the DAO and executes approved spending.
-- [`Manager`](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/src/manager/Manager.sol): Deploys DAO contracts and registers permitted implementation upgrades.
+- [`Auction`](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/auction/Auction.sol): Handles token auctions, bidding logic, and minting of new governance tokens.
+- [`Token`](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/token/Token.sol): ERC-721 (NFT) or ERC-20 (fungible) token contract representing DAO membership and voting power.
+- [`Governor`](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/governance/governor/Governor.sol): Manages proposals, updates, voting logic and execution of onchain actions.
+- [`Treasury`](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/governance/treasury/Treasury.sol): Holds ETH or other native tokens for the DAO and executes approved spending.
+- [`Manager`](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/manager/Manager.sol): Deploys DAO contracts and registers permitted implementation upgrades.
 - `Metadata Renderer`: Controls how token metadata is rendered (e.g., static art, generative logic).
 
 **Standard interfaces include:**
@@ -60,17 +60,17 @@ The upgraded governance stack adds two related but separate capabilities:
 
 :::note[Scope of the upgraded contracts]
 
-The original contracts remain valid and in active use. This section documents the `feat/updatable-proposals` implementation, not behaviour shared by every deployed Builder DAO. Existing DAOs opt into the implementation through governance; even after upgrading, proposal updates remain disabled while `proposalUpdatablePeriod()` is zero.
+The original contracts remain valid and in active use. This section documents the upgraded implementation pinned to [`e6679a2`](https://github.com/BuilderOSS/nouns-protocol/commit/e6679a20b38e2a9c35b7dbd75adf5043999dce75), not behaviour shared by every deployed Builder DAO. Existing DAOs opt into the implementation through governance; even after upgrading, proposal updates remain disabled while `proposalUpdatablePeriod()` is zero.
 
 :::
 
 The implementation references for this release are:
 
-- [Governor proposal lifecycle](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/governor-proposal-lifecycle.md)
-- [Proposal candidate EAS schemas](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/eas-proposal-candidates-schema.md)
-- [Governor architecture](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/governor-architecture.md)
-- [Upgrade runbook](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/upgrade-runbook.md)
-- [Governor implementation](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/src/governance/governor/Governor.sol)
+- [Governor proposal lifecycle](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-proposal-lifecycle.md)
+- [Proposal candidate EAS schemas](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/eas-proposal-candidates-schema.md)
+- [Governor architecture](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-architecture.md)
+- [Upgrade runbook](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/upgrade-runbook.md)
+- [Governor implementation](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/governance/governor/Governor.sol)
 
 ### Proposal Candidate Data Model
 
@@ -198,8 +198,6 @@ The protocol provides a [GraphQL subgraph](https://thegraph.com/) that indexes o
 **Example query: Fetch latest auctions**
 
 ```graphql
-graphql
-CopyEdit
 {
   auctions(first: 5, orderBy: startTime, orderDirection: desc) {
     id
@@ -208,7 +206,6 @@ CopyEdit
     highestBid
   }
 }
-
 ```
 
 ### REST and GraphQL APIs Available

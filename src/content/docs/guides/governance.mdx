@@ -26,7 +26,7 @@ Builder DAOs do not all use the same Governor implementation. Contract upgrades 
 | DAO configuration | First proposal state | Can proposals be updated? | Signing interface |
 |---|---|---|---|
 | **Original Governor contracts** | Pending | No | Original vote-signature ABI |
-| **Upgraded Governor, update period set to `0`** | Pending | No | Upgraded ABI and revision reads are available, but updates are disabled |
+| **Upgraded Governor, update period set to `0`** | Pending | No, updates are disabled while the period is `0` | Upgraded ABI and revision reads |
 | **Upgraded Governor, update period greater than `0`** | Updatable | Yes, during the fixed update period | Upgraded ABI and proposal-update functions |
 
 Upgrading an existing Governor does not rerun its initializer. A DAO upgrading from a contract without the new storage slot therefore begins with `proposalUpdatablePeriod == 0`. Its proposals continue to follow the original lifecycle until the DAO separately enables an update period through governance.
@@ -37,13 +37,13 @@ Do not infer the Governor version from the nouns.build interface alone. Read the
 
 :::
 
-The upgraded implementation and its design documentation are available in the protocol branch:
+The upgraded implementation and its design documentation are available in the pinned protocol revision:
 
-- [Governor implementation](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/src/governance/governor/Governor.sol)
-- [Governor interface](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/src/governance/governor/IGovernor.sol)
-- [Proposal lifecycle reference](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/governor-proposal-lifecycle.md)
-- [Governor architecture](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/governor-architecture.md)
-- [Upgrade runbook](https://github.com/BuilderOSS/nouns-protocol/blob/feat/updatable-proposals/docs/upgrade-runbook.md)
+- [Governor implementation](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/governance/governor/Governor.sol)
+- [Governor interface](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/governance/governor/IGovernor.sol)
+- [Proposal lifecycle reference](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-proposal-lifecycle.md)
+- [Governor architecture](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-architecture.md)
+- [Upgrade runbook](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/upgrade-runbook.md)
 
 ---
 
