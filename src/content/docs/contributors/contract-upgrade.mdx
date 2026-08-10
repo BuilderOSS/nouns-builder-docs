@@ -118,8 +118,12 @@ Before calling `proposeBySigs`, an integration must:
 When the update period is enabled, a proposal begins in the **Updatable** state before entering the existing lifecycle:
 
 ```text
-Updatable → Pending → Active → Succeeded or Defeated → Queued → Executed or Expired
+Updatable → Pending → Active ┬→ Succeeded → Queued ┬→ Executed
+                             │                      └→ Expired
+                             └→ Defeated
 ```
+
+Only **Succeeded** proposals can move to **Queued**. **Defeated**, **Canceled** and **Vetoed** are terminal outcomes, as are **Executed** and **Expired**. When a proposal is updated, its previous revision is surfaced as **Replaced** and points to the replacement rather than continuing through the lifecycle.
 
 The proposal timestamps are calculated when the original proposal is created:
 
@@ -186,6 +190,7 @@ Clients should also verify that they:
 
 - account for the update period when calculating vote-start times;
 - support the **Updatable** and **Replaced** presentation states;
+- treat **Defeated**, **Canceled**, **Vetoed**, **Executed**, **Expired** and **Replaced** as terminal for that proposal ID, and allow only **Succeeded** proposals to be queued;
 - follow revision links rather than treating a proposal ID as mutable;
 - require an update message in the user flow, while recognising that the revision relationship itself is enforced onchain;
 - rebuild sponsor payloads and signatures when proposal content changes; and

@@ -118,6 +118,6 @@ The example below sets a three-minute update period for testing. Select a period
 
 ## After Execution
 
-Confirm that the Governor reports v3 and that its update period matches the proposal. Existing proposals retain their prior state; newly created proposals enter **Updatable** for the configured period before moving to **Pending**.
+Confirm that the Governor reports v3 and that its update period matches the proposal. Existing proposals retain their prior state. If the configured update period is greater than `0`, newly created proposals enter **Updatable** before moving to **Pending**. If the period is `0`, newly created proposals enter **Pending** directly and cannot be updated.
 
 See [Updating a Proposal](/guides/updating-proposals/) for the proposer flow, [Proposal Candidates](/guides/proposal-candidates/) for signed sponsorship, and the [Builder Protocol Technical Reference](/contributors/contract-upgrade/#proposal-candidates-and-updateable-proposals) for contract-level checks.
