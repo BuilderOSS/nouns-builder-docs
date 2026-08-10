@@ -124,17 +124,58 @@ Wallets that do not hold the DAO's governance token can read candidates and comm
 
 Sponsorship is different from signalling. A sponsor signs support for submitting the exact candidate version as a formal proposal. These signatures contribute voting power towards the DAO's Proposal Threshold.
 
-To sponsor while adding a For signal:
+There are two ways to add a sponsor signature.
 
-1. Enable **Add a signal** and select **For**.
-2. Enable **Also sponsor this candidate**.
-3. Select **Signal & Sign** and complete both wallet requests: first the sponsor signature, then the onchain submission.
+### Sponsor While Signalling
+
+An eligible DAO member can signal **For** and sponsor the candidate in the same flow:
+
+1. Select **Signal / comment**.
+2. Enable **Signal on this candidate**, select **For** and add an optional comment.
+3. Enable **Also sponsor this candidate**.
+4. Select **Signal & Sign**.
+5. Complete both wallet requests: first sign the sponsorship message, then submit the signal and optional comment onchain.
 
 <img
-  src="/guides/candidateGuide/candidate-sponsor-signature.png"
-  alt="A For signal with candidate sponsorship enabled"
+  src="/guides/candidateGuide/candidate-sponsor-with-signal.png"
+  alt="A For signal with candidate sponsorship enabled and the Signal and Sign button"
   width="700"
 />
+
+Once both actions succeed, Builder confirms that the signal and signature have been recorded.
+
+<img
+  src="/guides/candidateGuide/candidate-signal-signature-confirmed.png"
+  alt="Confirmation that a candidate signal and sponsor signature were added"
+  width="600"
+/>
+
+### Sign Without Adding a Signal
+
+To sponsor without signalling or commenting, open the candidate's **Discussion** tab and select **Sign Candidate** under **Candidate Sponsors**. Review and sign the wallet request. This adds the sponsor signature only.
+
+<img
+  src="/guides/candidateGuide/candidate-sign-directly.png"
+  alt="The Candidate Sponsors section with a Sign Candidate button"
+  width="700"
+/>
+
+### Review the Signature Request
+
+The wallet may display the sponsorship request as raw EIP-712 typed data. Before signing, check:
+
+- the domain name, chain ID and Governor address under `verifyingContract`;
+- the candidate creator's address under `proposer`;
+- the `proposalId`, which binds the signature to the exact candidate content and transactions; and
+- the `nonce` and `deadline`, which prevent replay and limit how long the signature can be used.
+
+<img
+  src="/guides/candidateGuide/candidate-sponsor-typed-data.png"
+  alt="A wallet displaying the raw EIP-712 typed data for a candidate sponsor signature"
+  width="500"
+/>
+
+Do not sign if the network, contract, proposer or proposal ID is unexpected. The signature authorises the candidate creator to include your support when submitting this specific version through `proposeBySigs`; it is not a governance vote and does not transfer assets.
 
 Sponsor signatures are time-limited and tied to one candidate version. They cannot be carried over when the candidate is edited. The candidate creator's own signature is also excluded from the support required to submit the proposal.
 
@@ -146,23 +187,43 @@ Nouns Builder gives candidate sponsor signatures a seven-day deadline by default
 
 ## Promotion to a Proposal
 
-Once valid sponsor signatures supply enough voting power to pass the DAO's Proposal Threshold, the candidate can be promoted. A promoted candidate shows a **Promoted to Proposal** notice and links to the resulting proposal.
+Once valid sponsor signatures supply enough voting power to pass the DAO's Proposal Threshold, the candidate creator sees **Ready to Submit**. Only the candidate creator can promote it, so switch back to the wallet that created the candidate before continuing. The creator does not need to hold a governance token if the valid sponsor signatures provide enough voting power.
 
 <img
-  src="/guides/candidateGuide/candidate-promoted.png"
-  alt="A candidate promoted to a formal proposal with a View Proposal link"
+  src="/guides/candidateGuide/candidate-ready-to-submit.png"
+  alt="A candidate with enough sponsor support and a Submit as Proposal button"
   width="700"
 />
 
-The candidate discussion and signals remain available as a record of the proposal's development.
+Select **Submit as Proposal**, then confirm the onchain transaction in the creator's wallet. Builder submits the proposal with the collected signatures.
 
 <img
-  src="/guides/candidateGuide/candidate-discussion.png"
-  alt="The discussion on a promoted candidate showing signals and sponsor information"
+  src="/guides/candidateGuide/candidate-promotion-wallet-confirmation.png"
+  alt="The candidate creator's wallet asking to confirm the proposal submission transaction"
   width="700"
 />
 
-Once promoted, the proposal follows the DAO's governance lifecycle. If the DAO has updateable proposals enabled, its proposer may still revise it during the update period. See [Updating a Proposal](/guides/updating-proposals/) for that flow, or [How to Create a Proposal](/onboarding/builder-proposal/) for the standard proposal builder.
+<img
+  src="/guides/candidateGuide/candidate-proposal-created.png"
+  alt="Confirmation that the candidate was submitted as a proposal with one sponsor signature"
+  width="600"
+/>
+
+The resulting proposal links back to its originating candidate. The candidate's discussion, signals and sponsor record remain available as governance history.
+
+<img
+  src="/guides/candidateGuide/proposal-originating-candidate.png"
+  alt="A proposal showing its originating candidate and a View Candidate button"
+  width="700"
+/>
+
+:::caution[Sponsor-signed proposal updates are disabled]
+
+Updates to proposals created with sponsor signatures are disabled in Nouns Builder for now. If the candidate needs changes, edit it before promotion and collect fresh signatures for the new version.
+
+:::
+
+Once promoted, the proposal follows the DAO's standard voting and execution lifecycle. See [How to Create a Proposal](/onboarding/builder-proposal/#proposal-lifecycle) for the remaining stages.
 
 ## Protocol References
 

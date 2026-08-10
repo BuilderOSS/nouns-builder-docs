@@ -95,7 +95,15 @@ Candidate comments use their own support mapping:
 
 This differs from Governor votes, where `0 = Against`, `1 = For` and `2 = Abstain`. Integrations should not reuse the Governor mapping for candidate sentiment. To calculate current sentiment, use the latest non-revoked comment from each member. Retain earlier attestations as discussion history, and exclude revoked attestations from active counts.
 
-Sponsor signatures are formal authorisations for `proposeBySigs`, not informal candidate signals. A signature binds to the `proposalId`, and therefore to the exact proposer, description and transaction bundle. It also includes the Governor's shared proposal-signature nonce and a deadline. Candidate edits generate a different proposal ID, so clients must collect fresh signatures for the new version.
+Sponsor signatures are formal authorisations for `proposeBySigs`, and different from candidate signals. A signature binds to the `proposalId`, and therefore to the exact proposer, description and transaction bundle. It also includes the Governor's shared proposal-signature nonce and a deadline. Candidate edits generate a different proposal ID, so clients must collect fresh signatures for the new version.
+
+The EIP-712 request uses the primary type:
+
+```text
+Proposal(address proposer,bytes32 proposalId,uint256 nonce,uint256 deadline)
+```
+
+Its domain contains the Governor name and version, the current chain ID and the Governor address as `verifyingContract`. Clients should expose these fields for review and reject a signature if the domain, proposer, proposal ID, nonce or deadline does not match the current candidate submission.
 
 Before calling `proposeBySigs`, an integration must:
 
