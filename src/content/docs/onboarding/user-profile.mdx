@@ -6,13 +6,13 @@ title: Your Profile
 
 import { Steps } from '@astrojs/starlight/components';
 
-##### Learn how to manage your profile and customize which DAOs appear in your dashboard.
+##### Learn how to manage your profile, review your activity and customize which DAOs appear in your dashboard.
 
 # Your Profile
 
 ##### Manage your identity and DAO visibility on Nouns Builder
 
-Your profile page gives you an at-a-glance view of your on-chain activity and the DAOs you are a member of. It is accessible by connecting your wallet and navigating to your profile via the avatar menu in the top-right corner of the app.
+Your profile page is a participation dashboard for your connected wallet. It brings together your identity, links, delegation controls, DAO memberships, activity, and token holdings. Open it by connecting your wallet and selecting your profile from the avatar menu in the top-right corner of the app.
 
 ## Profile Overview
 
@@ -20,70 +20,70 @@ Once connected, your profile displays:
 
 - Your **ENS name** (or shortened wallet address if no ENS is set)
 - Your **wallet address**, with a one-click copy button
-- A **Feed** of your recent on-chain activity across all DAOs — including proposals submitted, votes cast, and proposals executed
-- A **Tokens** tab listing the DAO tokens you hold
+- Your profile links, when configured
+- Summary cards for your DAOs, tokens, votes, proposals and bids
+- An **Activity** feed of your recent on-chain activity across DAOs
+- A **Tokens** section listing the DAO tokens you hold
 
 <img
-  src="/guides/profileGuide/profile_overview.png"
-  alt="Profile overview showing ENS name, wallet address, and activity feed"
+  src="/guides/profileGuide/profile-overview.png"
+  alt="Profile overview showing identity, summary cards, DAO list and activity feed"
   width="600"
 />
 
+Use the options menu beside your profile identity to edit your links, copy your profile URL or wallet address, and open the relevant block explorer.
 
-## DAOs Section
-
-The **DAOs** section on your profile lists every DAO in which your connected wallet holds a token. Each entry shows the DAO name, logo, and the network it is deployed on (e.g. Ethereum mainnet, Base, Optimism).
-
-DAOs you have chosen to hide are collapsed under a **Hidden DAOs** counter. Click the arrow to expand and view them.
-
-**Hidden DAOs (default)**
 <img
-  src="/guides/profileGuide/hidden_daos_closed.png"
-  alt="DAOs section on the profile page showing hidden DAOs"
+  src="/guides/profileGuide/profile-options.png"
+  alt="Profile options menu with link, copy and block explorer actions"
   width="400"
 />
 
-**Open DAOs**
+## DAOs and Activity
+
+The **DAOs** section lists every DAO in which your connected wallet holds a token. Each card shows the DAO name, logo and network. Select a DAO card to filter the Activity and Tokens sections to that DAO; select it again to return to the combined view.
+
+Use the Activity menu to filter the feed by event type, including bids, wins, settles, proposal creation, votes, proposal updates and executions.
 
 <img
-  src="/guides/profileGuide/hidden_daos_open.png"
-  alt="DAOs section on the profile page showing visible and hidden DAOs"
-  width="400"
+  src="/guides/profileGuide/activity-filters.png"
+  alt="Profile activity filter menu"
+  width="600"
 />
 
 ## Editing Your DAO List
 
-You can customise which DAOs are visible on your profile and in your wallet dropdown by using the **Edit** mode.
+You can customize which DAOs are visible on your profile and in your wallet dropdown by using **Edit** mode.
 
 <Steps>
 
 1. **Open Edit mode**
 
-   Click the **Edit** button next to the DAOs heading on your profile page. Each DAO entry will now show additional controls.
+   The page starts in browse mode. Click the **Edit** button next to the DAOs heading to begin changing the list.
 
    <img
-     src="/guides/profileGuide/edit_daos.png"
-     alt="Profile DAOs section in Edit mode with hide, reorder and restore controls visible"
+     src="/guides/profileGuide/daos.png"
+     alt="Profile DAOs section before editing"
      width="400"
    />
 
-2. **Hide a DAO**
+2. **Use the edit controls**
 
-   Click the **minus (−)** icon next to a DAO to hide it. Hidden DAOs are moved to the **Hidden DAOs** group and are no longer shown in your profile or wallet dropdown by default. You can also use the arrows to reorder DAOs.
+   Click **Edit** to reveal the controls for changing the DAO list.
 
    <img
-     src="/guides/profileGuide/DAO_editing_enabled.png"
-     alt="Clicking the minus icon to hide a DAO from the profile"
+     src="/guides/profileGuide/daos-edit.png"
+     alt="Profile DAOs section in Edit mode with remove and reorder controls"
      width="400"
    />
 
-3. **Restore a hidden DAO**
+3. **Hide a DAO**
 
-   Expand the **Hidden DAOs** section by clicking the arrow. Click the **plus (+)** icon next to any hidden DAO to make it visible again.
+   Click the **minus (−)** icon next to a DAO to remove it from the visible list and wallet dropdown.
 
 4. **Reorder your DAOs**
 
-   Click and drag the **move (⊕)** handle on the right side of a DAO entry to reorder how DAOs appear in your list.
+   Click and drag the **move** handle on the right side of a DAO entry to reorder how DAOs appear in your list.
 
 5. **Save your changes**
 
@@ -91,29 +91,27 @@ You can customise which DAOs are visible on your profile and in your wallet drop
 
 </Steps>
 
-## Wallet Dropdown
+## Tokens
 
-The wallet dropdown — accessible by clicking your avatar in the top-right corner — mirrors your profile's DAO list. It shows:
+The Tokens section is collapsed by default so the profile stays easy to scan. Select the chevron beside **Tokens** to expand the gallery, then use the sort menu to change the order.
 
-- Your **ENS name** and current **ETH balance**
-- Your **visible DAOs**, each with its network indicator
-- A count of **Hidden DAOs**, expandable inline
-- A **Create a DAO** button to launch a new DAO
-- A quick link to switch between **Mainnet** and testnet environments
+![Collapsed Tokens section on the profile](/guides/profileGuide/tokens-collapsed.png)
 
-<img
-  src="/guides/profileGuide/wallet_dropdown.png"
-  alt="Wallet dropdown showing DAOs, hidden DAOs, Create a DAO button, and network switcher"
-  width="400"
-/>
+![Expanded token gallery on the profile](/guides/profileGuide/tokens-expanded.png)
 
-Changes made in Edit mode on your profile are reflected immediately in the wallet dropdown.
+Selecting a DAO card filters the token gallery to that DAO. Token cards show the owned NFTs and their collection context.
 
 :::note
 
-DAOs are only shown if your connected wallet holds at least one token for that DAO. If a DAO you expect to see is missing, verify that you are connected with the correct wallet and on the correct network.
+DAOs and tokens are only shown when the connected wallet has the relevant on-chain ownership. If a DAO or token you expect to see is missing, verify that you are connected with the correct wallet and network.
 
 :::
+
+## Wallet and Delegation Actions
+
+The profile and wallet menus provide quick access to your wallet address, profile URL, block explorers and profile links. You can also delegate to a profile when delegation is available for the selected DAO.
+
+When viewing your own profile, select an owned NFT to start the transfer flow. Choose a recipient, review the warning and transaction details, then submit the transfer from your wallet. Token transfers are limited to one chain at a time.
 
 
 ## Next Steps
