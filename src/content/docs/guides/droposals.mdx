@@ -118,7 +118,7 @@ As recipients and allocations become valid, the flow visualization shows each re
   width="500"
 />
 
-Creating the split requires a separate wallet transaction. Once deployed, its address becomes the Droposal's payout address; the Droposal itself still needs to pass through governance. The split contract forwards proceeds and royalties to its configured recipients according to their allocations.
+Creating the split requires a separate wallet transaction. Once deployed, its address becomes the Droposal's payout address; the Droposal itself still needs to pass through governance. The split receives sale proceeds and royalties sent to that payout address, but it does not automatically forward them to recipients.
 
 <img
   src="/guides/builderGuide/droposal-split-confirmed.png"
@@ -126,11 +126,25 @@ Creating the split requires a separate wallet transaction. Once deployed, its ad
   width="500"
 />
 
-### Withdrawal
+### Distribution and Withdrawal
 
-:::note[Documentation placeholder]
+Builder creates the split and sets it as the Droposal's payout address; it does not automate payout distribution or recipient withdrawals.
 
-Add the Builder UI withdrawal flow here once the withdrawal control is exposed on the Droposal. The contract-level `withdraw` function and recipient rules are documented in [Withdrawing Funds](#withdrawing-funds) below.
+:::note[User flow to be confirmed]
+
+The Builder payout user flow is still TBD and will be revised when distribution and withdrawal controls are available in the product. The steps below describe the current contract-level flow.
+
+:::
+
+1. The Droposal contract holds primary-sale proceeds until an authorized account calls its `withdraw` function. This sends funds to the configured payout address—the split contract in this case.
+2. ETH and ERC-20 balances then remain in the split until someone distributes them. For Split v1, anyone can call `distributeETH` for ETH or `distributeERC20` for a specific ERC-20 token. Distribution allocates each recipient's share but does not necessarily transfer it to their wallet.
+3. Each recipient can then withdraw their allocated balance. A distributor can also choose a combined distribute-and-withdraw flow in the Splits interface.
+
+Use the split address in the [Splits app](https://splits.org/changelog/distribute-balances/) or a block explorer to confirm the distribution transaction and recipient balances. A recipient's wallet receives funds only after withdrawal completes.
+
+:::caution
+
+Distribution is irreversible for the balance being distributed: the recipients and allocations in effect at that moment determine who receives the funds.
 
 :::
 
