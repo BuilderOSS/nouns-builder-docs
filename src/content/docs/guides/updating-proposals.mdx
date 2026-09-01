@@ -1,0 +1,111 @@
+---
+sidebar:
+  order: 2.2
+title: Updating a Proposal
+---
+
+##### Revise an onchain proposal before voting begins
+
+Updateable proposals give the proposer a limited period to correct or improve a submitted proposal before it enters the usual Pending and Active stages. The update may change the proposal text, its transactions or both.
+
+Only the proposer can update a proposal, and only while its status is **Updatable**. The feature must also be enabled in the DAO's upgraded Governor contract.
+
+:::note
+
+Updating a proposal creates a replacement revision onchain. It does not edit or erase the original proposal record.
+
+:::
+
+## Check the Update Period
+
+Open the proposal from your DAO's **Proposals** view. An eligible proposal displays an **Updatable** status, the time remaining to make changes and an **Update Proposal** button.
+
+<img
+  src="/guides/proposalGuide/proposal-updatable.png"
+  alt="An Updatable proposal showing the edit countdown and Update Proposal button"
+  width="700"
+/>
+
+Select **Update Proposal** to begin. If the button is not available, check that you are connected with the proposer's wallet and that the update period has not ended.
+
+## Revise the Proposal
+
+The update flow uses the familiar three-step proposal builder:
+
+1. **Write Proposal** — revise the title, description or discussion link.
+2. **Add Transactions** — add, remove or change the proposed actions.
+3. **Review & Submit** — compare the final content and confirm the governance timeline.
+
+<img
+  src="/guides/proposalGuide/proposal-update-write.png"
+  alt="The Write Proposal step while updating a proposal"
+  width="700"
+/>
+
+The warning at the top identifies the proposal being updated. Review every transaction as well as the written proposal: the new revision will replace the current one for the remainder of the governance process.
+
+## Review the Timeline and Explain the Update
+
+The review step shows the proposal's existing governance timeline. The Governor contract copies the original proposal's update deadline, vote start and vote end to every replacement. Updating therefore does not postpone voting, restart the Voting Delay or extend the Voting Period.
+
+For example, if a proposal has a 24-hour update period and is updated after 20 hours, the replacement remains updateable for the four hours left in the original window. The Voting Delay still begins at the original update deadline. All revisions also retain the original voting-power snapshot.
+
+Add a concise **Update Message** explaining what changed and why. This message is required before you can submit the revision.
+
+<img
+  src="/guides/proposalGuide/proposal-update-review.png"
+  alt="The update review step showing the governance timeline and Update Message field"
+  width="700"
+/>
+
+<img
+  src="/guides/proposalGuide/proposal-update-message-required.png"
+  alt="Validation explaining that an update message is required"
+  width="700"
+/>
+
+When everything is correct, select **Submit Updated Proposal** and confirm the transaction in your wallet.
+
+:::caution[Sponsor-signed proposal updates are disabled]
+
+If the proposal was submitted with sponsor signatures, its update needs a fresh, valid set of signatures for the new content. Signatures for an earlier revision cannot authorise the replacement.
+
+The update action for sponsor-signed proposals is disabled in Nouns Builder for now. Updates to proposals submitted without sponsor signatures remain available.
+
+:::
+
+## Review the Replacement and Edit History
+
+After the transaction confirms, the previous revision is marked **Replaced** and points to the new proposal. The replacement becomes the current revision without changing the original governance deadlines.
+
+<img
+  src="/guides/proposalGuide/proposal-replaced.png"
+  alt="A previous proposal revision with a Replaced status"
+  width="700"
+/>
+
+The current proposal displays an edited notice. Select **View Edit History** to open an earlier version.
+
+<img
+  src="/guides/proposalGuide/proposal-edit-history.png"
+  alt="An updated proposal with its edit history control"
+  width="700"
+/>
+
+Use **Changes** to inspect the diff or **Full Version** to read that revision in full. Removed content appears in red and additions appear in green. Transaction changes are shown separately from description changes.
+
+<img
+  src="/guides/proposalGuide/proposal-update-diff.png"
+  alt="A proposal update diff showing removed and added text"
+  width="700"
+/>
+
+When the update period ends, the current revision moves to **Pending** and can no longer be changed. It then continues through the DAO's standard voting and execution lifecycle.
+
+For ideas that are not ready to enter formal governance, use a [Proposal Candidate](/guides/proposal-candidates/) to collect feedback and sponsor signatures first.
+
+## Protocol References
+
+- [Upgraded Governor implementation](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/governance/governor/Governor.sol)
+- [Governor proposal lifecycle](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-proposal-lifecycle.md)
+- [Governor architecture](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-architecture.md)

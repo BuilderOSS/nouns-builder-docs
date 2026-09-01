@@ -1,0 +1,123 @@
+---
+sidebar:
+  order: 2.3
+title: Upgrading DAO Contracts
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+##### Create a governance proposal to upgrade an existing DAO to Governor v3
+
+The Governor v3 upgrade is optional. A DAO continues to use its existing contracts and proposal lifecycle unless its members approve and execute an upgrade proposal. Discuss the upgrade, its unaudited status and the proposed settings with your DAO members before submitting it, so the community understands the change and is aligned on whether to proceed.
+
+:::caution[This upgrade is unaudited]
+
+The Governor v3 implementation in [protocol PR #5](https://github.com/BuilderOSS/nouns-protocol/pull/5) is currently unaudited. Review the changes and their risks before creating or voting on an upgrade proposal. Do not proceed solely because the upgrade is available in the interface.
+
+:::
+
+## What the Upgrade Enables
+
+The generated proposal upgrades the DAO's Governor proxy to v3 and sets a configurable update period. This enables:
+
+- proposal revisions during the fixed update period;
+- signed proposals backed by up to 16 sponsors; and
+- the **Updatable** and **Replaced** proposal states, including revision history.
+
+The proposal supplied for this flow uses the Manager to upgrade the Governor proxy; it does not upgrade the DAO's Token, Treasury or Auction proxies. Existing proposals, votes and settings are preserved. Reversing the implementation would require another approved governance proposal.
+
+The example below sets a three-minute update period for testing. Select a period that gives your DAO enough time to review revisions in practice.
+
+## Create the Upgrade Proposal
+
+<Steps>
+
+1. **Open the available upgrade**
+
+   Open your DAO's **Proposals** tab. DAOs that have not yet upgraded see **Nouns Builder Upgrade 3.0.0** under **Upgrade Available** at the top of the page. Select **Upgrade**.
+
+   <img
+     src="/guides/upgradeGuide/upgrade-available.png"
+     alt="The Nouns Builder Upgrade 3.0.0 card with an Upgrade button"
+     width="700"
+   />
+
+2. **Review the code and unaudited status**
+
+   Select **Review Code Changes** to open [protocol PR #5](https://github.com/BuilderOSS/nouns-protocol/pull/5). The interface deliberately keeps **Continue with Upgrade** unavailable until you:
+
+   - acknowledge that the implementation is unaudited;
+   - enter the exact DAO-specific confirmation text; and
+   - choose the proposal update period.
+
+   <img
+     src="/guides/upgradeGuide/configure-upgrade.png"
+     alt="The upgrade configuration showing the unaudited warning, code-review link, confirmation field and update-period controls"
+     width="600"
+   />
+
+   These checks help prevent an accidental upgrade and ensure you understand what you are authorising. They do not mean that we endorse the contracts as safe. Only acknowledge the warning if you have reviewed the code yourself or trust the DAO's technical reviewers, and accept the remaining risk.
+
+3. **Confirm the DAO name exactly**
+
+   Type the phrase shown above the field, including capitalisation and spacing. It follows the format `Upgrade <DAO name>`. A partial or differently capitalised entry is rejected.
+
+   <img
+     src="/guides/upgradeGuide/confirmation-mismatch.png"
+     alt="An incomplete upgrade confirmation rejected because it does not match exactly"
+     width="600"
+   />
+
+   The field displays **Confirmed** only when the phrase matches exactly.
+
+   <img
+     src="/guides/upgradeGuide/confirmation-accepted.png"
+     alt="The exact DAO upgrade confirmation accepted by the interface"
+     width="600"
+   />
+
+4. **Set the proposal update period**
+
+   Enter the number of days, hours, minutes and seconds during which proposers may revise newly submitted proposals. The tested flow uses three minutes.
+
+   <img
+     src="/guides/upgradeGuide/updatable-period.png"
+     alt="The proposal update period configured to three minutes"
+     width="600"
+   />
+
+   See [Updating a Proposal](/guides/updating-proposals/) for how the update period works and what proposers can change during it.
+
+5. **Review the generated proposal**
+
+   Select **Continue with Upgrade**. Builder opens the standard **Review and submit** step with a pre-filled proposal description and transactions.
+
+   <img
+     src="/guides/upgradeGuide/review-upgrade-proposal.png"
+     alt="The Review and submit step for a generated Governor v3 upgrade proposal"
+     width="700"
+   />
+
+   Before submitting, verify that:
+
+   - the proposal links to PR #5 and clearly states that the upgrade is unaudited;
+   - the version and selected update period are correct;
+   - the encoded actions match the stated scope, without unexpected contract addresses or calls;
+   - the transaction simulation succeeds; and
+   - the projected governance timeline is appropriate.
+
+   <img
+     src="/guides/upgradeGuide/review-audit-warning.png"
+     alt="The generated proposal description showing the audit warning and link to protocol PR 5"
+     width="700"
+   />
+
+   Complete the remaining checks and submission as described in [Step 3: Review and Submit](/onboarding/builder-proposal/#step-3-review-and-submit). The upgrade takes effect only after the proposal passes, is queued and is executed.
+
+</Steps>
+
+## After Execution
+
+Confirm that the Governor reports v3 and that its update period matches the proposal. Existing proposals retain their prior state. If the configured update period is greater than `0`, newly created proposals enter **Updatable** before moving to **Pending**. If the period is `0`, newly created proposals enter **Pending** directly and cannot be updated.
+
+See [Updating a Proposal](/guides/updating-proposals/) for the proposer flow, [Proposal Candidates](/guides/proposal-candidates/) for signed sponsorship, and the [Builder Protocol Technical Reference](/contributors/contract-upgrade/#proposal-candidates-and-updateable-proposals) for contract-level checks.

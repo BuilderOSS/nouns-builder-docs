@@ -16,12 +16,6 @@ The technical reference below was adapted from [Zora's archived documentation](h
 :::
 
 
-:::tip
-
-[GnarsDAO](https://www.gnars.com/droposals) has built a custom [frontend](https://www.gnars.com/droposals/droposals) to support droposals and is the best point of contact for learning how to continue using them. The Gnars code implementing droposals can be found [here](https://github.com/sktbrd/gnars-terminal/blob/main/src/app/droposal/%5BcontractAddress%5D/page.tsx).
-
-:::
-
 ## Overview
 
 A droposal is an ERC-721 Drop Proposal — an on-chain DAO proposal that, if passed, deploys a new NFT collection contract and makes it available for public minting. The contract is based on Zora's `ERC721Drop` standard.
@@ -69,12 +63,13 @@ Visitors can mint directly from the gallery card without leaving the DAO page, o
 
 To create a new droposal:
 
-1. Navigate to your DAO's dashboard and click **Create Proposal**.
+1. Open your DAO, select the **Proposals** tab and click **Create Proposal**.
 2. Write a proposal title and description explaining the drop.
 3. On the Add Transactions step, select **Droposal: Single Edition** from the transaction type dropdown.
-4. Configure the drop settings (see Sales Configuration below).
-5. Add the transaction to the queue, then review and submit the proposal for a governance vote.
-6. If the proposal passes and is executed, the `ERC721Drop` contract is deployed and the mint page becomes active.
+4. Configure the collection, artwork, sale and revenue settings. Use **Advanced** to change the edition type and size, royalties, mint limit per address or default administrator.
+5. If **Use revenue split** is enabled, select **Create split**, sign the separate deployment transaction and wait for confirmation. Check that the deployed split address is shown as the payout address.
+6. Add the Droposal transaction to the queue, then review and submit the proposal for a governance vote.
+7. If the proposal passes and is executed, the `ERC721Drop` contract is deployed and the mint page becomes active.
 
 
 <img
@@ -85,23 +80,81 @@ To create a new droposal:
 
 *Select **Droposal: Single Edition** from the transaction type dropdown on the Add Transactions step.*
 
-You can then also define edition parameters and set a royalty payout address.
+Droposals use an open edition with unlimited mints per wallet by default. Change these settings under **Advanced** when the drop needs a fixed supply or per-wallet mint limit.
 
-#### Droposal Edition Parameters
+### Splitting Revenue
 
-<img
-  src="/guides/builderGuide/droposal_edition_params.png"
-  alt="Edition Parameters"
-  width="300"
-/>
+Enable **Use revenue split** under **Revenue** to deploy an optional **0xSplits v1** contract that shares mint proceeds and royalties between multiple recipients.
 
-#### Droposal Royalties Payout Address
+The **Revenue** section contains the payout address and the optional split configuration.
 
 <img
-  src="/guides/builderGuide/droposal_royalties.png"
-  alt="Droposals Royalty Payout"
-  width="300"
+  src="/guides/builderGuide/droposal-revenue-section.png"
+  alt="Droposal revenue section with the revenue split option"
+  width="600"
 />
+
+When the split option is enabled, add recipients and their allocations. Recipient addresses must be unique and the allocations must total 100% before you can create the split.
+
+<img
+  src="/guides/builderGuide/droposal-revenue-split-toggle.png"
+  alt="Droposal revenue split toggle"
+  width="500"
+/>
+
+The recipient editor starts with two equal allocations. Enter an address or ENS name for each recipient, adjust the percentages as needed, and use **Add recipient** for additional recipients. **Split evenly** resets the allocations to equal shares.
+
+<img
+  src="/guides/builderGuide/droposal-split-config.png"
+  alt="Droposal split recipient configuration"
+  width="500"
+/>
+
+As recipients and allocations become valid, the flow visualization shows each recipient's share. The width of each flow represents its allocation percentage.
+
+<img
+  src="/guides/builderGuide/droposal-split-flow.png"
+  alt="Droposal revenue split flow visualization"
+  width="500"
+/>
+
+Creating the split requires a separate wallet transaction. Once deployed, its address becomes the Droposal's payout address; the Droposal itself still needs to pass through governance. The split receives sale proceeds and royalties sent to that payout address, but it does not automatically forward them to recipients.
+
+<img
+  src="/guides/builderGuide/droposal-split-confirmed.png"
+  alt="Deployed Droposal revenue split"
+  width="500"
+/>
+
+### Distribution and Withdrawal
+
+Builder creates the split and sets it as the Droposal's payout address; it does not automate payout distribution or recipient withdrawals.
+
+:::note[User flow to be confirmed]
+
+The Builder payout user flow is still TBD and will be revised when distribution and withdrawal controls are available in the product. The steps below describe the current contract-level flow.
+
+:::
+
+1. The Droposal contract holds primary-sale proceeds until an authorized account calls its `withdraw` function. This sends funds to the configured payout address—the split contract in this case.
+2. ETH and ERC-20 balances then remain in the split until someone distributes them. For Split v1, anyone can call `distributeETH` for ETH or `distributeERC20` for a specific ERC-20 token. Distribution allocates each recipient's share but does not necessarily transfer it to their wallet.
+3. Each recipient can then withdraw their allocated balance. A distributor can also choose a combined distribute-and-withdraw flow in the Splits interface.
+
+Use the split address in the [Splits app](https://app.splits.org/) or a block explorer to confirm the distribution transaction and recipient balances. A recipient's wallet receives funds only after withdrawal completes.
+
+:::caution
+
+Distribution is irreversible for the balance being distributed: the recipients and allocations in effect at that moment determine who receives the funds.
+
+:::
+
+### Split Display on the Droposal
+
+:::note[Documentation placeholder]
+
+Add the public Droposal payout display here once it is available. The final documentation should show where visitors can see the active split address, recipients and allocation percentages.
+
+:::
 
 ## Technical Reference
 

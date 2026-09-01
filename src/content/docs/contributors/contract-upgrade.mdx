@@ -1,0 +1,266 @@
+---
+sidebar:
+  order: 5
+title: Builder Protocol Technical Reference
+---
+
+This section provides a deep dive into the technical foundation of Builder DAOs, including smart contract architecture, developer tools, and supported infrastructure. Whether you're customising your DAO, integrating it with other applications, or learning how it works under the hood, this guide will help you get started.
+
+## 🔗 Smart Contract Reference
+
+### Core Contracts and Interfaces
+
+The Nouns Builder Protocol is made up of modular, upgradeable contracts designed to work together to create and manage fully onchain DAOs.
+
+**Key upgraded contracts:**
+
+- [`Auction`](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/auction/Auction.sol): Handles token auctions, bidding logic, and minting of new governance tokens.
+- [`Token`](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/token/Token.sol): ERC-721 (NFT) or ERC-20 (fungible) token contract representing DAO membership and voting power.
+- [`Governor`](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/governance/governor/Governor.sol): Manages proposals, updates, voting logic and execution of onchain actions.
+- [`Treasury`](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/governance/treasury/Treasury.sol): Holds ETH or other native tokens for the DAO and executes approved spending.
+- [`Manager`](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/manager/Manager.sol): Deploys DAO contracts and registers permitted implementation upgrades.
+- `Metadata Renderer`: Controls how token metadata is rendered (e.g., static art, generative logic).
+
+**Standard interfaces include:**
+
+- `IAuction`
+- `IGovernor`
+- `IToken`
+- `IMetadataRenderer`
+
+These follow common patterns established by Nouns DAO and OpenZeppelin standards for interoperability.
+
+---
+
+### Upgrade Paths and Governance Hooks
+
+The protocol is **upgradeable** using UUPS proxy contracts, allowing Builder DAOs to evolve over time.
+
+**Upgrade mechanics:**
+
+- Proposals can include contract upgrades by specifying new implementation addresses.
+- DAOs must hold sufficient voting power and pass the proposal onchain.
+- Upgrades affect logic contracts but preserve storage and state via the proxy.
+
+**Governance hooks** are extension points for advanced functionality:
+
+- Proposal execution hooks
+- Auction settlement hooks
+- Metadata customisation and trait updates
+
+These allow power users to inject custom logic or bridge to external contracts.
+
+
+## Proposal Candidates and Updateable Proposals
+
+The upgraded governance stack adds two related but separate capabilities:
+
+- **Proposal candidates** use Ethereum Attestation Service (EAS) for drafting, discussion, sentiment and sponsor-signature collection before a proposal is submitted to the Governor.
+- **Updateable proposals** add an onchain edit period to the Governor. An update creates a replacement proposal ID while preserving the original governance schedule and history.
+
+:::note[Scope of the upgraded contracts]
+
+The original contracts remain valid and in active use. This section documents the upgraded implementation pinned to [`e6679a2`](https://github.com/BuilderOSS/nouns-protocol/commit/e6679a20b38e2a9c35b7dbd75adf5043999dce75), not behaviour shared by every deployed Builder DAO. Existing DAOs opt into the implementation through governance; even after upgrading, proposal updates remain disabled while `proposalUpdatablePeriod()` is zero.
+
+:::
+
+The implementation references for this release are:
+
+- [Governor proposal lifecycle](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-proposal-lifecycle.md)
+- [Proposal candidate EAS schemas](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/eas-proposal-candidates-schema.md)
+- [Governor architecture](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-architecture.md)
+- [Upgrade runbook](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/upgrade-runbook.md)
+- [Governor implementation](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/governance/governor/Governor.sol)
+
+### Proposal Candidate Data Model
+
+Candidates are represented by three revocable EAS attestation types:
+
+| Attestation | Purpose | Principal fields |
+|---|---|---|
+| `ProposalCandidate` | Stores one candidate revision and its proposed actions | `candidateId`, `salt`, `targets`, `values`, `calldatas`, `description` |
+| `CandidateComment` | Stores discussion and informal sentiment | `candidateId`, `support`, `comment`, `parentCommentUID` |
+| `CandidateSponsorSignature` | Stores a formal EIP-712 signature for proposal submission | `candidateId`, `proposalId`, `nonce`, `deadline`, `signature` |
+
+`candidateId` is derived from the attester and a random salt. Each edit creates a new `ProposalCandidate` attestation using the same salt, so the subgraph can group the versions. Version numbers and proposal IDs are derived by the indexer rather than stored in the current candidate schema.
+
+Candidate comments use their own support mapping:
+
+```text
+0 = For
+1 = Against
+2 = Abstain
+3 = None
+```
+
+This differs from Governor votes, where `0 = Against`, `1 = For` and `2 = Abstain`. Integrations should not reuse the Governor mapping for candidate sentiment. To calculate current sentiment, use the latest non-revoked comment from each member. Retain earlier attestations as discussion history, and exclude revoked attestations from active counts.
+
+Sponsor signatures are formal authorisations for `proposeBySigs`, and different from candidate signals. A signature binds to the `proposalId`, and therefore to the exact proposer, description and transaction bundle. It also includes the Governor's shared proposal-signature nonce and a deadline. Candidate edits generate a different proposal ID, so clients must collect fresh signatures for the new version.
+
+The EIP-712 request uses the primary type:
+
+```text
+Proposal(address proposer,bytes32 proposalId,uint256 nonce,uint256 deadline)
+```
+
+Its domain contains the Governor name and version, the current chain ID and the Governor address as `verifyingContract`. Clients should expose these fields for review and reject a signature if the domain, proposer, proposal ID, nonce or deadline does not match the current candidate submission.
+
+Before calling `proposeBySigs`, an integration must:
+
+- exclude the proposer from the signer set;
+- remove expired, revoked and stale-nonce signatures;
+- sort unique signers by address in ascending order;
+- limit sponsorship to 16 signers; and
+- confirm that the proposer and signers' combined voting power exceeds the Proposal Threshold.
+
+### Updated Proposal Lifecycle
+
+When the update period is enabled, a proposal begins in the **Updatable** state before entering the existing lifecycle:
+
+```text
+Updatable → Pending → Active ┬→ Succeeded → Queued ┬→ Executed
+                             │                      └→ Expired
+                             └→ Defeated
+```
+
+Only **Succeeded** proposals can move to **Queued**. **Defeated**, **Canceled** and **Vetoed** are terminal outcomes, as are **Executed** and **Expired**. When a proposal is updated, its previous revision is surfaced as **Replaced** and points to the replacement rather than continuing through the lifecycle.
+
+The proposal timestamps are calculated when the original proposal is created:
+
+```text
+proposalUpdatePeriodEnd = timeCreated + proposalUpdatablePeriod
+voteStart = proposalUpdatePeriodEnd + votingDelay
+voteEnd = voteStart + votingPeriod
+```
+
+An update does not recalculate these timestamps. Every replacement retains the original update deadline, vote start, vote end, threshold and quorum snapshots. Voting power also remains anchored to the original proposal's `timeCreated`; changing the proposal cannot move the voting-power snapshot.
+
+Fresh Governor initialisations default to a one-day update period in the deployment scripts. The accepted range is zero, which disables updates, through 24 weeks. The DAO controls the setting through `updateProposalUpdatablePeriod(...)`.
+
+### Update Paths and Proposal Identity
+
+Proposal IDs are hashes of the proposal's content. Changing the description or any transaction therefore creates a new ID rather than mutating the stored proposal.
+
+The Governor exposes two update paths while `state(proposalId) == Updatable`:
+
+- `updateProposal(...)` is the proposer-only path for a proposal without sponsor signatures. The proposer must satisfy the contract's threshold check.
+- `updateProposalBySigs(...)` is required for a signed proposal, or may be used to convert an unsigned proposal to a sponsored one. Its replacement signer set is validated afresh and does not need to match the original set.
+
+On a successful update, the previous ID is cancelled, the new ID becomes the current revision and `proposalIdReplacedBy(oldId)` records the link. A no-op update reverts with `NO_OP_PROPOSAL_UPDATE`. Reusing the exact content of an earlier stored revision also reverts because that proposal ID already exists.
+
+Useful reads for clients and indexers include:
+
+| Read | Purpose |
+|---|---|
+| `state(proposalId)` | Resolve the current lifecycle state |
+| `getProposal(proposalId)` | Read the complete proposal record |
+| `proposalUpdatePeriodEnd(proposalId)` | Display the edit deadline |
+| `proposalSnapshot(proposalId)` | Read the vote-start timestamp |
+| `proposalDeadline(proposalId)` | Read the vote-end timestamp |
+| `getProposalSigners(proposalId)` | Display and validate sponsors |
+| `proposalIdReplacedBy(proposalId)` | Follow the proposal revision chain |
+
+Treat proposal IDs as revision identifiers in interfaces, caches and subgraph entities. Follow replacement links to the canonical revision while retaining the old records for diffs and audit history.
+
+### Existing and New DAO Deployments
+
+Existing Governor proxies preserve storage and do not rerun `initialize` during an implementation upgrade. For a DAO upgrading from a version without the new storage slot, `proposalUpdatablePeriod` is therefore zero after the upgrade. This is intentional:
+
+- proposals move directly to **Pending**;
+- `updateProposal` and `updateProposalBySigs` revert; and
+- the established voting, queuing and execution flow continues unchanged.
+
+The DAO must separately execute `updateProposalUpdatablePeriod(...)` through governance to enable an edit window. New DAO deployments receive the value supplied in `GovParams`; current deployment scripts default it to one day.
+
+A typical per-DAO implementation upgrade executes:
+
+1. `Token.upgradeTo(newTokenImplementation)`
+2. `Auction.pause()`
+3. `Auction.upgradeTo(newAuctionImplementation)`
+4. `Auction.unpause()`
+5. `Governor.upgradeTo(newGovernorImplementation)`
+
+Use only implementation addresses registered by the Manager for the DAO's current base implementations. Capture the current state, simulate the complete proposal and verify every proxy implementation and version after execution.
+
+### Client Compatibility
+
+The upgraded Governor changes `castVoteBySig` from `(voter, proposalId, support, deadline, v, r, s)` to `(voter, proposalId, support, nonce, deadline, bytes signature)`. The contract and interface describe this as the V2 to V3 signing change, while the upgrade runbook describes the associated release as Governor 2.0.0 to 2.1.0. Integrations should identify the deployed implementation and ABI rather than relying on one version label. Existing vote-signing code and signatures are not compatible with the new type hash or ABI.
+
+Clients should also verify that they:
+
+- account for the update period when calculating vote-start times;
+- support the **Updatable** and **Replaced** presentation states;
+- treat **Defeated**, **Canceled**, **Vetoed**, **Executed**, **Expired** and **Replaced** as terminal for that proposal ID, and allow only **Succeeded** proposals to be queued;
+- follow revision links rather than treating a proposal ID as mutable;
+- require an update message in the user flow, while recognising that the revision relationship itself is enforced onchain;
+- rebuild sponsor payloads and signatures when proposal content changes; and
+- distinguish candidate sentiment values from Governor vote values.
+
+
+## 📊 Subgraph and APIs
+
+### Using the Builder Subgraph
+
+The protocol provides a [GraphQL subgraph](https://thegraph.com/) that indexes onchain events such as:
+
+- New auctions
+- Proposal lifecycle events
+- Treasury transfers
+- Token mints
+
+**Example query: Fetch latest auctions**
+
+```graphql
+{
+  auctions(first: 5, orderBy: startTime, orderDirection: desc) {
+    id
+    startTime
+    endTime
+    highestBid
+  }
+}
+```
+
+### GraphQL and Onchain APIs Available
+
+While the subgraph is the primary source of indexed data, DAOs and developers can also use:
+
+- **GraphQL API**: Preferred for web interfaces and data dashboards.
+- **Onchain reads**: For real-time, trustless data via JSON-RPC (e.g., `eth_call`).
+
+---
+
+## 🚀 Deployment Details
+
+### Supported Chains
+
+Builder DAOs can be deployed on any EVM-compatible chain. Official support currently includes:
+
+- **Ethereum Mainnet**
+- **Optimism**
+- **Base**
+
+**Testnets:**
+
+- Ethereum Sepolia
+- Base Sepolia
+
+Chain selection affects gas costs, UX, and community reach. Most DAOs currently launch on low-cost L2s like Base or Optimism.
+
+
+---
+
+### Gas and Cost Considerations
+
+**Key cost components:**
+
+- **DAO Deployment**: ~0.1–0.2 ETH (varies by chain)
+- **Auction Bids**: Transaction fees per bid and settlement
+- **Proposal Actions**: Voting and execution transactions
+- **Metadata Rendering**: If using generative or dynamic logic
+
+**Tips to save gas:**
+
+- Launch on a Layer 2 like Base
+- Use static metadata rendering
+- Minimise external calls in proposals
