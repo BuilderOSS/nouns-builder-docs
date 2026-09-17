@@ -126,33 +126,56 @@ Creating the split requires a separate wallet transaction. Once deployed, its ad
   width="500"
 />
 
-### Distribution and Withdrawal
+### Distributing and Withdrawing Split Revenue
 
-Builder creates the split and sets it as the Droposal's payout address; it does not automate payout distribution or recipient withdrawals.
+After the Droposal is executed, open its standalone mint page. The **Revenue split contract** panel below the mint form shows the split contract, its creation transaction, and every recipient's allocation.
 
-:::note[User flow to be confirmed]
+<img
+  src="/guides/builderGuide/droposal-revenue-split-overview.png"
+  alt="Droposal page with the Revenue split contract panel below the mint form"
+  width="800"
+/>
 
-The Builder payout user flow is still TBD and will be revised when distribution and withdrawal controls are available in the product. The steps below describe the current contract-level flow.
+*The split details and payout controls are available directly on the Droposal page.*
+
+To retrieve funds through Builder:
+
+1. Connect the wallet included as a recipient in the split.
+2. Open the Droposal page and scroll to **Revenue split contract**.
+3. Use the available action to distribute funds according to the displayed shares, then withdraw the balance allocated to your connected wallet.
+4. Confirm the required wallet transaction or transactions. Funds reach the recipient wallet only after withdrawal completes.
+
+The action reflects the split's current state. For example, **Nothing to distribute** appears when the split has no balance ready for distribution.
+
+<img
+  src="/guides/builderGuide/droposal-revenue-split-recipient.png"
+  alt="Revenue split contract panel shown to a connected split recipient, with payout controls and withdrawal guidance"
+  width="600"
+/>
+
+*A connected recipient sees the distribution and withdrawal controls.*
+
+Logged-out visitors and connected wallets that are not included in the split see the contract, creation transaction, recipients, and allocation percentages without payout controls.
+
+<img
+  src="/guides/builderGuide/droposal-revenue-split-read-only.png"
+  alt="Read-only Revenue split contract panel shown to logged-out visitors and wallets that are not split recipients"
+  width="600"
+/>
+
+*The read-only view makes the split configuration publicly verifiable.*
+
+You can still use the split address in the [Splits app](https://app.splits.org/) to distribute funds and withdraw a recipient balance, or use a block explorer to confirm the distribution transaction and balances.
+
+:::note
+
+The split can distribute only funds it has received. If primary-sale proceeds are still held by the Droposal contract, an authorized account must first call the Droposal contract's `withdraw` function to send them to its payout address (the split contract).
 
 :::
-
-1. The Droposal contract holds primary-sale proceeds until an authorized account calls its `withdraw` function. This sends funds to the configured payout address—the split contract in this case.
-2. ETH and ERC-20 balances then remain in the split until someone distributes them. For Split v1, anyone can call `distributeETH` for ETH or `distributeERC20` for a specific ERC-20 token. Distribution allocates each recipient's share but does not necessarily transfer it to their wallet.
-3. Each recipient can then withdraw their allocated balance. A distributor can also choose a combined distribute-and-withdraw flow in the Splits interface.
-
-Use the split address in the [Splits app](https://app.splits.org/) or a block explorer to confirm the distribution transaction and recipient balances. A recipient's wallet receives funds only after withdrawal completes.
 
 :::caution
 
 Distribution is irreversible for the balance being distributed: the recipients and allocations in effect at that moment determine who receives the funds.
-
-:::
-
-### Split Display on the Droposal
-
-:::note[Documentation placeholder]
-
-Add the public Droposal payout display here once it is available. The final documentation should show where visitors can see the active split address, recipients and allocation percentages.
 
 :::
 
@@ -321,9 +344,11 @@ function setOwner(address newOwner)
 ```
 
 
-## Withdrawing Funds
+## Withdrawing Funds from the Droposal Contract
 
 Once minting concludes, funds can be moved out of the contract by calling `withdraw`. This can be called by a default admin, the `fundsRecipient` address, a sales manager, or the Zora DAO.
+
+When `fundsRecipient` is a split contract, this call moves the proceeds into the split. Recipients can then use the [distribution and withdrawal flow](#distributing-and-withdrawing-split-revenue) described above.
 
 ```solidity
 function withdraw()
