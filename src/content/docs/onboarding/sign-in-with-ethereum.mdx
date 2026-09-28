@@ -3,113 +3,100 @@ sidebar:
   order: 3.5
 id: sign-in-with-ethereum
 title: Signing in with Ethereum
-description: Connect a wallet and sign in to Nouns Builder, including as the owner of a Safe.
+description: Sign in to Nouns Builder with a regular wallet or a Safe, and confirm actions from a Safe.
 ---
 
 import { Steps } from '@astrojs/starlight/components';
 
-Nouns Builder uses **Sign-In with Ethereum (SIWE)** to authenticate your wallet. Connecting lets the app read your public address and request actions; signing a SIWE message proves that you control that address and starts your authenticated session.
+Nouns Builder uses **Sign-In with Ethereum (SIWE)** to confirm that you control the wallet you connect. Signing in does not create a blockchain transaction, move funds, or cost gas.
 
-A SIWE signature is not a blockchain transaction. It does not move funds, approve token spending or cost gas.
-
-## Signing in with a Wallet
+## Sign in with a regular wallet
 
 <Steps>
 
-1. **Connect your wallet**
-
-   Select **Connect Wallet**, then choose your wallet from the list.
+1. Select **Connect Wallet**, and choose your wallet.
 
    <img
-     src="/onboarding/sign-in/connect-wallet.png"
-     alt="Nouns Builder wallet connection options"
+     src="/onboarding/sign-in/wallet-selector.png"
+     alt="Wallet options available when connecting to Nouns Builder"
      width="600"
    />
 
-2. **Approve the connection**
-
-   Confirm the connection request in your wallet. This connects your public wallet address to Nouns Builder but does not yet authenticate the session.
-
-3. **Start the SIWE request**
-
-   When Nouns Builder asks you to complete authentication, select **Sign Message**. This request does not create a transaction or cost gas.
+2. Select **Sign Message**. Check the site and wallet address in the request, then approve it in your wallet.
 
    <img
-     src="/onboarding/sign-in/sign-message.png"
-     alt="Nouns Builder asking the connected wallet to sign a message"
-     width="520"
+     src="/onboarding/sign-in/wallet-sign-in.png"
+     alt="A Nouns Builder sign-in request alongside the wallet signature prompt"
+     width="720"
    />
 
-4. **Review and sign the message**
-
-   Check the requesting domain and wallet address shown by your wallet, then approve the signature. Once it has been verified, you are signed in to Nouns Builder.
+3. Wait for the **Authenticated** confirmation. You are now signed in.
 
 </Steps>
 
-## Signing in with a Safe
+## Sign in with a Safe
 
-A Safe is a smart contract account, so one of its owner wallets signs in on its behalf. Nouns Builder verifies that the connected wallet is an owner, then presents the Safe address as the connected account while retaining the owner identity used for authentication.
-
-:::note[Sign-in does not create a Safe transaction]
-
-The SIWE message is signed by one Safe owner and does not require the Safe's transaction approval threshold. It does not create an onchain transaction or cost gas.
-
-:::
+A Safe signs in through one of its owner wallets. This only authenticates the Safe in Nouns Builder; it does not create a Safe transaction or require approval from every signer.
 
 <Steps>
 
-1. **Select Safe**
+1. Select **Connect Wallet**, then choose **Safe**.
 
-   Select **Connect Wallet**, then choose **Safe** from the wallet list.
+2. Select the network where the Safe is deployed, enter its address, and select **Continue**. You can also select a previously used Safe under **Recent safes**.
 
-2. **Enter the Safe details**
+3. Choose a wallet that owns the Safe, and approve the connection.
 
-   Select the network on which the Safe is deployed, enter its address and select **Continue**. Safes are specific to a network, so both details must match.
+4. Select **Sign Message**, and approve the request in the owner wallet. Check both the owner and Safe addresses before signing.
 
    <img
-     src="/onboarding/sign-in/safe-details.png"
-     alt="Selecting a network and entering a Safe address"
+     src="/onboarding/sign-in/safe-sign-in.png"
+     alt="Nouns Builder Safe sign-in request showing the owner and Safe addresses"
      width="520"
-   />
-
-3. **Connect an owner wallet**
-
-   Choose a wallet that controls one of the Safe's owner addresses and approve the connection. Nouns Builder will verify that the connected address is an owner of the selected Safe.
-
-   <img
-     src="/onboarding/sign-in/safe-owner-wallet.png"
-     alt="Choosing a wallet belonging to an owner of the Safe"
-     width="520"
-   />
-
-4. **Sign in for the Safe**
-
-   Select **Sign Message**. The prompt identifies the Safe for which you are signing in. Review and approve the SIWE request in the owner wallet.
-
-   <img
-     src="/onboarding/sign-in/safe-sign-message.png"
-     alt="A Safe owner being asked to sign in for the selected Safe"
-     width="520"
-   />
-
-5. **Confirm the connected account**
-
-   Open the account menu after authentication. It displays the Safe address as the connected account and identifies the owner wallet that signed in.
-
-   <img
-     src="/onboarding/sign-in/safe-connected.png"
-     alt="Account menu showing the connected Safe and its authenticating owner"
-     width="420"
    />
 
 </Steps>
 
-## Using a Safe for Onchain Actions
+After signing in, the account menu shows the Safe address, its signature requirement, and the owner wallet used to authenticate.
 
-:::caution[Safe transaction guide coming soon]
+<img
+  src="/onboarding/sign-in/safe-profile.png"
+  alt="Account menu showing the connected Safe, its signature requirement, and its owner wallet"
+  width="420"
+/>
 
-The onchain Safe flow is still in development and has not been tested end to end. This section will explain how Nouns Builder prepares a Safe transaction, redirects you to Safe, and how the required owners approve and execute it once the production flow is available.
+## Create a proposal with a Safe
 
-Until then, do not rely on the current test implementation for production Safe transactions.
+Create and review the DAO proposal as usual, then submit it. Nouns Builder displays the Safe action while your owner wallet asks you to confirm it.
 
-:::
+<img
+  src="/onboarding/sign-in/safe-proposal-confirmation.png"
+  alt="A Safe transaction being reviewed in Nouns Builder and confirmed in the owner wallet"
+  width="520"
+/>
+
+- For a **1-of-1 Safe**, confirming in the owner wallet creates the DAO proposal immediately. Nouns Builder then provides a block explorer link.
+- For a **multisig Safe**, Nouns Builder submits the action to Safe. Follow the link to Safe, then collect the required approvals and execute the transaction there. The DAO proposal is created after the Safe transaction is executed.
+
+<img
+  src="/onboarding/sign-in/safe-transaction-complete.png"
+  alt="Confirmation that a Safe transaction has been executed"
+  width="520"
+/>
+
+## Troubleshooting
+
+### Safe not found on this network
+
+Safes are network-specific. If you see **Safe not found on this network**, select the network where the Safe was created. If it appears under **Recent safes**, select it to restore the saved address and network.
+
+<img
+  src="/onboarding/sign-in/safe-network-error.png"
+  alt="Safe not found error with a previously used Safe listed under Recent safes"
+  width="520"
+/>
+
+### The sign-in or transaction request does not reach your wallet
+
+- Temporarily disable any ad blocker or VPN for Nouns Builder, then try again. These services can sometimes block the connection that passes the request to your wallet.
+- Reload the page, reconnect the wallet, and retry the request.
+- If the issue continues, clear Nouns Builder's saved site data. In Chrome, Brave, or Edge, open **Developer Tools**, select **Application → Storage → Clear site data**, then reload and reconnect. This signs you out and resets the saved connection. Your wallet, funds, and keys are safe and not affected by this operation.
