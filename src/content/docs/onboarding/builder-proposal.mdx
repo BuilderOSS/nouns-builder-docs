@@ -30,7 +30,7 @@ To follow along safely before going to mainnet, use the [Sepolia Testnet](https:
 
 ## Proposal Lifecycle
 
-Once submitted, a proposal moves through the following stages:
+For DAOs using the original Governor contracts, or an upgraded Governor with its update period disabled, a submitted proposal moves through the following stages:
 
 1. **Pending** — The proposal is on-chain but voting hasn't started yet (Voting Delay is active).
 2. **Active** — Voting is open. Token holders cast For, Against, or Abstain votes.
@@ -38,12 +38,18 @@ Once submitted, a proposal moves through the following stages:
 4. **Queued** — A successful proposal enters the time lock queue.
 5. **Executed** — After the Time Lock Delay, anyone can trigger execution. The DAO's treasury carries out the attached transactions.
 
+:::note[DAOs with updateable proposals enabled]
+
+These proposals begin in an **Updatable** stage before moving to **Pending**. The optional update period is an additional stage provided by the upgraded Governor; it does not replace or alter the legacy lifecycle for DAOs that have not enabled it. See [Updating a Proposal](/guides/updating-proposals/).
+
+:::
+
 ![proposalLifecycle](../../../assets/images/proposalLifecycle.png)
 
 
 ## Creating a Proposal
 
-Navigate to your DAO's **Activity** tab and click **Create proposal**.
+Open your DAO, select the **Proposals** tab and click **Create proposal**.
 
 <img
   src="/guides/proposalGuide/create_proposal.png"
@@ -132,19 +138,19 @@ Use the **Select transaction type** dropdown to choose from the available option
 |---|---|
 | **Send Tokens** | Send ETH or ERC-20 tokens from the treasury to one or more recipients |
 | **Send NFTs** | Send NFTs from the treasury |
-| [**Stream Tokens**](/guides/sablier-proposal.mdx) | Set up continuous token payments over time (powered by Sablier) |
-| [**Airdrop Tokens**](/guides/sablier-proposal.mdx) | Distribute tokens via Sablier merkle campaigns |
-| [**Milestone Payments**](/guides/builder-escrow-proposal.mdx) | Schedule token releases tied to milestones |
-| [**Mint Governance Tokens**](/guides/mint_gov_tokens.mdx) | Mint governance tokens to specific addresses |
+| [**Stream Tokens**](/guides/sablier-proposal/) | Set up continuous token payments over time (powered by Sablier) |
+| [**Airdrop Tokens**](/guides/sablier-proposal/) | Distribute tokens via Sablier merkle campaigns |
+| [**Milestone Payments**](/guides/builder-escrow-proposal/) | Schedule token releases tied to milestones |
+| [**Mint Governance Tokens**](/guides/mint_gov_tokens/) | Mint governance tokens to specific addresses |
 | **WalletConnect** | Connect to a dApp and execute transactions via WalletConnect |
-| [**Nominate Delegate**](/guides/builder-escrow-proposal.mdx) | Nominate a delegate for milestone payments or token streams |
+| [**Nominate Delegate**](/guides/builder-escrow-proposal/) | Nominate a delegate for milestone payments or token streams |
 | **Pin Treasury Asset** | Whitelist a token or NFT for prominent display in the treasury |
 | **Custom Transaction** | Any other contract call — paste an ABI and select a function |
-| [**Coining**](/guides/coining.mdx) | Create a proposal to mint a Content or DAO Coin |
-| [**Droposal: Single Edition**](/guides/droposals.mdx) | Create a single-edition ERC-721 collection droposal |
-| [**Pause Auctions**](/guides/auctions.mdx) | Pause DAO auctions |
-| [**Add Artwork**](/guides/artworks.mdx) | Add new artwork layers to your DAO's NFT collection |
-| [**Replace Artwork**](/guides/artworks.mdx) | Replace an existing artwork layer in your collection |
+| [**Coining**](/guides/coining/) | Create a proposal to mint a Content or DAO Coin |
+| [**Droposal: Single Edition**](/guides/droposals/) | Create a single-edition ERC-721 collection droposal |
+| [**Pause Auctions**](/guides/auctions/) | Pause DAO auctions |
+| [**Add Artwork**](/guides/artworks/) | Add new artwork layers to your DAO's NFT collection |
+| [**Replace Artwork**](/guides/artworks/) | Replace an existing artwork layer in your collection |
 
 <img
   src="/guides/proposalGuide/txn_type.png"
@@ -221,10 +227,16 @@ Your wallet must hold enough governance tokens to meet the Proposal Threshold at
 
 :::
 
-Once the transaction confirms, the proposal will appear in your DAO's **Activity** tab with a **Pending** status. It will move to **Active** once the Voting Delay period has elapsed.
+Once the transaction confirms, a proposal without an enabled update period appears with a **Pending** status and moves to **Active** once the Voting Delay has elapsed. In a DAO with updateable proposals enabled, it appears as **Updatable** first and moves to **Pending** when the fixed update period ends.
 
 <img
   src="/guides/proposalGuide/proposal_pending.png"
   alt="Proposal pending"
   width="600"
 />
+
+## Related Proposal Workflows
+
+- Use a [Proposal Candidate](/guides/proposal-candidates/) to develop an idea, collect member signals and gather sponsor signatures before formal submission.
+- If the DAO has upgraded its Governor and enabled an update period, see [Updating a Proposal](/guides/updating-proposals/) to revise a submitted proposal before voting begins.
+- For the contract-level distinction between original, upgraded-but-disabled and update-enabled Governors, see the [Governor proposal lifecycle](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-proposal-lifecycle.md) and [upgrade runbook](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/upgrade-runbook.md).

@@ -6,6 +6,14 @@ title: Governance
 
 Governance is the process through which Builder DAOs make decisions, allocate funds, and evolve over time. The Builder Protocol enables fully onchain, transparent governance where token holders can create, vote on, and execute proposals. This section explains how proposals work, how voting power is calculated, and the tools and practices that support effective DAO governance.
 
+:::note[Governor versions]
+
+Contract upgrades are optional, so Builder DAOs may use the original Governor or the upgraded Governor. Original contracts—and upgraded Governors whose update period remains set to zero—begin proposals in **Pending**. An upgraded Governor with an enabled update period begins proposals in **Updatable**, then moves them to **Pending** at the original update deadline.
+
+See [Proposals and Voting](/guides/governance/) for the versioned contract behaviour, [Updating a Proposal](/guides/updating-proposals/) for the user flow and the [upgraded Governor lifecycle reference](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-proposal-lifecycle.md) for the implementation model.
+
+:::
+
 ---
 
 ## 🗳️ Proposal Lifecycle
@@ -14,12 +22,13 @@ Governance is the process through which Builder DAOs make decisions, allocate fu
 
 Governance proposals allow DAO members to make decisions about how the DAO operates or spends treasury funds.
 
-**The standard lifecycle:**
+**The shared governance lifecycle:**
 
 1. **Proposal Creation**
     - A member with the required number of tokens (proposal threshold) submits a proposal.
     - Proposals include a title, description, and one or more onchain actions (e.g., sending ETH, calling a contract).
-    - After creation, the proposal enters the *voting delay* period.
+    - On original or update-disabled Governors, the proposal enters the *voting delay* period.
+    - With an enabled upgraded Governor, it first enters a fixed *update period*. Once that ends, the voting delay begins.
 2. **Voting Period**
     - Once active, DAO members can vote **FOR**, **AGAINST**, or **ABSTAIN** using their tokens.
     - Voting is open for a set period (e.g., 2–5 days), as configured during DAO setup.
@@ -118,7 +127,7 @@ Builder DAOs can use a variety of interfaces to manage and interact with governa
 
 ### 2. **Custom Interfaces**
 
-- DAOs can fork and customize their own governance UIs
+- DAOs can fork and customise their own governance UIs
 - Useful for projects with unique branding or voting logic
 - Requires frontend development experience
 

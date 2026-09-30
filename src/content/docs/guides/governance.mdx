@@ -19,9 +19,35 @@ For example, if the Proposal Threshold is set to 100 BPS and there are 500 total
 - `Voting Period:` The duration for voting on a proposal in seconds.
 - `Time Lock Delay:` The amount of time a successful proposal must wait between being queued and executed.
 
+## Which Governor Behaviour Applies?
+
+Builder DAOs do not all use the same Governor implementation. Contract upgrades are optional and controlled by each DAO, so the correct lifecycle and ABI depend on that DAO's contracts and configuration.
+
+| DAO configuration | First proposal state | Can proposals be updated? | Signing interface |
+|---|---|---|---|
+| **Original Governor contracts** | Pending | No | Original vote-signature ABI |
+| **Upgraded Governor, update period set to `0`** | Pending | No, updates are disabled while the period is `0` | Upgraded ABI and revision reads |
+| **Upgraded Governor, update period greater than `0`** | Updatable | Yes, during the fixed update period | Upgraded ABI and proposal-update functions |
+
+Upgrading an existing Governor does not rerun its initializer. A DAO upgrading from a contract without the new storage slot therefore begins with `proposalUpdatablePeriod == 0`. Its proposals continue to follow the original lifecycle until the DAO separately enables an update period through governance.
+
+:::note
+
+Do not infer the Governor version from the nouns.build interface alone. Read the DAO's contract version and `proposalUpdatablePeriod()` before building an integration or preparing an upgrade.
+
+:::
+
+The upgraded implementation and its design documentation are available in the pinned protocol revision:
+
+- [Governor implementation](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/governance/governor/Governor.sol)
+- [Governor interface](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/governance/governor/IGovernor.sol)
+- [Proposal lifecycle reference](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-proposal-lifecycle.md)
+- [Governor architecture](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-architecture.md)
+- [Upgrade runbook](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/upgrade-runbook.md)
+
 ---
 
-### Proposal Lifecycle:
+### Original or Update-Disabled Proposal Lifecycle
 - A proposal is submitted to the DAO on-chain by an address that owns enough NFTs to clear the Proposal Threshold.
 - The proposal can't be voted on until after the voting delay time has passed.
 - Once the delay period has passed, the proposal must then receive more **For** votes than **Against** and the number of **For** votes must meet or exceed the Quorum Threshold.
@@ -34,7 +60,7 @@ For example, if the Proposal Threshold is set to 100 BPS and there are 500 total
 
 ### Proposal Stages In Depth
 
-Proposals in Nouns Builder move through the following stages, defined by the `ProposalState` enum:
+The original Governor enum remains the correct reference for DAOs that have not upgraded:
 
 ```ts
 export enum ProposalState {
@@ -49,6 +75,32 @@ export enum ProposalState {
   Vetoed = 8       // Vetoed by an address with veto rights
 }
 ```
+
+The upgraded Governor appends two states without changing the numeric values of the original states:
+
+```ts
+export enum UpgradedProposalState {
+  Pending = 0,
+  Active = 1,
+  Canceled = 2,
+  Defeated = 3,
+  Succeeded = 4,
+  Queued = 5,
+  Expired = 6,
+  Executed = 7,
+  Vetoed = 8,
+  Updatable = 9,   // Editable during the configured update period
+  Replaced = 10    // An earlier revision superseded by a new proposal ID
+}
+```
+
+When the upgraded Governor's update period is enabled, the lifecycle begins:
+
+```text
+Updatable → Pending → Active
+```
+
+It then follows the same voting, queuing and execution outcomes as the original Governor. An update creates a new proposal ID and marks the preceding revision **Replaced**. It preserves the original update deadline, vote start, vote end and voting-power snapshot.
 
 The lifecycle of a proposal generally follows:
 
@@ -139,7 +191,10 @@ function castVoteWithReason(
 ) external returns (uint256)
 ```
 
-#### castVoteBySig
+#### Original `castVoteBySig`
+
+The following ABI applies to the original Governor contracts:
+
 ```
 /// @notice Casts a signed vote
 /// @param _voter The voter address
@@ -159,6 +214,23 @@ function castVoteBySig(
     bytes32 _s
 ) external returns (uint256)
 ```
+
+#### Upgraded `castVoteBySig`
+
+The upgraded Governor adds an explicit nonce and accepts the complete signature as `bytes`:
+
+```solidity
+function castVoteBySig(
+    address _voter,
+    bytes32 _proposalId,
+    uint256 _support,
+    uint256 _nonce,
+    uint256 _deadline,
+    bytes calldata _sig
+) external returns (uint256)
+```
+
+The upgraded contract source describes this as the V2 to V3 signing change. The upgrade runbook describes the associated release as Governor 2.0.0 to 2.1.0. Regardless of release-label conventions, the ABIs and EIP-712 type hashes are incompatible: signatures produced for the original interface cannot be reused after the upgrade.
 
 ---
 
@@ -217,7 +289,7 @@ function delegateBySig(
 ## Vetoing
 Vetoing is an optional setting that can be configured by the founders when deploying.
 Note, veto power is encouraged due to the small number of votes (NFTs) at the beginning of a DAO.
-The veto can later be removed by the founders once the NFTs have become sufficiently decentralized.
+The veto can later be removed by the founders once the NFTs have become sufficiently decentralised.
 
 #### Vetoing Proposal
 ```

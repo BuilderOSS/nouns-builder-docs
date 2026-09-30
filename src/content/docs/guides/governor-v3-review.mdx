@@ -1,0 +1,85 @@
+---
+sidebar:
+  order: 2.4
+title: Plain-Language Review of v3 Contract Upgrades
+description: What the Governor v3 upgrade changes, what stays the same, and what an independent community review found.
+---
+
+Governor v3 changes the rules used to create and manage proposals. It does not move the DAO, its treasury, or its history to new addresses.
+
+:::note[Credit]
+
+This page adapts an AI-assisted review prepared for [Gnars](https://www.gnars.com/) by community contributor **Vlad**. Thank you to Gnars and Vlad for contributing the work and making it available to the wider Builder community.
+
+The original report evaluated a broader, Gnars-specific upgrade plan. This version keeps only the findings relevant to the Governor upgrade offered through Nouns Builder.
+
+:::
+
+:::caution[This is not a formal security audit]
+
+The review provides useful independent analysis, but it is not a formal audit by a security firm, and it does not guarantee that the contracts are free of issues. Each DAO should review and discuss the upgrade before voting.
+
+:::
+
+## The short version
+
+Think of the DAO as a clubhouse and the Governor as its rulebook. The upgrade replaces the rulebook inside the clubhouse; it does not move the clubhouse or remove anything stored inside it.
+
+- The Governor's public address stays the same.
+- Existing proposals, votes, settings, and governance history remain in place.
+- The DAO must approve and execute the upgrade through its normal governance process.
+- The DAO can upgrade only to an implementation registered by the Builder Manager.
+- The Manager can permit an implementation, but it cannot force a DAO to adopt it.
+
+## What the upgrade adds
+
+| Feature | What it means for members |
+| --- | --- |
+| Proposal update period | A proposer may correct the description or actions before voting begins. The DAO chooses how long this period lasts. Setting it to zero disables updates. |
+| Proposal sponsorship | Up to 16 members may combine their voting power by signing the same proposal before it is submitted. |
+| Clear revision history | An edited proposal receives a new ID. The previous version is marked **Replaced**, and the relationship between the versions remains visible. |
+
+An update cannot move the vote to a more favourable time. The voting-power snapshot, update deadline, vote start, vote end, proposal threshold, and quorum are copied from the original proposal.
+
+## What the review checked
+
+The review examined whether the new Governor could safely take over from the existing implementation without changing the DAO's stored state. It also checked whether the new proposal and signature features introduced obvious ways to bypass governance.
+
+The main conclusions were:
+
+- **Stored state is preserved.** The new Governor storage is added after the existing storage layout, and the existing proposal and settings structures remain compatible.
+- **Only the DAO can approve its upgrade.** The upgrade requires an executed governance proposal and a registered implementation.
+- **Proposal actions remain bound to the approved content.** The proposal ID continues to cover the destination addresses, values, call data, description, and proposer.
+- **Sponsor signatures include replay protection.** A signature is tied to a specific proposal, Governor, network, deadline, and signer nonce. Duplicate signers cannot be counted more than once.
+- **Proposal updates cannot rewrite an active vote.** Updates are allowed only before voting begins, and replaced versions cannot be voted on, queued, or executed.
+
+As supporting evidence, the original review recorded 18 successful checks while upgrading a DAO on a mainnet fork, along with 630 passing unit and fuzz tests. These were point-in-time test results, not a guarantee about every DAO or future release.
+
+## Resolved finding
+
+The original review identified one compatibility issue involving older off-chain vote signatures. That issue was fixed before this documentation was published and is not an outstanding blocker for the current Builder upgrade flow.
+
+Members voting normally through Nouns Builder are not affected. Teams that operate custom voting relayers, bots, indexers, or alternative frontends should still confirm that they use the current Governor interface before their DAO upgrades.
+
+## Behaviour members should understand
+
+- A proposal backed by sponsor signatures may be cancelled by the proposer or by any one of its sponsors before execution. This is intentional, so members should understand that responsibility before signing.
+- Editing a proposal requires new sponsor signatures because the edited content has a new proposal ID.
+- If the update period is set to zero, proposals continue directly to **Pending** and cannot be edited.
+- Custom interfaces and indexers must understand the **Updatable** and **Replaced** states and follow the link from an old proposal ID to its replacement.
+
+## Before your DAO upgrades
+
+1. Read the generated upgrade proposal and confirm that its actions match the displayed summary.
+2. Discuss whether proposal updates should be enabled and how long the update period should be.
+3. Confirm that any custom voting or governance tools support the upgraded Governor.
+4. Review the transaction simulation before submitting the proposal.
+5. Vote through the DAO's normal governance process. The upgrade takes effect only if the proposal passes and is executed.
+
+For the complete user flow, see [Upgrading DAO Contracts](/guides/upgrading-contracts/).
+
+## Sources
+
+- [Original AI-assisted review prepared for Gnars](https://claude.ai/code/artifact/05548db7-df62-4f3e-8983-a76367a8149d)
+- [Governor v3 implementation](https://github.com/BuilderOSS/nouns-protocol/pull/5)
+- [Documentation tracking issue](https://github.com/BuilderOSS/nouns-builder/issues/1025)

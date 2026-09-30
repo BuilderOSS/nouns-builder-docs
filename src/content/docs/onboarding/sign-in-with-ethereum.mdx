@@ -1,0 +1,102 @@
+---
+sidebar:
+  order: 3.5
+id: sign-in-with-ethereum
+title: Signing in with Ethereum
+description: Sign in to Nouns Builder with a regular wallet or a Safe, and confirm actions from a Safe.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+Nouns Builder uses **Sign-In with Ethereum (SIWE)** to confirm that you control the wallet you connect. Signing in does not create a blockchain transaction, move funds, or cost gas.
+
+## Sign in with a regular wallet
+
+<Steps>
+
+1. Select **Connect Wallet**, and choose your wallet.
+
+   <img
+     src="/onboarding/sign-in/wallet-selector.png"
+     alt="Wallet options available when connecting to Nouns Builder"
+     width="600"
+   />
+
+2. Select **Sign Message**. Check the site and wallet address in the request, then approve it in your wallet.
+
+   <img
+     src="/onboarding/sign-in/wallet-sign-in.png"
+     alt="A Nouns Builder sign-in request alongside the wallet signature prompt"
+     width="720"
+   />
+
+3. Wait for the **Authenticated** confirmation. You are now signed in.
+
+</Steps>
+
+## Sign in with a Safe
+
+A Safe signs in through one of its owner wallets. This only authenticates the Safe in Nouns Builder; it does not create a Safe transaction or require approval from every signer.
+
+<Steps>
+
+1. Select **Connect Wallet**, then choose **Safe**.
+
+2. Select the network where the Safe is deployed, enter its address, and select **Continue**. You can also select a previously used Safe under **Recent safes**.
+
+3. Choose a wallet that owns the Safe, and approve the connection.
+
+4. Select **Sign Message**, and approve the request in the owner wallet. Check both the owner and Safe addresses before signing.
+
+   <img
+     src="/onboarding/sign-in/safe-sign-in.png"
+     alt="Nouns Builder Safe sign-in request showing the owner and Safe addresses"
+     width="520"
+   />
+
+</Steps>
+
+After signing in, the account menu shows the Safe address, its signature requirement, and the owner wallet used to authenticate.
+
+<img
+  src="/onboarding/sign-in/safe-profile.png"
+  alt="Account menu showing the connected Safe, its signature requirement, and its owner wallet"
+  width="420"
+/>
+
+## Create a proposal with a Safe
+
+Create and review the DAO proposal as usual, then submit it. Nouns Builder displays the Safe action while your owner wallet asks you to confirm it.
+
+<img
+  src="/onboarding/sign-in/safe-proposal-confirmation.png"
+  alt="A Safe transaction being reviewed in Nouns Builder and confirmed in the owner wallet"
+  width="520"
+/>
+
+- For a **1-of-1 Safe**, confirming in the owner wallet creates the DAO proposal immediately. Nouns Builder then provides a block explorer link.
+- For a **multisig Safe**, Nouns Builder submits the action to Safe. Follow the link to Safe, then collect the required approvals and execute the transaction there. The DAO proposal is created after the Safe transaction is executed.
+
+<img
+  src="/onboarding/sign-in/safe-transaction-complete.png"
+  alt="Confirmation that a Safe transaction has been executed"
+  width="520"
+/>
+
+## Troubleshooting
+
+### Safe not found on this network
+
+Safes are network-specific. If you see **Safe not found on this network**, select the network where the Safe was created. If it appears under **Recent safes**, select it to restore the saved address and network.
+
+<img
+  src="/onboarding/sign-in/safe-network-error.png"
+  alt="Safe not found error with a previously used Safe listed under Recent safes"
+  width="520"
+/>
+
+### The sign-in or transaction request does not reach your wallet
+
+- Temporarily disable any ad blocker or VPN for Nouns Builder, then try again. These services can sometimes block the connection that passes the request to your wallet.
+- Reload the page, reconnect the wallet, and retry the request.
+- If the issue continues, clear Nouns Builder's saved site data. In Chrome, Brave, or Edge, open **Developer Tools**, select **Application → Storage → Clear site data**, then reload and reconnect. This signs you out and resets the saved connection. Your wallet, funds, and keys are safe and not affected by this operation.

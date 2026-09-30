@@ -1,0 +1,232 @@
+---
+sidebar:
+  order: 2.1
+title: Proposal Candidates
+---
+
+##### Develop an idea, gather feedback and collect support before submitting a proposal
+
+Proposal candidates give a DAO space to develop an idea before it becomes a formal governance proposal. Anyone can publish a candidate, share revisions and invite members to signal their view. DAO members can also sign their support so that a candidate can be promoted to a proposal once it meets the DAO's Proposal Threshold.
+
+Creating a candidate does not open voting. Candidates remain separate from the formal proposal lifecycle until they are promoted.
+
+## Find Proposal Candidates
+
+Open your DAO and select the **Candidates** tab. The page lists active candidates and their current support. Select a candidate to read it, review its transactions and join the discussion.
+
+<img
+  src="/guides/candidateGuide/candidates-list.png"
+  alt="The Candidates tab showing proposal candidates and the Create Candidate button"
+  width="700"
+/>
+
+The candidate page shows:
+
+- its current version and edit history;
+- the proposed transactions;
+- the signatures collected towards the Proposal Threshold;
+- For, Against and Abstain signals from DAO members; and
+- whether it is still a draft or has been promoted to a proposal.
+
+<img
+  src="/guides/candidateGuide/candidate-overview.png"
+  alt="A proposal candidate overview showing its version, signatures and signals"
+  width="700"
+/>
+
+## Create a Candidate
+
+From the **Candidates** tab, select **Create Candidate**. The candidate builder follows the same three steps as the proposal builder:
+
+1. **Write Candidate** — add a clear title and description.
+2. **Add Transactions** — define what the DAO would execute if the candidate later becomes a successful proposal.
+3. **Review & Submit** — check the content and transactions before publishing.
+
+<img
+  src="/guides/candidateGuide/candidate-edit-transactions.png"
+  alt="The Add Transactions step with two candidate transactions queued"
+  width="700"
+/>
+
+<img
+  src="/guides/candidateGuide/candidate-edit-review.png"
+  alt="The candidate review step showing the candidate summary and transactions"
+  width="700"
+/>
+
+When you submit, confirm the transaction in your wallet. The candidate is recorded as an onchain attestation and will appear in the DAO's Candidates tab.
+
+<img
+  src="/guides/candidateGuide/candidate-submitting.png"
+  alt="The Creating Candidate screen asking for wallet confirmation"
+  width="700"
+/>
+
+:::note
+
+You do not need to meet the DAO's Proposal Threshold to create a candidate. The threshold applies when the candidate is promoted to a formal proposal.
+
+:::
+
+## Edit a Candidate
+
+The candidate creator can select **Edit Candidate** to publish a new version. Work through the same Write, Transactions and Review steps, then confirm the update in your wallet.
+
+<img
+  src="/guides/candidateGuide/candidate-edit-write.png"
+  alt="The Write Candidate step when updating an existing candidate"
+  width="700"
+/>
+
+An update replaces the candidate's current version and resets its existing sponsor signatures. This protects signers from supporting content or transactions they have not reviewed. Ask supporters to review and sign the new version after it is published.
+
+Previous versions remain available from **View Edit History**. Select a version to compare its changes or open **Full Version** to read that revision on its own.
+
+<img
+  src="/guides/candidateGuide/candidate-edit-history.png"
+  alt="The candidate edit history menu showing previous versions"
+  width="700"
+/>
+
+<img
+  src="/guides/candidateGuide/candidate-version-diff.png"
+  alt="A candidate version diff showing removed and added text"
+  width="700"
+/>
+
+<img
+  src="/guides/candidateGuide/candidate-version-full.png"
+  alt="The Full Version view for a previous candidate revision"
+  width="700"
+/>
+
+## Comment and Signal
+
+DAO members can use the candidate's **Discussion** tab to comment and signal **For**, **Against** or **Abstain**. A signal records a member's position on the candidate, but it is not a vote on a formal proposal.
+
+Select **Add a comment**, enable **Add a signal**, choose your position and add an optional comment. Then confirm the action in your wallet.
+
+<img
+  src="/guides/candidateGuide/candidate-signal-options.png"
+  alt="The candidate discussion form with For, Against and Abstain signal options"
+  width="700"
+/>
+
+Wallets that do not hold the DAO's governance token can read candidates and comment, but cannot signal as a member.
+
+<img
+  src="/guides/candidateGuide/candidate-non-member-comment.png"
+  alt="The candidate comment form explaining that a governance token is required to signal"
+  width="700"
+/>
+
+## Sponsor a Candidate
+
+Sponsorship is different from signalling. A sponsor signs support for submitting the exact candidate version as a formal proposal. These signatures contribute voting power towards the DAO's Proposal Threshold.
+
+There are two ways to add a sponsor signature.
+
+### Sponsor While Signalling
+
+An eligible DAO member can signal **For** and sponsor the candidate in the same flow:
+
+1. Select **Signal / comment**.
+2. Enable **Signal on this candidate**, select **For** and add an optional comment.
+3. Enable **Also sponsor this candidate**.
+4. Select **Signal & Sign**.
+5. Complete both wallet requests: first sign the sponsorship message, then submit the signal and optional comment onchain.
+
+<img
+  src="/guides/candidateGuide/candidate-sponsor-with-signal.png"
+  alt="A For signal with candidate sponsorship enabled and the Signal and Sign button"
+  width="700"
+/>
+
+Once both actions succeed, Builder confirms that the signal and signature have been recorded.
+
+<img
+  src="/guides/candidateGuide/candidate-signal-signature-confirmed.png"
+  alt="Confirmation that a candidate signal and sponsor signature were added"
+  width="600"
+/>
+
+### Sign Without Adding a Signal
+
+To sponsor without signalling or commenting, open the candidate's **Discussion** tab and select **Sign Candidate** under **Candidate Sponsors**. Review and sign the wallet request. This adds the sponsor signature only.
+
+<img
+  src="/guides/candidateGuide/candidate-sign-directly.png"
+  alt="The Candidate Sponsors section with a Sign Candidate button"
+  width="700"
+/>
+
+### Review the Signature Request
+
+The wallet may display the sponsorship request as raw EIP-712 typed data. Before signing, check:
+
+- the domain name, chain ID and Governor address under `verifyingContract`;
+- the candidate creator's address under `proposer`;
+- the `proposalId`, which binds the signature to the exact candidate content and transactions; and
+- the `nonce` and `deadline`, which prevent replay and limit how long the signature can be used.
+
+<img
+  src="/guides/candidateGuide/candidate-sponsor-typed-data.png"
+  alt="A wallet displaying the raw EIP-712 typed data for a candidate sponsor signature"
+  width="500"
+/>
+
+Do not sign if the network, contract, proposer or proposal ID is unexpected. The signature authorises the candidate creator to include your support when submitting this specific version through `proposeBySigs`; it is not a governance vote and does not transfer assets.
+
+Sponsor signatures are time-limited and tied to one candidate version. They cannot be carried over when the candidate is edited. The candidate creator's own signature is also excluded from the support required to submit the proposal.
+
+:::caution[Check the signature deadline]
+
+Nouns Builder gives candidate sponsor signatures a seven-day deadline by default; seven days is not enforced by the protocol itself. The deadline recorded in each signature attestation determines how long it remains valid. If the candidate has not been promoted before that deadline, the signature no longer counts towards the Proposal Threshold and the member must provide a new one.
+
+:::
+
+## Promotion to a Proposal
+
+Once valid sponsor signatures supply enough voting power to pass the DAO's Proposal Threshold, the candidate creator sees **Ready to Submit**. Only the candidate creator can promote it, so switch back to the wallet that created the candidate before continuing. The creator does not need to hold a governance token if the valid sponsor signatures provide enough voting power.
+
+<img
+  src="/guides/candidateGuide/candidate-ready-to-submit.png"
+  alt="A candidate with enough sponsor support and a Submit as Proposal button"
+  width="700"
+/>
+
+Select **Submit as Proposal**, then confirm the onchain transaction in the creator's wallet. Builder submits the proposal with the collected signatures.
+
+<img
+  src="/guides/candidateGuide/candidate-promotion-wallet-confirmation.png"
+  alt="The candidate creator's wallet asking to confirm the proposal submission transaction"
+  width="700"
+/>
+
+<img
+  src="/guides/candidateGuide/candidate-proposal-created.png"
+  alt="Confirmation that the candidate was submitted as a proposal with one sponsor signature"
+  width="600"
+/>
+
+The resulting proposal links back to its originating candidate. The candidate's discussion, signals and sponsor record remain available as governance history.
+
+<img
+  src="/guides/candidateGuide/proposal-originating-candidate.png"
+  alt="A proposal showing its originating candidate and a View Candidate button"
+  width="700"
+/>
+
+:::caution[Sponsor-signed proposal updates are disabled]
+
+Updates to proposals created with sponsor signatures are disabled in Nouns Builder for now. If the candidate needs changes, edit it before promotion and collect fresh signatures for the new version.
+
+:::
+
+Once promoted, the proposal follows the DAO's standard voting and execution lifecycle. See [How to Create a Proposal](/onboarding/builder-proposal/#proposal-lifecycle) for the remaining stages.
+
+## Protocol References
+
+- [Proposal candidate EAS schema design](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/eas-proposal-candidates-schema.md)
+- [Upgraded Governor implementation](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/src/governance/governor/Governor.sol)
+- [Governor architecture](https://github.com/BuilderOSS/nouns-protocol/blob/e6679a20b38e2a9c35b7dbd75adf5043999dce75/docs/governor-architecture.md)
